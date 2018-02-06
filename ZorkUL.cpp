@@ -1,9 +1,10 @@
+#include <QCoreApplication>
 #include <iostream>
 
 using namespace std;
 #include "ZorkUL.h"
 
-int main(int argc, char argv[]) {
+int main() {
 	ZorkUL temp;
 	temp.play();
 	return 0;
@@ -14,7 +15,7 @@ ZorkUL::ZorkUL() {
 }
 
 void ZorkUL::createRooms()  {
-	Room *a, *b, *c, *d, *e, *f, *g, *h, *i;
+    Room *a, *b, *c, *d, *e, *f, *g, *h, *i,*j;
 
 	a = new Room("a");
         a->addItem(new Item("x", 1, 11));
@@ -29,17 +30,18 @@ void ZorkUL::createRooms()  {
 	g = new Room("g");
 	h = new Room("h");
 	i = new Room("i");
-
+    j = new Room("j");
 //             (N, E, S, W)
 	a->setExits(f, b, d, c);
 	b->setExits(NULL, NULL, NULL, a);
 	c->setExits(NULL, a, NULL, NULL);
 	d->setExits(a, e, NULL, i);
 	e->setExits(NULL, NULL, NULL, d);
-	f->setExits(NULL, g, a, h);
+    f->setExits(j, g, a, h);
 	g->setExits(NULL, NULL, NULL, f);
 	h->setExits(NULL, f, NULL, NULL);
     i->setExits(NULL, d, NULL, NULL);
+    j->setExits(NULL,NULL,f,NULL);
 
         currentRoom = a;
 }
@@ -143,7 +145,7 @@ bool ZorkUL::processCommand(Command command) {
 			cout << "overdefined input"<< endl;
 		else
 			return true; /**signal to quit*/
-	}
+    }
 	return false;
 }
 /** COMMANDS **/
