@@ -1,6 +1,6 @@
 #include <QCoreApplication>
 #include <iostream>
-
+#include <ctime>
 using namespace std;
 #include "ZorkUL.h"
 
@@ -15,35 +15,35 @@ ZorkUL::ZorkUL() {
 }
 
 void ZorkUL::createRooms()  {
-    Room *a, *b, *c, *d, *e, *f, *g, *h, *i,*j;
+    /* Directly pushing rooms onto the rooms vector so im not dealing with 2 variables*/
+    rooms.push_back(new Room("a"));//0
+        rooms.at(0)->addItem(new Item("x", 1, 11));
+        rooms.at(0)->addItem(new Item("y", 2, 22));
+    rooms.push_back(new Room("b"));//1
+        rooms.at(1)->addItem(new Item("xx", 3, 33));
+        rooms.at(1)->addItem(new Item("yy", 4, 44));
+    rooms.push_back(new Room("c"));//2
+    rooms.push_back( new Room("d"));//3
+    rooms.push_back(new Room("e"));//4
+    rooms.push_back(new Room("f"));//5
+    rooms.push_back(new Room("g"));//6
+    rooms.push_back(new Room("h"));//7
+    rooms.push_back( new Room("i"));//8
+    rooms.push_back(new Room("j"));//9
+    rooms.at(9)->addItem(new Item("A small bust of Aaron Dunes ginger head", 5, 33));
+    //                   (N, E, S, W)
+    rooms.at(0)->setExits(rooms.at(5),rooms.at(1),rooms.at(3), rooms.at(2));
+    rooms.at(1)->setExits(NULL, NULL, NULL, rooms.at(0));
+    rooms.at(2)->setExits(NULL, rooms.at(0), NULL, NULL);
+    rooms.at(3)->setExits(rooms.at(0), rooms.at(4), NULL, rooms.at(8));
+    rooms.at(4)->setExits(NULL, NULL, NULL, rooms.at(3));
+    rooms.at(5)->setExits(rooms.at(9), rooms.at(6), rooms.at(0), rooms.at(7));
+    rooms.at(6)->setExits(NULL, NULL, NULL, rooms.at(5));
+    rooms.at(7)->setExits(NULL, rooms.at(5), NULL, NULL);
+    rooms.at(8)->setExits(NULL, rooms.at(3), NULL, NULL);
+    rooms.at(9)->setExits(NULL,NULL,rooms.at(5),NULL);
 
-	a = new Room("a");
-        a->addItem(new Item("x", 1, 11));
-        a->addItem(new Item("y", 2, 22));
-	b = new Room("b");
-        b->addItem(new Item("xx", 3, 33));
-        b->addItem(new Item("yy", 4, 44));
-	c = new Room("c");
-	d = new Room("d");
-	e = new Room("e");
-	f = new Room("f");
-	g = new Room("g");
-	h = new Room("h");
-	i = new Room("i");
-    j = new Room("j");
-//             (N, E, S, W)
-	a->setExits(f, b, d, c);
-	b->setExits(NULL, NULL, NULL, a);
-	c->setExits(NULL, a, NULL, NULL);
-	d->setExits(a, e, NULL, i);
-	e->setExits(NULL, NULL, NULL, d);
-    f->setExits(j, g, a, h);
-	g->setExits(NULL, NULL, NULL, f);
-	h->setExits(NULL, f, NULL, NULL);
-    i->setExits(NULL, d, NULL, NULL);
-    j->setExits(NULL,NULL,f,NULL);
-
-        currentRoom = a;
+    currentRoom = rooms.at(0);
 }
 
 /**
@@ -127,6 +127,18 @@ bool ZorkUL::processCommand(Command command) {
     else if (commandWord.compare("put") == 0)
     {
 
+    }
+    else if(commandWord.compare("teleport") == 0){
+        //seeding random function with the current timestamp
+        srand(time(NULL));
+        int randomNum;
+        //added a do-while to ensure you are teleported to another room
+        do{
+           randomNum = rand() % rooms.size();
+        }while(currentRoom == rooms.at(randomNum));
+        //set room to the room that was randomly generated.
+        currentRoom = rooms.at(randomNum);
+        cout << currentRoom->longDescription() << endl;
     }
     /*
     {
