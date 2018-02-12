@@ -47,6 +47,7 @@ void Room::addItem(Item *inItem) {
     itemsInRoom.push_back(*inItem);
 }
 
+
 string Room::displayItem() {
     string tempString = "items in room = ";
     int sizeItems = (itemsInRoom.size());
