@@ -1,6 +1,7 @@
 #ifndef ZORKUL_H_
 #define ZORKUL_H_
 #include "mainwindow.h"
+#include "Character.h"
 #include "Command.h"
 #include "Parser.h"
 #include "Room.h"
@@ -11,7 +12,8 @@ using namespace std;
 
 class ZorkUL {
 private:
-	Parser parser;
+    Character user;
+    Parser parser;
 	Room *currentRoom;
     vector <Room *> rooms;
     void createRooms();

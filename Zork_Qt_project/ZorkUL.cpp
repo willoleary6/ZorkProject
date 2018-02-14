@@ -8,8 +8,10 @@ using namespace std;
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
+    //MainWindow w;
+    //w.show();
+    ZorkUL temp;
+    temp.play();
     return a.exec();
     /*ZorkUL temp;
 	temp.play();
@@ -56,7 +58,8 @@ void ZorkUL::createRooms()  {
  *  Main play routine.  Loops until end of play.
  */
 void ZorkUL::play() {
-	printWelcome();
+
+    printWelcome();
 
 	// Enter the main command loop.  Here we repeatedly read commands and
 	// execute them until the ZorkUL game is over.
@@ -92,13 +95,10 @@ bool ZorkUL::processCommand(Command command) {
 		cout << "invalid input"<< endl;
 		return false;
 	}
-
-	string commandWord = command.getCommandWord();
-	if (commandWord.compare("info") == 0)
+    string commandWord = command.getCommandWord();
+    if (commandWord.compare("info") == 0){
 		printHelp();
-
-	else if (commandWord.compare("map") == 0)
-		{
+    }else if (commandWord.compare("map") == 0){
         cout << "[h] --- [f] --- [g]" << endl;
 		cout << "         |         " << endl;
         cout << "         |         " << endl;
@@ -106,63 +106,73 @@ bool ZorkUL::processCommand(Command command) {
 		cout << "         |         " << endl;
 		cout << "         |         " << endl;
 		cout << "[i] --- [d] --- [e]" << endl;
-		}
-
-	else if (commandWord.compare("go") == 0)
+    }else if (commandWord.compare("go") == 0){
 		goRoom(command);
-
-    else if (commandWord.compare("take") == 0)
-    {
+    }
+    else if (commandWord.compare("take") == 0){
        	if (!command.hasSecondWord()) {
-		cout << "incomplete input"<< endl;
+            cout << "incomplete input"<< endl;
+        }else if (command.hasSecondWord()) {
+            cout << "you're trying to take " + command.getSecondWord() << endl;
+            int location = currentRoom->isItemInRoom(command.getSecondWord());
+            if (location  < 0 ){
+                cout << "item is not in room" << endl;
+            }else{
+                cout << "item is in room" << endl;
+                user.addItem(currentRoom->removeItem(location));
+                cout << endl;
+                cout << user.longDescription() << endl;
+            }
         }
-        else
-         if (command.hasSecondWord()) {
-        cout << "you're trying to take " + command.getSecondWord() << endl;
-        int location = currentRoom->isItemInRoom(command.getSecondWord());
-        if (location  < 0 )
-            cout << "item is not in room" << endl;
-        else
-            cout << "item is in room" << endl;
-            cout << "index number " << + location << endl;
-            cout << endl;
+    }else if (commandWord.compare("put") == 0){
+        if (!command.hasSecondWord()) {
+            cout << "incomplete input"<< endl;
+        }else if (command.hasSecondWord()) {
+            cout << "you're trying to place " + command.getSecondWord() << endl;
+            int location = user.isItemOnCharacter(command.getSecondWord());
+            if (location  < 0 ){
+                cout << "item is not on you" << endl;
+            }else{
+                cout << "item is on you "<< endl;
+                currentRoom->addItem(user.removeItem(location));
+                cout << endl;
+                cout << currentRoom->longDescription() << endl;
+            }
+        }
+    }else if(commandWord.compare("teleport") == 0){
+        if (command.hasSecondWord()){
+            bool found = false;
+            for(unsigned int i = 0; i < rooms.size(); i++){
+                if(rooms.at(i)->shortDescription() == command.getSecondWord()){
+                    currentRoom = rooms.at(i);
+                    cout << currentRoom->longDescription() << endl;
+                    found = true;
+                    break;
+                }
+            }
+            if(!found){
+                cout << "No room by that name." << endl;
+            }
+        }else{
+            //seeding random function with the current timestamp
+            srand(time(NULL));
+            int randomNum;
+            //added a do-while to ensure you are teleported to another room
+            do{
+               randomNum = rand() % rooms.size();
+            }while(currentRoom == rooms.at(randomNum));
+            //set room to the room that was randomly generated.
+            currentRoom = rooms.at(randomNum);
             cout << currentRoom->longDescription() << endl;
         }
-    }
-
-    else if (commandWord.compare("put") == 0)
-    {
-
-    }
-    else if(commandWord.compare("teleport") == 0){
-        //seeding random function with the current timestamp
-        srand(time(NULL));
-        int randomNum;
-        //added a do-while to ensure you are teleported to another room
-        do{
-           randomNum = rand() % rooms.size();
-        }while(currentRoom == rooms.at(randomNum));
-        //set room to the room that was randomly generated.
-        currentRoom = rooms.at(randomNum);
-        cout << currentRoom->longDescription() << endl;
-    }
-    /*
-    {
-    if (!command.hasSecondWord()) {
-		cout << "incomplete input"<< endl;
-        }
-        else
-            if (command.hasSecondWord()) {
-            cout << "you're adding " + command.getSecondWord() << endl;
-            itemsInRoom.push_Back;
-        }
-    }
-*/
-    else if (commandWord.compare("quit") == 0) {
-		if (command.hasSecondWord())
+    }else if(commandWord.compare("inventory") == 0){
+        cout << user.longDescription() << endl;
+    }else if (commandWord.compare("quit") == 0) {
+        if (command.hasSecondWord()){
 			cout << "overdefined input"<< endl;
-		else
+        }else{
 			return true; /**signal to quit*/
+        }
     }
 	return false;
 }
@@ -170,7 +180,6 @@ bool ZorkUL::processCommand(Command command) {
 void ZorkUL::printHelp() {
 	cout << "valid inputs are; " << endl;
 	parser.showCommands();
-
 }
 
 void ZorkUL::goRoom(Command command) {
@@ -178,15 +187,12 @@ void ZorkUL::goRoom(Command command) {
 		cout << "incomplete input"<< endl;
 		return;
 	}
-
-	string direction = command.getSecondWord();
-
-	// Try to leave current room.
+    string direction = command.getSecondWord();
+    // Try to leave current room.
 	Room* nextRoom = currentRoom->nextRoom(direction);
-
-	if (nextRoom == NULL)
+    if (nextRoom == NULL){
 		cout << "underdefined input"<< endl;
-	else {
+    }else {
 		currentRoom = nextRoom;
 		cout << currentRoom->longDescription() << endl;
 	}
@@ -197,10 +203,9 @@ string ZorkUL::go(string direction) {
 	//transform(direction.begin(), direction.end(), direction.begin(),:: tolower);
 	//Move to the next room
 	Room* nextRoom = currentRoom->nextRoom(direction);
-	if (nextRoom == NULL)
+    if (nextRoom == NULL){
 		return("direction null");
-	else
-	{
+    }else{
 		currentRoom = nextRoom;
 		return currentRoom->longDescription();
 	}

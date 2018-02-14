@@ -7,14 +7,18 @@ Room::Room(string description) {
 }
 
 void Room::setExits(Room *north, Room *east, Room *south, Room *west) {
-	if (north != NULL)
+    if (north != NULL){
 		exits["north"] = north;
-	if (east != NULL)
+    }
+    if (east != NULL){
 		exits["east"] = east;
-	if (south != NULL)
+    }
+    if (south != NULL){
 		exits["south"] = south;
-	if (west != NULL)
+    }
+    if (west != NULL){
 		exits["west"] = west;
+    }
 }
 
 string Room::shortDescription() {
@@ -27,9 +31,10 @@ string Room::longDescription() {
 
 string Room::exitString() {
 	string returnString = "\nexits =";
-	for (map<string, Room*>::iterator i = exits.begin(); i != exits.end(); i++)
+    for (map<string, Room*>::iterator i = exits.begin(); i != exits.end(); i++){
 		// Loop through map
 		returnString += "  " + i->first;	// access the "first" element of the pair (direction as a string)
+    }
 	return returnString;
 }
 
@@ -42,27 +47,32 @@ Room* Room::nextRoom(string direction) {
 }
 
 void Room::addItem(Item *inItem) {
-    //cout <<endl;
-    //cout << "Just added" + inItem->getLongDescription();
     itemsInRoom.push_back(*inItem);
 }
 
+void Room::addItem(Item &item) {
+    itemsInRoom.push_back(item);
+}
+
+void Room::addItem(Item item) {
+    itemsInRoom.push_back(item);
+}
 
 string Room::displayItem() {
     string tempString = "items in room = ";
     int sizeItems = (itemsInRoom.size());
     if (itemsInRoom.size() < 1) {
         tempString = "no items in room";
-        }
+    }
     else if (itemsInRoom.size() > 0) {
-       int x = (0);
+        int x = (0);
         for (int n = sizeItems; n > 0; n--) {
             tempString = tempString + itemsInRoom[x].getShortDescription() + "  " ;
             x++;
-            }
         }
-    return tempString;
     }
+    return tempString;
+}
 
 int Room::numberOfItems() {
     return itemsInRoom.size();
@@ -73,19 +83,23 @@ int Room::isItemInRoom(string inString)
     int sizeItems = (itemsInRoom.size());
     if (itemsInRoom.size() < 1) {
         return false;
-        }
-    else if (itemsInRoom.size() > 0) {
-       int x = (0);
+    }else if (itemsInRoom.size() > 0) {
+        int x = (0);
         for (int n = sizeItems; n > 0; n--) {
             // compare inString with short description
             int tempFlag = inString.compare( itemsInRoom[x].getShortDescription());
             if (tempFlag == 0) {
-                itemsInRoom.erase(itemsInRoom.begin()+x);
                 return x;
             }
             x++;
-            }
         }
+    }
     return -1;
+}
+
+Item Room::removeItem(int itemIndex){
+    Item Temp = itemsInRoom.at(itemIndex);
+    itemsInRoom.erase(itemsInRoom.begin() + itemIndex);
+    return Temp;
 }
 

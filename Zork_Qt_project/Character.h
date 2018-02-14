@@ -1,28 +1,30 @@
-/*#ifndef CHARACTER_H_
+#ifndef CHARACTER_H_
 #define CHARACTER_H_
-#include "ZorkUL.h"
+#include "item.h"
 
 #include <string>
-using namespace std;
 #include <vector>
+using namespace std;
+
 using std::vector;
 
 
 class Character {
 private:
 	string description;
-	 vector < string > itemsInCharacter;
+    vector <Item> itemsInCharacter;
 public:
 	void addItems(string Item);
-
-
-
-
-public:
-	Character(string description);
-	string shortDescription();
+    void addItem(Item item);
+    void addItem(Item &item);
+    void addItem(Item *item);
+    Character(string description);
+    Character();
+    string shortDescription();
 	string longDescription();
+    Item removeItem(int itemIndex);
+    int isItemOnCharacter(string inString);
 
 };
 
-#endif /*CHARACTER_H_*/
+#endif
