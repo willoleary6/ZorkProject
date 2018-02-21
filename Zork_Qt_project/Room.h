@@ -12,7 +12,7 @@ class Room {
 
 private:
 	string description;
-	map<string, Room*> exits;
+    map<string, Room*> exits;
 	string exitString();
     vector <Item> itemsInRoom;
 
@@ -30,6 +30,7 @@ public:
     string displayItem();
     int isItemInRoom(string inString);
     Item removeItem(int itemIndex);
+    map<string, Room*> getExits();
 };
 
 #endif

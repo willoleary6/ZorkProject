@@ -102,4 +102,7 @@ Item Room::removeItem(int itemIndex){
     itemsInRoom.erase(itemsInRoom.begin() + itemIndex);
     return Temp;
 }
+map<string, Room*> Room::getExits(){
+    return exits;
+}
 

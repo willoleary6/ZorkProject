@@ -8,14 +8,14 @@ using namespace std;
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    //MainWindow w;
-    //w.show();
+    /*MainWindow w;
+    w.show();
     ZorkUL temp;
-    temp.play();
-    return a.exec();
-    /*ZorkUL temp;
+    temp.play();*/
+    //return a.exec();
+    ZorkUL temp;
 	temp.play();
-    return 0;*/
+    return 0;
 }
 
 ZorkUL::ZorkUL() {
@@ -24,20 +24,20 @@ ZorkUL::ZorkUL() {
 
 void ZorkUL::createRooms()  {
     /* Directly pushing rooms onto the rooms vector so im not dealing with 2 variables*/
-    rooms.push_back(new Room("a"));//0
+    rooms.push_back(new Room("First Room"));//0
         rooms.at(0)->addItem(new Item("x", 1, 11));
         rooms.at(0)->addItem(new Item("y", 2, 22));
-    rooms.push_back(new Room("b"));//1
+    rooms.push_back(new Room("Second Room"));//1
         rooms.at(1)->addItem(new Item("xx", 3, 33));
         rooms.at(1)->addItem(new Item("yy", 4, 44));
-    rooms.push_back(new Room("c"));//2
-    rooms.push_back( new Room("d"));//3
-    rooms.push_back(new Room("e"));//4
-    rooms.push_back(new Room("f"));//5
-    rooms.push_back(new Room("g"));//6
-    rooms.push_back(new Room("h"));//7
-    rooms.push_back( new Room("i"));//8
-    rooms.push_back(new Room("j"));//9
+    rooms.push_back(new Room("Third Room"));//2
+    rooms.push_back( new Room("Fourth Room"));//3
+    rooms.push_back(new Room("Fifth Room"));//4
+    rooms.push_back(new Room("Sixth Room"));//5
+    rooms.push_back(new Room("Seventh Room"));//6
+    rooms.push_back(new Room("Eigth Room"));//7
+    rooms.push_back( new Room("Nineth Room"));//8
+    rooms.push_back(new Room("Tenth Room"));//9
     rooms.at(9)->addItem(new Item("A small bust of Aaron Dunes ginger head", 5, 33));
     //                   (N, E, S, W)
     rooms.at(0)->setExits(rooms.at(5),rooms.at(1),rooms.at(3), rooms.at(2));
@@ -99,18 +99,22 @@ bool ZorkUL::processCommand(Command command) {
     if (commandWord.compare("info") == 0){
 		printHelp();
     }else if (commandWord.compare("map") == 0){
-        cout << "[h] --- [f] --- [g]" << endl;
+        cout << printMap() << endl;
+        //map<string,Room*> currentRoomExits = rooms.at(0)->getExits();
+        //cout << currentRoomExits["north"]->shortDescription() << endl;
+        /*cout << "[h] --- [f] --- [g]" << endl;
 		cout << "         |         " << endl;
         cout << "         |         " << endl;
 		cout << "[c] --- [a] --- [b]" << endl;
 		cout << "         |         " << endl;
 		cout << "         |         " << endl;
-		cout << "[i] --- [d] --- [e]" << endl;
+        cout << "[i] --- [d] --- [e]" << endl;*/
     }else if (commandWord.compare("go") == 0){
 		goRoom(command);
     }
     else if (commandWord.compare("take") == 0){
-       	if (!command.hasSecondWord()) {
+        // added functionality for user to take items out of a room
+        if (!command.hasSecondWord()) {
             cout << "incomplete input"<< endl;
         }else if (command.hasSecondWord()) {
             cout << "you're trying to take " + command.getSecondWord() << endl;
@@ -119,12 +123,15 @@ bool ZorkUL::processCommand(Command command) {
                 cout << "item is not in room" << endl;
             }else{
                 cout << "item is in room" << endl;
+                //adding item to user's inventory while also removing it from the room
                 user.addItem(currentRoom->removeItem(location));
                 cout << endl;
                 cout << user.longDescription() << endl;
             }
         }
     }else if (commandWord.compare("put") == 0){
+        // Added functionality for user to place item in a room
+
         if (!command.hasSecondWord()) {
             cout << "incomplete input"<< endl;
         }else if (command.hasSecondWord()) {
@@ -134,14 +141,18 @@ bool ZorkUL::processCommand(Command command) {
                 cout << "item is not on you" << endl;
             }else{
                 cout << "item is on you "<< endl;
+                /*Wrote a hand over function here,
+                 * so while the room is gaining said item the user is loosing it.*/
                 currentRoom->addItem(user.removeItem(location));
                 cout << endl;
                 cout << currentRoom->longDescription() << endl;
             }
         }
     }else if(commandWord.compare("teleport") == 0){
+        //added debug functionality to jump to any room a player wanted
         if (command.hasSecondWord()){
             bool found = false;
+            //go through each room to check if the room specified matches any of the rooms short description
             for(unsigned int i = 0; i < rooms.size(); i++){
                 if(rooms.at(i)->shortDescription() == command.getSecondWord()){
                     currentRoom = rooms.at(i);
@@ -166,6 +177,7 @@ bool ZorkUL::processCommand(Command command) {
             cout << currentRoom->longDescription() << endl;
         }
     }else if(commandWord.compare("inventory") == 0){
+        //displaying all the items in users inventory
         cout << user.longDescription() << endl;
     }else if (commandWord.compare("quit") == 0) {
         if (command.hasSecondWord()){
@@ -209,4 +221,133 @@ string ZorkUL::go(string direction) {
 		currentRoom = nextRoom;
 		return currentRoom->longDescription();
 	}
+}
+bool ZorkUL::findMapCoordinates(int index,int *x_position, int *y_position, vector<vector<string>> mapDisplay){
+    for(int j = 0; j < mapDisplay.size(); j++){
+        for(int k = 0; k <mapDisplay[j].size(); k++){
+            if(rooms[index]->shortDescription() == mapDisplay[j][k]){
+                *x_position = k;
+                *y_position = j;
+                return true;
+            }
+        }
+    }
+    return false;
+}
+string ZorkUL::printMap(){
+    bool pushBackUsed = false, insertUsed = false;
+    map<string,Room*> currentRoomExits;
+            //cout << currentRoomExits["north"]->shortDescription() << endl;
+    vector<vector<string>> mapDisplay;
+    vector<string> temp;
+    int x_position = 0,y_position = 0;
+    temp.push_back(rooms.at(0)->shortDescription());
+    mapDisplay.push_back(temp);
+    //go through each room and add it to vector map
+    for(int i = 0; i < rooms.size(); i++){
+        currentRoomExits  = rooms.at(i)->getExits();
+        //TODO: add safegaurd to stop island rooms
+
+        findMapCoordinates(i,&x_position, &y_position,mapDisplay);
+        if(currentRoomExits["east"] != NULL){
+            /*we have now established that the current room has
+             * an exit to its east and we will now reflect that on the map.
+             */
+            if(x_position == (mapDisplay[y_position].size()-1)){
+               /*since the room is on the edge of the vector
+                * we must add a new element to encorporate the new room to the map.
+                */
+               mapDisplay[y_position].push_back(" --- ");
+               mapDisplay[y_position].push_back(currentRoomExits["east"]->shortDescription());
+               pushBackUsed = true;
+            }else{
+                /*setting the element to the right of the
+                 * current room to that of its eastern neighbour.
+                 */
+                mapDisplay[y_position].at(x_position+1) =  " --- ";
+                mapDisplay[y_position].at(x_position+2) =  currentRoomExits["east"]->shortDescription();
+            }
+        }
+        if(currentRoomExits["west"]!= NULL){
+            //there's a room to our west and we must now incorporate it into the map.
+            if(x_position == 0){
+              //if the room is at the begining of the array we must insert a new element into the start.
+              mapDisplay[y_position].insert(mapDisplay[y_position].begin()," --- ");
+              mapDisplay[y_position].insert(mapDisplay[y_position].begin(),currentRoomExits["west"]->shortDescription());
+              insertUsed = true;
+              //increment x_position variable to accuratly reflect the new position of the current room.
+              x_position++;
+              x_position++;
+            }else{
+                // if the element already exists we simply set its value to the western room.
+                mapDisplay[y_position].at(x_position-1) =  " --- ";
+                mapDisplay[y_position].at(x_position-2) =  currentRoomExits["west"]->shortDescription();
+            }
+        }
+        if(currentRoomExits["south"]!= NULL){
+           //there is a room to our south and we are now mapping it similar to if blocks above
+           if(mapDisplay.size() == (y_position+1)){
+               temp.clear();
+               temp.push_back("|");
+               mapDisplay.push_back(temp);
+
+               temp.clear();
+               temp.push_back(currentRoomExits["south"]->shortDescription());
+               mapDisplay.push_back(temp);
+            }else{
+               mapDisplay[y_position+2].at(x_position) = currentRoomExits["south"]->shortDescription();
+           }
+        }
+        if(currentRoomExits["north"]!= NULL){
+           //if i == 0
+            if(y_position == 0){
+               temp.clear();
+               temp.push_back("|");
+               mapDisplay.insert(mapDisplay.begin(),temp);
+
+               temp.clear();
+               temp.push_back(currentRoomExits["north"]->shortDescription());
+               mapDisplay.insert(mapDisplay.begin(),temp);
+               y_position++;
+               y_position++;
+            }else{
+                mapDisplay[y_position-2].at(x_position) = currentRoomExits["north"]->shortDescription();
+            }
+        }
+        int largest = 0;
+        for(int x = 0; x < mapDisplay.size(); x++){
+              if(largest < mapDisplay[x].size()){
+                  largest = mapDisplay[x].size();
+              }
+        }
+        for(int x = 0; x < mapDisplay.size(); x++){
+            if(mapDisplay[x].size() < largest){
+                if(pushBackUsed){
+                  mapDisplay[x].push_back("");
+                }
+                if(insertUsed){
+                  mapDisplay[x].insert(mapDisplay[x].begin(),"");
+                }
+
+            }
+        }
+    }
+
+    string textMap;
+    //printing vector map
+    for(int i = 0; i < mapDisplay.size(); i++){
+        for(int j = 0; j < mapDisplay[i].size(); j++){
+            if(mapDisplay[i][j] == "" && i%2 == 0 && i != (mapDisplay.size()-1)){
+                textMap += string(mapDisplay[i+2][j].length(),' ');
+            }else if(mapDisplay[i][j] == ""){
+                textMap += string(mapDisplay[i+1][j].length(),' ');
+            }else if(mapDisplay[i][j] == "|"){
+                textMap += string((mapDisplay[i+1][j].length()+mapDisplay[i-1][j].length())/4,' ')+mapDisplay[i][j];
+            }else{
+                textMap += mapDisplay[i][j];
+            }
+        }
+        textMap += "\n";
+     }
+    return textMap;
 }

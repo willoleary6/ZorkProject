@@ -19,10 +19,12 @@ private:
     void createRooms();
 	void printWelcome();
 	bool processCommand(Command command);
-	void printHelp();
+    bool findMapCoordinates(int index,int *x_position, int *y_position, vector<vector<string>> mapDisplay);
+    void printHelp();
 	void goRoom(Command command);
     void createItems();
     void displayItems();
+    string printMap();
 
 public:
 	ZorkUL();
