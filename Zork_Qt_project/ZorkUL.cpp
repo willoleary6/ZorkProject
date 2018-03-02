@@ -23,6 +23,7 @@ ZorkUL::ZorkUL() {
 }
 
 void ZorkUL::createRooms()  {
+    generateRandomFloorPlan();
     /* Directly pushing rooms onto the rooms vector so im not dealing with 2 variables*/
     rooms.push_back(new Room("First Room"));//0
         rooms.at(0)->addItem(new Item("x", 1, 11));
@@ -53,6 +54,32 @@ void ZorkUL::createRooms()  {
 
     currentRoom = rooms.at(0);
 }
+ void ZorkUL::generateRandomFloorPlan(){
+     Room* floorPlan[4][4];
+     int rows = sizeof floorPlan/sizeof floorPlan[0];
+     int cols = sizeof floorPlan[0]/sizeof(Room*);
+     int count = 0;
+     int randomValue =0;
+     srand(time(NULL));
+     for(int i =0; i < rows; i++){
+         for(int j = 0; j < cols; j++){
+             randomValue = rand() % 9;
+             if(randomValue > 4){
+                 floorPlan[i][j] = NULL;
+             }else{
+                 count++;
+                 floorPlan[i][j] = new Room(to_string(count));
+             }
+             if(floorPlan[i][j] == NULL){
+                 cout << "0" <<" ";
+
+             }else{
+                 cout << floorPlan[i][j]->shortDescription() << " ";
+             }
+         }
+         cout << endl;
+     }
+ }
 
 /**
  *  Main play routine.  Loops until end of play.
@@ -335,19 +362,44 @@ string ZorkUL::printMap(){
 
     string textMap;
     //printing vector map
+    int largest = 0;
     for(int i = 0; i < mapDisplay.size(); i++){
         for(int j = 0; j < mapDisplay[i].size(); j++){
             if(mapDisplay[i][j] == "" && i%2 == 0 && i != (mapDisplay.size()-1)){
-                textMap += string(mapDisplay[i+2][j].length(),' ');
+                //inserting the spacing for vertical breakers that are not populated with "|"
+                largest = getLargestIndex(mapDisplay, i, j);
+                textMap += string(largest,' ');
             }else if(mapDisplay[i][j] == ""){
-                textMap += string(mapDisplay[i+1][j].length(),' ');
+                //insert spacing between empty indexs
+                largest = getLargestIndex(mapDisplay, i, j);
+                textMap += string(largest,' ');
+                //textMap += string(mapDisplay[i+1][j].length(),' ');
             }else if(mapDisplay[i][j] == "|"){
+                //inserting the vertical breakers
                 textMap += string((mapDisplay[i+1][j].length()+mapDisplay[i-1][j].length())/4,' ')+mapDisplay[i][j];
             }else{
-                textMap += mapDisplay[i][j];
+                //add the room name to the text map
+                largest = getLargestIndex(mapDisplay, i, j);
+                if(mapDisplay[i][j] != " --- "){
+                    textMap += mapDisplay[i][j]+string(largest-mapDisplay[i][j].length(),' ');
+                }else{
+                    textMap += mapDisplay[i][j];
+                }
             }
         }
         textMap += "\n";
      }
     return textMap;
+}
+int ZorkUL::getLargestIndex(vector<vector<string>> mapDisplay, int i, int j){
+    /*this function goes through the selected column
+     * and returns the size of the largest value in that columns.
+     */
+    int largest = 0;
+    for(int k = 0; k < mapDisplay.size(); k++){
+            if(largest < mapDisplay[k][j].length()){
+                largest = mapDisplay[k][j].length();
+            }
+     }
+    return largest;
 }
