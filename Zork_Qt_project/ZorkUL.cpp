@@ -25,7 +25,7 @@ ZorkUL::ZorkUL() {
 void ZorkUL::createRooms()  {
     generateRandomFloorPlan();
     /* Directly pushing rooms onto the rooms vector so im not dealing with 2 variables*/
-    rooms.push_back(new Room("First Room"));//0
+    /*rooms.push_back(new Room("First Room"));//0
         rooms.at(0)->addItem(new Item("x", 1, 11));
         rooms.at(0)->addItem(new Item("y", 2, 22));
     rooms.push_back(new Room("Second Room"));//1
@@ -52,7 +52,7 @@ void ZorkUL::createRooms()  {
     rooms.at(8)->setExits(NULL, rooms.at(3), NULL, NULL);
     rooms.at(9)->setExits(NULL,NULL,rooms.at(5),NULL);
 
-    currentRoom = rooms.at(0);
+    currentRoom = rooms.at(0);*/
 }
  void ZorkUL::generateRandomFloorPlan(){
      Room* floorPlan[4][4];
@@ -79,6 +79,82 @@ void ZorkUL::createRooms()  {
          }
          cout << endl;
      }
+      //                 (N,   E,  S,   W)
+     map<string, Room*> roomExits;
+     for(int i = 0; i < rows;i++){
+         for(int j=0; j < cols;j++){
+             roomExits = floorPlan[i][j]->getExits();
+             if(floorPlan[i][j] != NULL){
+                //range horizontal right populating the eastern exit possibly
+                 eastWard:
+                 //making sure there is actually space to move right
+                 if(j < cols-1 && roomExits["east"] == NULL){
+                     for(int rangeRight = j+1; rangeRight < rows; rangeRight++){
+                         if(floorPlan[i][rangeRight] != NULL){
+                             randomValue = rand() % 9;
+                             //if(ramdomValue > 3){
+                                floorPlan[i][j]->setEastExit(floorPlan[i][rangeRight]);
+                                floorPlan[i][rangeRight]->setWestExit(floorPlan[i][j]);
+                                goto westWard;
+                             //}
+                         }
+                     }
+                 }
+                 //range horizontally left populating the western exit
+                 westWard:
+                 if(j > 0 && roomExits["west"] == NULL){
+                    for(int rangeLeft = j; j > 0; j--){
+                        if(floorPlan[i][rangeLeft] != NULL){
+                            randomValue = rand() % 9;
+                            //if(ramdomValue > 3){
+                            floorPlan[i][j]->setWestExit(floorPlan[i][rangeLeft]);
+                            floorPlan[i][rangeLeft]->setEastExit(floorPlan[i][j]);
+                            goto upWard;
+                            //}
+                        }
+                    }
+                 }
+                 upWard:
+                 if(i > 1 && roomExits["north"] == NULL){
+                     for(int rangeUp = i; i > 0; i--){
+                         if(floorPlan[rangeUp][j] != NULL){
+                             randomValue = rand() % 9;
+                             //if(ramdomValue > 3){
+                             floorPlan[i][j]->setNorthExit(floorPlan[rangeUp][j]);
+                             floorPlan[rangeUp][j]->setSouthExit(floorPlan[i][j]);
+                             goto downWard;
+                             //}
+                         }
+
+                     }
+                 }
+                 downWard:
+                 if(i < rows && roomExits["south"] == NULL){
+                     for(int rangeDown = i; i < rows; i++){
+                         if(floorPlan[rangeDown][j] != NULL){
+                             randomValue = rand() % 9;
+                             //if(ramdomValue > 3){
+                             floorPlan[i][j]->setSouthExit(floorPlan[rangeDown][j]);
+                             floorPlan[rangeDown][j]->setNorthExit(floorPlan[i][j]);
+                             goto finish;
+                         }
+                     }
+                 }
+                 finish:
+                 cout << "Round complete" << endl;
+             }
+         }
+     }
+     //now gonna set rooms to this configureation
+     for(int i = 0; i < rows; i++){
+         for(int j = 0; j < cols; j++){
+             if(floorPlan[i][j] != NULL){
+                rooms.push_back(floorPlan[i][j]);
+             }
+         }
+
+     }
+     currentRoom = rooms.at(0);
  }
 
 /**

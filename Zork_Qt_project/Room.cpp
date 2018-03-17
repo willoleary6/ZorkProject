@@ -20,6 +20,21 @@ void Room::setExits(Room *north, Room *east, Room *south, Room *west) {
 		exits["west"] = west;
     }
 }
+void Room::setNorthExit(Room *north){
+    exits["north"] = north;
+}
+
+void Room::setEastExit(Room *east){
+    exits["east"] = east;
+}
+
+void Room::setSouthExit(Room *south){
+    exits["south"] = south;
+}
+
+void Room::setWestExit(Room *west){
+    exits["west"] = west;
+}
 
 string Room::shortDescription() {
 	return description;
@@ -104,5 +119,21 @@ Item Room::removeItem(int itemIndex){
 }
 map<string, Room*> Room::getExits(){
     return exits;
+}
+int Room::getNoOfExits(){
+    int count = 0;
+    if (exits["north"] != NULL){
+         count++;
+    }
+    if (exits["east"] != NULL){
+        count++;
+    }
+    if (exits["south"] != NULL){
+         count++;
+    }
+    if (exits["west"] != NULL){
+         count++;
+    }
+    return count;
 }
 

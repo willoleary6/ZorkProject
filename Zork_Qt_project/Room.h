@@ -21,6 +21,10 @@ public:
     int numberOfItems();
 	Room(string description);
 	void setExits(Room *north, Room *east, Room *south, Room *west);
+    void setNorthExit(Room *north);
+    void setEastExit(Room *east);
+    void setSouthExit(Room *south);
+    void setWestExit(Room *west);
 	string shortDescription();
 	string longDescription();
 	Room* nextRoom(string direction);
@@ -31,6 +35,8 @@ public:
     int isItemInRoom(string inString);
     Item removeItem(int itemIndex);
     map<string, Room*> getExits();
+    int getNoOfExits();
+
 };
 
 #endif
