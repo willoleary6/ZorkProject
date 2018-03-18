@@ -4,6 +4,10 @@
 
 Room::Room(string description) {
 	this->description = description;
+    exits["north"] = NULL;
+    exits["east"] = NULL;
+    exits["south"] = NULL;
+    exits["west"] = NULL;
 }
 
 void Room::setExits(Room *north, Room *east, Room *south, Room *west) {
@@ -46,9 +50,17 @@ string Room::longDescription() {
 
 string Room::exitString() {
 	string returnString = "\nexits =";
-    for (map<string, Room*>::iterator i = exits.begin(); i != exits.end(); i++){
-		// Loop through map
-		returnString += "  " + i->first;	// access the "first" element of the pair (direction as a string)
+    if (exits["north"] != NULL){
+        returnString += "  North";
+    }
+    if (exits["east"] != NULL){
+        returnString += "  East";
+    }
+    if (exits["south"] != NULL){
+        returnString += "  South";
+    }
+    if (exits["west"] != NULL){
+        returnString += "  West";
     }
 	return returnString;
 }

@@ -28,6 +28,7 @@ private:
     int getLargestIndex(vector<vector<string>> mapDisplay, int i, int j);
     void generateRandomFloorPlan();
 
+
 public:
 	ZorkUL();
 	void play();

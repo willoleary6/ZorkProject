@@ -55,13 +55,21 @@ void ZorkUL::createRooms()  {
     currentRoom = rooms.at(0);*/
 }
  void ZorkUL::generateRandomFloorPlan(){
-     Room* floorPlan[4][4];
+     //Room* floorPlan[4][4];
+     Room* floorPlan[4][4] = {{new Room("1"),new Room("2"),new Room("3"),NULL},
+                              {new Room("4"),new Room("5"),NULL,NULL},
+                              {new Room("6"),new Room("7"),NULL,NULL},
+                              {new Room("8"),new Room("9"),NULL,NULL}};
+     //cout << "test" << endl;
      int rows = sizeof floorPlan/sizeof floorPlan[0];
      int cols = sizeof floorPlan[0]/sizeof(Room*);
      int count = 0;
      int randomValue =0;
      srand(time(NULL));
-     for(int i =0; i < rows; i++){
+     /* TODO: ok we need to sort the randomly generated arrays so that the NULLs are all together in one side to avoid problems
+      *
+      */
+     /*for(int i =0; i < rows; i++){
          for(int j = 0; j < cols; j++){
              randomValue = rand() % 9;
              if(randomValue > 4){
@@ -78,19 +86,29 @@ void ZorkUL::createRooms()  {
              }
          }
          cout << endl;
-     }
+     }*/
       //                 (N,   E,  S,   W)
+
+     //setting debug value for floor plan
+     /*floorPlan = {{new Room("1"),new Room("2"),new Room("0"),new Room("3")},
+                  {new Room("4"),new Room("5"),new Room("0"),new Room("0")},
+                  {new Room("6"),new Room("7"),new Room("0"),new Room("0")},
+                  {new Room("0"),new Room("0"),new Room("8"),new Room("9")}};*/
      map<string, Room*> roomExits;
      for(int i = 0; i < rows;i++){
+         //cout << "Row Start" << endl;
          for(int j=0; j < cols;j++){
-             roomExits = floorPlan[i][j]->getExits();
+
+             //cout << "test" << endl;
              if(floorPlan[i][j] != NULL){
-                //range horizontal right populating the eastern exit possibly
+                 roomExits = floorPlan[i][j]->getExits();
+                 //cout << floorPlan[i][j]->shortDescription()<< " at index " << i << j << endl;
+                 //range horizontal right populating the eastern exit possibly
                  eastWard:
                  //making sure there is actually space to move right
                  if(j < cols-1 && roomExits["east"] == NULL){
                      for(int rangeRight = j+1; rangeRight < rows; rangeRight++){
-                         if(floorPlan[i][rangeRight] != NULL){
+                         if(floorPlan[i][rangeRight] != NULL && floorPlan[i][rangeRight] != floorPlan[i][j]){
                              randomValue = rand() % 9;
                              //if(ramdomValue > 3){
                                 floorPlan[i][j]->setEastExit(floorPlan[i][rangeRight]);
@@ -103,8 +121,8 @@ void ZorkUL::createRooms()  {
                  //range horizontally left populating the western exit
                  westWard:
                  if(j > 0 && roomExits["west"] == NULL){
-                    for(int rangeLeft = j; j > 0; j--){
-                        if(floorPlan[i][rangeLeft] != NULL){
+                    for(int rangeLeft = j-1; rangeLeft >= 0; rangeLeft--){
+                        if(floorPlan[i][rangeLeft] != NULL && floorPlan[i][rangeLeft] != floorPlan[i][j]){
                             randomValue = rand() % 9;
                             //if(ramdomValue > 3){
                             floorPlan[i][j]->setWestExit(floorPlan[i][rangeLeft]);
@@ -115,8 +133,8 @@ void ZorkUL::createRooms()  {
                     }
                  }
                  upWard:
-                 if(i > 1 && roomExits["north"] == NULL){
-                     for(int rangeUp = i; i > 0; i--){
+                 if(i > 0 && roomExits["north"] == NULL){
+                     for(int rangeUp = i-1; rangeUp >= 0; rangeUp--){
                          if(floorPlan[rangeUp][j] != NULL){
                              randomValue = rand() % 9;
                              //if(ramdomValue > 3){
@@ -129,21 +147,39 @@ void ZorkUL::createRooms()  {
                      }
                  }
                  downWard:
+
                  if(i < rows && roomExits["south"] == NULL){
-                     for(int rangeDown = i; i < rows; i++){
+                     for(int rangeDown = i+1; rangeDown < rows; rangeDown++){
                          if(floorPlan[rangeDown][j] != NULL){
                              randomValue = rand() % 9;
                              //if(ramdomValue > 3){
+
                              floorPlan[i][j]->setSouthExit(floorPlan[rangeDown][j]);
                              floorPlan[rangeDown][j]->setNorthExit(floorPlan[i][j]);
                              goto finish;
                          }
                      }
                  }
+
                  finish:
-                 cout << "Round complete" << endl;
+
+                 roomExits = floorPlan[i][j]->getExits();
+                 /*cout << "Exits of this node in "<<endl;
+                 if(roomExits["west"] != NULL){
+                     cout <<"west "<< roomExits["west"]->shortDescription() <<endl;
+                 }
+                 if(roomExits["east"] != NULL){
+                    cout <<"east "<< roomExits["east"]->shortDescription()<< endl;
+                 }
+                 if(roomExits["north"] != NULL){
+                    cout <<"north "<< roomExits["north"]->shortDescription()<< endl;
+                 }
+                 if(roomExits["south"] != NULL){
+                    cout <<"south "<< roomExits["south"]->shortDescription()<< endl;
+                 }*/
              }
          }
+        //cout << "Row complete" << endl;
      }
      //now gonna set rooms to this configureation
      for(int i = 0; i < rows; i++){
@@ -347,7 +383,9 @@ string ZorkUL::printMap(){
     temp.push_back(rooms.at(0)->shortDescription());
     mapDisplay.push_back(temp);
     //go through each room and add it to vector map
+
     for(int i = 0; i < rooms.size(); i++){
+
         currentRoomExits  = rooms.at(i)->getExits();
         //TODO: add safegaurd to stop island rooms
 
@@ -356,6 +394,7 @@ string ZorkUL::printMap(){
             /*we have now established that the current room has
              * an exit to its east and we will now reflect that on the map.
              */
+
             if(x_position == (mapDisplay[y_position].size()-1)){
                /*since the room is on the edge of the vector
                 * we must add a new element to encorporate the new room to the map.
@@ -370,11 +409,15 @@ string ZorkUL::printMap(){
                 mapDisplay[y_position].at(x_position+1) =  " --- ";
                 mapDisplay[y_position].at(x_position+2) =  currentRoomExits["east"]->shortDescription();
             }
+
         }
-        if(currentRoomExits["west"]!= NULL){
+
+        if(currentRoomExits["west"] != NULL){
             //there's a room to our west and we must now incorporate it into the map.
+
             if(x_position == 0){
-              //if the room is at the begining of the array we must insert a new element into the start.
+
+                //if the room is at the begining of the array we must insert a new element into the start.
               mapDisplay[y_position].insert(mapDisplay[y_position].begin()," --- ");
               mapDisplay[y_position].insert(mapDisplay[y_position].begin(),currentRoomExits["west"]->shortDescription());
               insertUsed = true;
@@ -382,11 +425,14 @@ string ZorkUL::printMap(){
               x_position++;
               x_position++;
             }else{
+
                 // if the element already exists we simply set its value to the western room.
                 mapDisplay[y_position].at(x_position-1) =  " --- ";
                 mapDisplay[y_position].at(x_position-2) =  currentRoomExits["west"]->shortDescription();
             }
+
         }
+
         if(currentRoomExits["south"]!= NULL){
            //there is a room to our south and we are now mapping it similar to if blocks above
            if(mapDisplay.size() == (y_position+1)){
@@ -398,9 +444,12 @@ string ZorkUL::printMap(){
                temp.push_back(currentRoomExits["south"]->shortDescription());
                mapDisplay.push_back(temp);
             }else{
+               mapDisplay[y_position+1].at(x_position) = "|";
                mapDisplay[y_position+2].at(x_position) = currentRoomExits["south"]->shortDescription();
            }
         }
+
+        //cout << x_position << "  " << y_position << endl;
         if(currentRoomExits["north"]!= NULL){
            //if i == 0
             if(y_position == 0){
@@ -414,9 +463,11 @@ string ZorkUL::printMap(){
                y_position++;
                y_position++;
             }else{
+                mapDisplay[y_position-1].at(x_position) = "|";
                 mapDisplay[y_position-2].at(x_position) = currentRoomExits["north"]->shortDescription();
             }
         }
+
         int largest = 0;
         for(int x = 0; x < mapDisplay.size(); x++){
               if(largest < mapDisplay[x].size()){
@@ -427,13 +478,24 @@ string ZorkUL::printMap(){
             if(mapDisplay[x].size() < largest){
                 if(pushBackUsed){
                   mapDisplay[x].push_back("");
+                  mapDisplay[x].push_back("");
                 }
                 if(insertUsed){
+                  mapDisplay[x].insert(mapDisplay[x].begin(),"");
                   mapDisplay[x].insert(mapDisplay[x].begin(),"");
                 }
 
             }
         }
+        /*cout << "test" << endl;
+        for(int j =0; j < mapDisplay.size(); j++){
+            cout << "level size: "<<mapDisplay[j].size()<<endl;
+            for(int k =0; k < mapDisplay[j].size();k++ ){
+                cout << mapDisplay[j][k];
+            }
+            cout << endl;
+        }*/
+
     }
 
     string textMap;
