@@ -27,7 +27,7 @@ private:
     string printMap();
     int getLargestIndex(vector<vector<string>> mapDisplay, int i, int j);
     void generateRandomFloorPlan();
-
+    void pushNULLsToEnd(Room* rooms[]);
 
 public:
 	ZorkUL();

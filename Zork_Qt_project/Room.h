@@ -15,11 +15,13 @@ private:
     map<string, Room*> exits;
 	string exitString();
     vector <Item> itemsInRoom;
-
+    int IDnumber;
+    int numberOfItems();
 
 public:
-    int numberOfItems();
-	Room(string description);
+
+    Room(string description, int IDnumber);
+    Room(int IDnumber);
 	void setExits(Room *north, Room *east, Room *south, Room *west);
     void setNorthExit(Room *north);
     void setEastExit(Room *east);
@@ -36,6 +38,7 @@ public:
     Item removeItem(int itemIndex);
     map<string, Room*> getExits();
     int getNoOfExits();
+    int getIdNumber();
 
 };
 

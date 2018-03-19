@@ -55,11 +55,11 @@ void ZorkUL::createRooms()  {
     currentRoom = rooms.at(0);*/
 }
  void ZorkUL::generateRandomFloorPlan(){
-     //Room* floorPlan[4][4];
-     Room* floorPlan[4][4] = {{new Room("1"),new Room("2"),new Room("3"),NULL},
-                              {new Room("4"),new Room("5"),NULL,NULL},
-                              {new Room("6"),new Room("7"),NULL,NULL},
-                              {new Room("8"),new Room("9"),NULL,NULL}};
+     Room* floorPlan[4][4];
+     /*Room* floorPlan[4][4] = {{NULL,new Room(1),new Room(2),new Room(3)},
+                              {new Room(4),NULL,new Room(5),NULL},
+                              {new Room(6),new Room(7),NULL,NULL},
+                              {new Room(8),new Room(9),NULL,NULL}};*/
      //cout << "test" << endl;
      int rows = sizeof floorPlan/sizeof floorPlan[0];
      int cols = sizeof floorPlan[0]/sizeof(Room*);
@@ -69,14 +69,14 @@ void ZorkUL::createRooms()  {
      /* TODO: ok we need to sort the randomly generated arrays so that the NULLs are all together in one side to avoid problems
       *
       */
-     /*for(int i =0; i < rows; i++){
+     for(int i =0; i < rows; i++){
          for(int j = 0; j < cols; j++){
              randomValue = rand() % 9;
              if(randomValue > 4){
                  floorPlan[i][j] = NULL;
              }else{
                  count++;
-                 floorPlan[i][j] = new Room(to_string(count));
+                 floorPlan[i][j] = new Room(count);
              }
              if(floorPlan[i][j] == NULL){
                  cout << "0" <<" ";
@@ -86,7 +86,13 @@ void ZorkUL::createRooms()  {
              }
          }
          cout << endl;
-     }*/
+     }
+
+     //sorting
+     for(int row = 0; row < rows;row++){
+         pushNULLsToEnd(floorPlan[row]);
+         //pushNULLsToStart(floorPlan[row]);
+     }
       //                 (N,   E,  S,   W)
 
      //setting debug value for floor plan
@@ -192,6 +198,16 @@ void ZorkUL::createRooms()  {
      }
      currentRoom = rooms.at(0);
  }
+void ZorkUL::pushNULLsToEnd(Room* rooms[]){
+    int count = 0;
+
+    for(int i = 0; i < sizeof(rooms); i++)
+        if(rooms[i] != NULL)
+            rooms[count++] = rooms[i];
+
+    while(count < sizeof(rooms))
+        rooms[count++] = NULL;
+}
 
 /**
  *  Main play routine.  Loops until end of play.

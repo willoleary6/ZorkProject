@@ -2,12 +2,24 @@
 #include "Command.h"
 
 
-Room::Room(string description) {
-	this->description = description;
+Room::Room(string description, int IDNumber ) {
+    this->description = description;
+    this->IDnumber = IDNumber;
     exits["north"] = NULL;
     exits["east"] = NULL;
     exits["south"] = NULL;
     exits["west"] = NULL;
+}
+Room::Room(int IDNumber) {
+    this->description = to_string(IDNumber);
+    this->IDnumber = IDNumber;
+    exits["north"] = NULL;
+    exits["east"] = NULL;
+    exits["south"] = NULL;
+    exits["west"] = NULL;
+}
+int Room::getIdNumber(){
+    return IDnumber;
 }
 
 void Room::setExits(Room *north, Room *east, Room *south, Room *west) {
