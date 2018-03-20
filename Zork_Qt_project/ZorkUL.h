@@ -19,7 +19,7 @@ private:
     void createRooms();
 	void printWelcome();
 	bool processCommand(Command command);
-    bool findMapCoordinates(int index,int *x_position, int *y_position, vector<vector<string>> mapDisplay);
+    bool findMapCoordinates(Room* rooms,int *x_position, int *y_position, vector<vector<string>> mapDisplay);
     void printHelp();
 	void goRoom(Command command);
     void createItems();
@@ -28,7 +28,12 @@ private:
     int getLargestIndex(vector<vector<string>> mapDisplay, int i, int j);
     void generateRandomFloorPlan();
     void pushNULLsToEnd(Room* rooms[]);
-
+    int getNumberOfValidRooms(Room* rooms[]);
+    void addMapIndex(int x_position, int y_position, vector<vector<string>> *mapDisplay, Room* currentRoom,string *textMap);
+    vector<string> fillEmptySlots(int x_position,bool invisible);
+    vector<vector<string>> traverseExits(int x_position, int y_position,
+                       vector<vector<string>> mapString,map<string,Room*> currentRoomExits,
+                       vector<string> temp,Room* currentRoom, string *textMap);
 public:
 	ZorkUL();
 	void play();
