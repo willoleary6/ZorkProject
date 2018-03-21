@@ -30,7 +30,8 @@ SOURCES += mainwindow.cpp\
         item.cpp\
         Parser.cpp\
         Room.cpp\
-        ZorkUL.cpp
+        ZorkUL.cpp \
+    floor.cpp
 
 
 HEADERS  += mainwindow.h\
@@ -40,6 +41,7 @@ HEADERS  += mainwindow.h\
             item.h\
             parser.h\
             Room.h\
-            ZorkUL.h
+            ZorkUL.h \
+    floor.h
 
 FORMS    += mainwindow.ui

@@ -5,8 +5,8 @@
 #include <string>
 #include <vector>
 #include "item.h"
+#include "Command.h"
 using namespace std;
-using std::vector;
 
 class Room {
 
