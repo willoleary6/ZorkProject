@@ -13,8 +13,17 @@ int main(int argc, char *argv[])
     return 0;
 }
 ZorkUL::ZorkUL() {
-    floors = new floor();
-    rooms = floors->getRooms();
+    srand(time(NULL));
+    for(int i =0; i < 3; i++){
+        if(i == 0){
+            floors.push_back(new floor(0));
+        }else{
+            floors.push_back(new floor());
+        }
+    }
+    currentFloor = 0;
+    addStairSystem();
+    rooms = floors[currentFloor]->getRooms();
     currentRoom = rooms[0];
 }
 /**
@@ -37,6 +46,24 @@ void ZorkUL::play() {
 	cout << endl;
 	cout << "end" << endl;
 }
+void ZorkUL::addStairSystem(){
+    vector <Room *> lowerFloor;
+    vector <Room *> upperFloor;
+    int randomValue1;
+    int randomValue2;
+    for(int i =0; i < floors.size()-1; i++){
+        lowerFloor = floors[i]->getRooms();
+        randomValue1= rand()%lowerFloor.size();
+        //randomValue1 = 0;
+        upperFloor = floors[i+1]->getRooms();
+        randomValue2= rand()%upperFloor.size();
+        //randomValue2 = randomValue1;
+        lowerFloor[randomValue1]->setUpStairsExit(upperFloor[randomValue2]);
+        upperFloor[randomValue2]->setDownStairsExit(lowerFloor[randomValue1]);
+
+    }
+}
+
 void ZorkUL::printWelcome() {
 	cout << "start"<< endl;
 	cout << "info for help"<< endl;
@@ -57,7 +84,7 @@ bool ZorkUL::processCommand(Command command) {
     if (commandWord.compare("info") == 0){
 		printHelp();
     }else if (commandWord.compare("map") == 0){
-         cout << floors->printMap() << endl;
+         cout << floors[currentFloor]->printMap() << endl;
          cout << currentRoom->longDescription() << endl;
     }else if (commandWord.compare("go") == 0){
 		goRoom(command);
@@ -116,7 +143,7 @@ bool ZorkUL::processCommand(Command command) {
             }
         }else{
             //seeding random function with the current timestamp
-            srand(time(NULL));
+            //srand(time(NULL));
             int randomNum;
             //added a do-while to ensure you are teleported to another room
             do{
@@ -154,6 +181,14 @@ void ZorkUL::goRoom(Command command) {
     if (nextRoom == NULL){
 		cout << "underdefined input"<< endl;
     }else {
+        if(direction == "upStairs"){
+            currentFloor++;
+            cout << "Going Up stairs!"<<endl;
+        }else if(direction == "downStairs"){
+            currentFloor--;
+            cout << "Going downStairs!"<<endl;
+        }
+        rooms = floors[currentFloor]->getRooms();
 		currentRoom = nextRoom;
 		cout << currentRoom->longDescription() << endl;
 	}

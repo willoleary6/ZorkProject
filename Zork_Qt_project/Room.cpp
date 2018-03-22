@@ -14,10 +14,13 @@ Room::Room(int IDNumber) {
     exits["east"] = NULL;
     exits["south"] = NULL;
     exits["west"] = NULL;
+    exits["upStairs"] = NULL;
+    exits["downStairs"] = NULL;
 }
 int Room::getIdNumber(){
     return IDnumber;
 }
+
 
 void Room::setExits(Room *north, Room *east, Room *south, Room *west) {
     if (north != NULL){
@@ -35,6 +38,12 @@ void Room::setExits(Room *north, Room *east, Room *south, Room *west) {
 }
 void Room::setNorthExit(Room *north){
     exits["north"] = north;
+}
+void Room::setUpStairsExit(Room *upStairs){
+    exits["upStairs"] = upStairs;
+}
+void Room::setDownStairsExit(Room *downStairs){
+    exits["downStairs"] = downStairs;
 }
 
 void Room::setEastExit(Room *east){
@@ -70,6 +79,12 @@ string Room::exitString() {
     }
     if (exits["west"] != NULL){
         returnString += "  West";
+    }
+    if(exits["upStairs"] != NULL){
+        returnString += " upStairs";
+    }
+    if(exits["downStairs"] != NULL){
+        returnString += " downStairs";
     }
 	return returnString;
 }

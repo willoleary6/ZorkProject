@@ -17,6 +17,10 @@ private:
     vector <Item> itemsInRoom;
     int IDnumber;
     int numberOfItems();
+    int lowerFloorIndex;
+    int upperFloorIndex;
+    int upperFloor;
+    int lowerFloor;
 
 public:
 
@@ -27,6 +31,8 @@ public:
     void setEastExit(Room *east);
     void setSouthExit(Room *south);
     void setWestExit(Room *west);
+    void setUpStairsExit(Room *upStairs);
+    void setDownStairsExit(Room *downStairs);
 	string shortDescription();
 	string longDescription();
 	Room* nextRoom(string direction);

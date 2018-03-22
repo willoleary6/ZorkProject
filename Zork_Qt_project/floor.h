@@ -21,6 +21,7 @@ class floor {
 
     public:
         floor();
+        floor(int basement);
         vector <Room *> getRooms();
         string printMap();
 };

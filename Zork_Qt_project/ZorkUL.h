@@ -17,7 +17,8 @@ using namespace std;
 
 class ZorkUL {
 private:
-    floor* floors;
+    int currentFloor =0;
+    vector<floor*> floors;
     Character user;
     Parser parser;
 	Room *currentRoom;
@@ -28,6 +29,7 @@ private:
 	void goRoom(Command command);
     void createItems();
     void displayItems();
+    void addStairSystem();
     string go(string direction);
 public:
 	ZorkUL();

@@ -3,6 +3,10 @@
 floor::floor(){
      generateRandomFloorPlan();
 }
+floor::floor(int basement){
+    rooms.push_back(new Room("Basement",0));
+    //rooms.push_back();
+}
 vector<Room *> floor::getRooms(){
     return rooms;
 }
@@ -17,7 +21,6 @@ void floor::generateRandomFloorPlan(){
      int cols = sizeof floorPlan[0]/sizeof(Room*);
      int count = 0;
      int randomValue =0;
-     srand(time(NULL));
      /* TODO: ok we need to sort the randomly generated arrays so that the NULLs are all together in one side to avoid problems
       *
       */
