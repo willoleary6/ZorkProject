@@ -34,15 +34,16 @@ void ZorkUL::play() {
     // Enter the main command loop.  Here we repeatedly read commands and
 	// execute them until the ZorkUL game is over.
     bool finished = false;
-	while (!finished) {
+    Command* command;
+    while (!finished) {
 		// Create pointer to command and give it a command.
-		Command* command = parser.getCommand();
+        command = parser.getCommand();
 		// Pass dereferenced command and check for end of game.
 		finished = processCommand(*command);
-		// Free the memory allocated by "parser.getCommand()"
-		//   with ("return new Command(...)")
-		delete command;
 	}
+    // Free the memory allocated by "parser.getCommand()"
+    //   with ("return new Command(...)")
+    delete command;
 	cout << endl;
 	cout << "end" << endl;
 }
@@ -58,8 +59,8 @@ void ZorkUL::addStairSystem(){
         upperFloor = floors[i+1]->getRooms();
         randomValue2= rand()%upperFloor.size();
         //randomValue2 = randomValue1;
-        lowerFloor[randomValue1]->setUpStairsExit(upperFloor[randomValue2]);
-        upperFloor[randomValue2]->setDownStairsExit(lowerFloor[randomValue1]);
+        lowerFloor[randomValue1]->setUpstairsExit(upperFloor[randomValue2]);
+        upperFloor[randomValue2]->setDownstairsExit(lowerFloor[randomValue1]);
 
     }
 }
@@ -106,18 +107,18 @@ bool ZorkUL::processCommand(Command command) {
                 cout << user.longDescription() << endl;
             }
         }
-    }else if (commandWord.compare("put") == 0){
+    }else if (commandWord.compare("drop") == 0){
         // Added functionality for user to place item in a room
 
         if (!command.hasSecondWord()) {
             cout << "incomplete input"<< endl;
         }else if (command.hasSecondWord()) {
-            cout << "you're trying to place " + command.getSecondWord() << endl;
+            cout << "you're trying to drop " + command.getSecondWord() << endl;
             int location = user.isItemOnCharacter(command.getSecondWord());
             if (location  < 0 ){
                 cout << "item is not on you" << endl;
             }else{
-                cout << "item is on you "<< endl;
+                //cout << "item is on you "<< endl;
                 /*Wrote a hand over function here,
                  * so while the room is gaining said item the user is loosing it.*/
                 currentRoom->addItem(user.removeItem(location));
@@ -181,10 +182,10 @@ void ZorkUL::goRoom(Command command) {
     if (nextRoom == NULL){
 		cout << "underdefined input"<< endl;
     }else {
-        if(direction == "upStairs"){
+        if(direction == "upstairs"){
             currentFloor++;
             cout << "Going Up stairs!"<<endl;
-        }else if(direction == "downStairs"){
+        }else if(direction == "downstairs"){
             currentFloor--;
             cout << "Going downStairs!"<<endl;
         }

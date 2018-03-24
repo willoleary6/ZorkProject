@@ -5,6 +5,9 @@ floor::floor(){
 }
 floor::floor(int basement){
     rooms.push_back(new Room("Basement",0));
+    rooms[0]->addItem(new Item("hammer"));
+    rooms[0]->addItem(new Item("saw"));
+    rooms[0]->addItem(new Item("box"));
     //rooms.push_back();
 }
 vector<Room *> floor::getRooms(){
@@ -115,7 +118,7 @@ bool floor::findMapCoordinates(Room* rooms,int *x_position, int *y_position, vec
     //this function finds the x-y coordinates of a room that we know is already on the map.
     for(int j = 0; j < mapDisplay.size(); j++){
         for(int k = 0; k <mapDisplay[j].size(); k++){
-            if(rooms->shortDescription() == mapDisplay[j][k]){
+            if(rooms->roomName() == mapDisplay[j][k]){
                 *x_position = k;
                 *y_position = j;
                 return true;
@@ -186,14 +189,14 @@ vector<vector<string>> floor::traverseExits(int x_position, int y_position,
         }
     }
     if(currentRoomExits["west"] != NULL){
-        if(x_position < 2 && mapString[y_position][(x_position)] != to_string(currentRoomExits["west"]->getIdNumber())){
+        if(x_position < 2 && mapString[y_position][(x_position)] != currentRoomExits["west"]->roomName()){
             mapString[y_position].insert(mapString[y_position].begin(),"---");
             mapString[y_position].insert(mapString[y_position].begin(),"");
             if(x_position < 0){
                x_position = 0;
             }
             addMapIndex(x_position, y_position, &mapString, currentRoomExits["west"]);
-        }else if(mapString[y_position][(x_position)-2] != to_string(currentRoom->getIdNumber())){
+        }else if(mapString[y_position][(x_position)-2] != currentRoom->roomName()){
             addMapIndex(x_position-2, y_position, &mapString, currentRoomExits["west"]);
         }
     }
@@ -223,7 +226,7 @@ void floor::addMapIndex(int x_position, int y_position, vector<vector<string>> *
     vector<string> temp;
     vector<vector<string>> mapString = *mapDisplay;
     if(x_position == 0 && y_position == 0 && mapString.size() == 0){
-        temp.push_back(to_string(currentRoom->getIdNumber()));
+        temp.push_back(currentRoom->roomName());
         mapString.push_back(temp);
         currentRoomExits = currentRoom->getExits();
         mapString = traverseExits(x_position, y_position,
@@ -232,7 +235,7 @@ void floor::addMapIndex(int x_position, int y_position, vector<vector<string>> *
 
      }else if(y_position < mapString.size()){
         if(x_position < mapString[y_position].size()){
-            mapString[y_position][x_position] = to_string(currentRoom->getIdNumber());
+            mapString[y_position][x_position] = currentRoom->roomName();
             currentRoomExits = currentRoom->getExits();
             mapString = traverseExits(x_position, y_position,
                                       mapString,currentRoomExits,

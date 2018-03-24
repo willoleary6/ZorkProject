@@ -6,11 +6,13 @@
 #include <vector>
 #include "item.h"
 #include "Command.h"
+
 using namespace std;
 
-class Room {
+class Room{
 
 private:
+    string name;
 	string description;
     map<string, Room*> exits;
 	string exitString();
@@ -23,7 +25,7 @@ private:
     int lowerFloor;
 
 public:
-
+    string roomName();
     Room(string description, int IDnumber);
     Room(int IDnumber);
 	void setExits(Room *north, Room *east, Room *south, Room *west);
@@ -31,8 +33,8 @@ public:
     void setEastExit(Room *east);
     void setSouthExit(Room *south);
     void setWestExit(Room *west);
-    void setUpStairsExit(Room *upStairs);
-    void setDownStairsExit(Room *downStairs);
+    void setUpstairsExit(Room *upstairs);
+    void setDownstairsExit(Room *downstairs);
 	string shortDescription();
 	string longDescription();
 	Room* nextRoom(string direction);

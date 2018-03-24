@@ -1,6 +1,7 @@
 #include "Room.h"
 Room::Room(string description, int IDNumber ) {
     this->description = description;
+    this->name = description;
     this->IDnumber = IDNumber;
     exits["north"] = NULL;
     exits["east"] = NULL;
@@ -9,13 +10,14 @@ Room::Room(string description, int IDNumber ) {
 }
 Room::Room(int IDNumber) {
     this->description = to_string(IDNumber);
+    this->name = to_string(IDNumber);
     this->IDnumber = IDNumber;
     exits["north"] = NULL;
     exits["east"] = NULL;
     exits["south"] = NULL;
     exits["west"] = NULL;
-    exits["upStairs"] = NULL;
-    exits["downStairs"] = NULL;
+    exits["upstairs"] = NULL;
+    exits["downstairs"] = NULL;
 }
 int Room::getIdNumber(){
     return IDnumber;
@@ -39,11 +41,13 @@ void Room::setExits(Room *north, Room *east, Room *south, Room *west) {
 void Room::setNorthExit(Room *north){
     exits["north"] = north;
 }
-void Room::setUpStairsExit(Room *upStairs){
-    exits["upStairs"] = upStairs;
+void Room::setUpstairsExit(Room *upstairs){
+    exits["upstairs"] = upstairs;
+    this->name += "[^]";
 }
-void Room::setDownStairsExit(Room *downStairs){
-    exits["downStairs"] = downStairs;
+void Room::setDownstairsExit(Room *downstairs){
+    exits["downstairs"] = downstairs;
+    this->name += "[v]";
 }
 
 void Room::setEastExit(Room *east){
@@ -61,6 +65,9 @@ void Room::setWestExit(Room *west){
 string Room::shortDescription() {
 	return description;
 }
+string Room::roomName(){
+   return name;
+}
 
 string Room::longDescription() {
 	return "room = " + description + ".\n" + displayItem() + exitString();
@@ -69,22 +76,22 @@ string Room::longDescription() {
 string Room::exitString() {
 	string returnString = "\nexits =";
     if (exits["north"] != NULL){
-        returnString += "  North";
+        returnString += " north";
     }
     if (exits["east"] != NULL){
-        returnString += "  East";
+        returnString += " east";
     }
     if (exits["south"] != NULL){
-        returnString += "  South";
+        returnString += " south";
     }
     if (exits["west"] != NULL){
-        returnString += "  West";
+        returnString += " west";
     }
-    if(exits["upStairs"] != NULL){
-        returnString += " upStairs";
+    if(exits["upstairs"] != NULL){
+        returnString += " upstairs";
     }
-    if(exits["downStairs"] != NULL){
-        returnString += " downStairs";
+    if(exits["downstairs"] != NULL){
+        returnString += " downstairs";
     }
 	return returnString;
 }
