@@ -27,8 +27,10 @@ void newGame::on_startGameButton_clicked() {
     else {
 
         // Call Main window
-        close();
-        MainWindow w();
+        //close();
+        MainWindow *w = new MainWindow(this);
+        w->show();
+        //MainWindow w();
         //w.show();
         //ZorkUL zork;
     }
