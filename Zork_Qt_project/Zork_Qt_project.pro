@@ -31,7 +31,9 @@ SOURCES += mainwindow.cpp\
         Parser.cpp\
         Room.cpp\
         ZorkUL.cpp \
-    floor.cpp
+    floor.cpp \
+    zorkhome.cpp \
+    newGame.cpp
 
 
 HEADERS  += mainwindow.h\
@@ -42,6 +44,13 @@ HEADERS  += mainwindow.h\
             parser.h\
             Room.h\
             ZorkUL.h \
-    floor.h
+    floor.h \
+    zorkhome.h \
+    newGame.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    newGame.ui \
+    zorkhome.ui
+
+RESOURCES += \
+    imglib.qrc

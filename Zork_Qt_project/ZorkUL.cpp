@@ -3,24 +3,25 @@ using namespace std;
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    /*MainWindow w;
-    w.show();
-    ZorkUL temp;
+    zorkHome n;
+    n.show();
+
+    //w.show();
+    /*ZorkUL temp;
     temp.play();*/
-    //return a.exec();
-    ZorkUL temp;
-	temp.play();
-    return 0;
+    return a.exec();
 }
+
 ZorkUL::ZorkUL() {
     srand(time(NULL));
     for(int i =0; i < 3; i++){
         if(i == 0){
             floors.push_back(new floor(0));
         }else{
-            floors.push_back(new floor());
+            //floors.push_back(new floor());
         }
     }
+
     currentFloor = 0;
     addStairSystem();
     rooms = floors[currentFloor]->getRooms();

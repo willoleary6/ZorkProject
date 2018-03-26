@@ -1,6 +1,8 @@
 #include "floor.h"
 
 floor::floor(){
+
+
      generateRandomFloorPlan();
 }
 floor::floor(int basement){
@@ -15,11 +17,13 @@ vector<Room *> floor::getRooms(){
 }
 void floor::generateRandomFloorPlan(){
     //This function generates a random floor plan of the map.
+
     Room* floorPlan[4][4];
      /*Room* floorPlan[4][4] = {{NULL,new Room(1),new Room(2),new Room(3)},
                               {new Room(4),NULL,new Room(5),new Room(6)},
                               {NULL,new Room(7),NULL,NULL},
                               {new Room(8),new Room(9),NULL,NULL}};*/
+
      int rows = sizeof floorPlan/sizeof floorPlan[0];
      int cols = sizeof floorPlan[0]/sizeof(Room*);
      int count = 0;
@@ -44,13 +48,17 @@ void floor::generateRandomFloorPlan(){
              }
          }
      }
+
      //sorting this row so nulls are all to the right
      for(int row = 0; row < rows;row++){
          pushNULLsToEnd(floorPlan[row]);
      }
+
      map<string, Room*> roomExits;
+
      //Linking each room together so a player can traverse the map.
      for(int i = 0; i < rows;i++){
+
          for(int j=0; j < cols;j++){
              if(floorPlan[i][j] != NULL){
                  //get the exits currently set.
@@ -80,6 +88,7 @@ void floor::generateRandomFloorPlan(){
              }
          }
      }
+
      //adding randomly generated rooms to the rooms list
      for(int i = 0; i < rows; i++){
          for(int j = 0; j < cols; j++){
