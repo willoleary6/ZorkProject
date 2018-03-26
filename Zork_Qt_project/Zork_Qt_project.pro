@@ -33,7 +33,9 @@ SOURCES += mainwindow.cpp\
         ZorkUL.cpp \
     floor.cpp \
     zorkhome.cpp \
-    newGame.cpp
+    newGame.cpp \
+    carryableItem.cpp
+
 
 
 HEADERS  += mainwindow.h\
@@ -46,7 +48,8 @@ HEADERS  += mainwindow.h\
             ZorkUL.h \
     floor.h \
     zorkhome.h \
-    newGame.h
+    newGame.h \
+    carryableItem.h
 
 FORMS    += mainwindow.ui \
     newGame.ui \

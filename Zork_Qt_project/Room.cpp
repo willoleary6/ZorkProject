@@ -26,16 +26,16 @@ int Room::getIdNumber(){
 
 void Room::setExits(Room *north, Room *east, Room *south, Room *west) {
     if (north != NULL){
-		exits["north"] = north;
+        exits["north"] = north;
     }
     if (east != NULL){
-		exits["east"] = east;
+        exits["east"] = east;
     }
     if (south != NULL){
-		exits["south"] = south;
+        exits["south"] = south;
     }
     if (west != NULL){
-		exits["west"] = west;
+        exits["west"] = west;
     }
 }
 void Room::setNorthExit(Room *north){
@@ -63,18 +63,18 @@ void Room::setWestExit(Room *west){
 }
 
 string Room::shortDescription() {
-	return description;
+    return description;
 }
 string Room::roomName(){
    return name;
 }
 
 string Room::longDescription() {
-	return "room = " + description + ".\n" + displayItem() + exitString();
+    return "room = " + description + ".\n" + displayItem() + exitString();
 }
 
 string Room::exitString() {
-	string returnString = "\nexits =";
+    string returnString = "\nexits =";
     if (exits["north"] != NULL){
         returnString += " north";
     }
@@ -93,15 +93,15 @@ string Room::exitString() {
     if(exits["downstairs"] != NULL){
         returnString += " downstairs";
     }
-	return returnString;
+    return returnString;
 }
 
 Room* Room::nextRoom(string direction) {
-	map<string, Room*>::iterator next = exits.find(direction); //returns an iterator for the "pair"
-	if (next == exits.end())
-		return NULL; // if exits.end() was returned, there's no room in that direction.
-	return next->second; // If there is a room, remove the "second" (Room*)
-				// part of the "pair" (<string, Room*>) and return it.
+    map<string, Room*>::iterator next = exits.find(direction); //returns an iterator for the "pair"
+    if (next == exits.end())
+        return NULL; // if exits.end() was returned, there's no room in that direction.
+    return next->second; // If there is a room, remove the "second" (Room*)
+                // part of the "pair" (<string, Room*>) and return it.
 }
 
 void Room::addItem(Item *inItem) {
@@ -159,6 +159,9 @@ Item Room::removeItem(int itemIndex){
     Item Temp = itemsInRoom.at(itemIndex);
     itemsInRoom.erase(itemsInRoom.begin() + itemIndex);
     return Temp;
+}
+Item Room::getItem(int itemIndex){
+    return itemsInRoom.at(itemIndex);;
 }
 map<string, Room*> Room::getExits(){
     return exits;

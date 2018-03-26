@@ -29,7 +29,7 @@ void newGame::on_startGameButton_clicked() {
         // Call Main window
         close();
         MainWindow w();
-        w.show();
+        //w.show();
         //ZorkUL zork;
     }
 }

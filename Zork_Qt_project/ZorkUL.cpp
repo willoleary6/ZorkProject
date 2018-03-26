@@ -3,25 +3,22 @@ using namespace std;
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    zorkHome n;
-    n.show();
-
-    //w.show();
-    /*ZorkUL temp;
-    temp.play();*/
+   // zorkHome n;
+    //n.show();
+    ZorkUL temp;
+    temp.play();
     return a.exec();
+   // return 0;
 }
-
 ZorkUL::ZorkUL() {
     srand(time(NULL));
     for(int i =0; i < 3; i++){
         if(i == 0){
             floors.push_back(new floor(0));
         }else{
-            //floors.push_back(new floor());
+            floors.push_back(new floor());
         }
     }
-
     currentFloor = 0;
     addStairSystem();
     rooms = floors[currentFloor]->getRooms();
@@ -33,20 +30,20 @@ ZorkUL::ZorkUL() {
 void ZorkUL::play() {
     printWelcome();
     // Enter the main command loop.  Here we repeatedly read commands and
-	// execute them until the ZorkUL game is over.
+    // execute them until the ZorkUL game is over.
     bool finished = false;
     Command* command;
     while (!finished) {
-		// Create pointer to command and give it a command.
+        // Create pointer to command and give it a command.
         command = parser.getCommand();
-		// Pass dereferenced command and check for end of game.
-		finished = processCommand(*command);
-	}
+        // Pass dereferenced command and check for end of game.
+        finished = processCommand(*command);
+    }
     // Free the memory allocated by "parser.getCommand()"
     //   with ("return new Command(...)")
     delete command;
-	cout << endl;
-	cout << "end" << endl;
+    cout << endl;
+    cout << "end" << endl;
 }
 void ZorkUL::addStairSystem(){
     vector <Room *> lowerFloor;
@@ -67,10 +64,10 @@ void ZorkUL::addStairSystem(){
 }
 
 void ZorkUL::printWelcome() {
-	cout << "start"<< endl;
-	cout << "info for help"<< endl;
-	cout << endl;
-	cout << currentRoom->longDescription() << endl;
+    cout << "start"<< endl;
+    cout << "info for help"<< endl;
+    cout << endl;
+    cout << currentRoom->longDescription() << endl;
 }
 /**
  * Given a command, process (that is: execute) the command.
@@ -78,18 +75,18 @@ void ZorkUL::printWelcome() {
  * returned.
  */
 bool ZorkUL::processCommand(Command command) {
-	if (command.isUnknown()) {
-		cout << "invalid input"<< endl;
-		return false;
-	}
+    if (command.isUnknown()) {
+        cout << "invalid input"<< endl;
+        return false;
+    }
     string commandWord = command.getCommandWord();
     if (commandWord.compare("info") == 0){
-		printHelp();
+        printHelp();
     }else if (commandWord.compare("map") == 0){
          cout << floors[currentFloor]->printMap() << endl;
          cout << currentRoom->longDescription() << endl;
     }else if (commandWord.compare("go") == 0){
-		goRoom(command);
+        goRoom(command);
     }
     else if (commandWord.compare("take") == 0){
         // added functionality for user to take items out of a room
@@ -101,11 +98,16 @@ bool ZorkUL::processCommand(Command command) {
             if (location  < 0 ){
                 cout << "item is not in room" << endl;
             }else{
-                cout << "item is in room" << endl;
-                //adding item to user's inventory while also removing it from the room
-                user.addItem(currentRoom->removeItem(location));
-                cout << endl;
-                cout << user.longDescription() << endl;
+                //checking to see if the item is carryable
+
+                if(currentRoom->getItem(location).isCarryable()){
+                    //adding item to user's inventory while also removing it from the room
+                    user.addItem(currentRoom->removeItem(location));
+                    cout << endl;
+                    cout << user.longDescription() << endl;
+                }else{
+                    cout << currentRoom->getItem(location).getShortDescription() << " seems to be nailed to the fucking floor you bell end." << endl;
+                }
             }
         }
     }else if (commandWord.compare("drop") == 0){
@@ -160,28 +162,28 @@ bool ZorkUL::processCommand(Command command) {
         cout << user.longDescription() << endl;
     }else if (commandWord.compare("quit") == 0) {
         if (command.hasSecondWord()){
-			cout << "overdefined input"<< endl;
+            cout << "overdefined input"<< endl;
         }else{
-			return true; /**signal to quit*/
+            return true; /**signal to quit*/
         }
     }
-	return false;
+    return false;
 }
 /** COMMANDS **/
 void ZorkUL::printHelp() {
-	cout << "valid inputs are; " << endl;
-	parser.showCommands();
+    cout << "valid inputs are; " << endl;
+    parser.showCommands();
 }
 void ZorkUL::goRoom(Command command) {
-	if (!command.hasSecondWord()) {
-		cout << "incomplete input"<< endl;
-		return;
-	}
+    if (!command.hasSecondWord()) {
+        cout << "incomplete input"<< endl;
+        return;
+    }
     string direction = command.getSecondWord();
     // Try to leave current room.
-	Room* nextRoom = currentRoom->nextRoom(direction);
+    Room* nextRoom = currentRoom->nextRoom(direction);
     if (nextRoom == NULL){
-		cout << "underdefined input"<< endl;
+        cout << "underdefined input"<< endl;
     }else {
         if(direction == "upstairs"){
             currentFloor++;
@@ -191,20 +193,20 @@ void ZorkUL::goRoom(Command command) {
             cout << "Going downStairs!"<<endl;
         }
         rooms = floors[currentFloor]->getRooms();
-		currentRoom = nextRoom;
-		cout << currentRoom->longDescription() << endl;
-	}
+        currentRoom = nextRoom;
+        cout << currentRoom->longDescription() << endl;
+    }
 }
 string ZorkUL::go(string direction) {
-	//Make the direction lowercase
-	//transform(direction.begin(), direction.end(), direction.begin(),:: tolower);
-	//Move to the next room
-	Room* nextRoom = currentRoom->nextRoom(direction);
+    //Make the direction lowercase
+    //transform(direction.begin(), direction.end(), direction.begin(),:: tolower);
+    //Move to the next room
+    Room* nextRoom = currentRoom->nextRoom(direction);
     if (nextRoom == NULL){
-		return("direction null");
+        return("direction null");
     }else{
-		currentRoom = nextRoom;
-		return currentRoom->longDescription();
-	}
+        currentRoom = nextRoom;
+        return currentRoom->longDescription();
+    }
 }
 

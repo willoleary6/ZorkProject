@@ -8,23 +8,29 @@ using namespace std;
 
 class Item {
 private:
-	string description;
-	string longDescription;
-	int weightGrams;
-	float value;
-	bool weaponCheck;
 
+protected:
+    string description;
+    string longDescription;
+    int weightGrams;
+    float value;
+    bool weaponCheck;
+    bool carryable;
+    bool searchable;
 public:
+    Item();
     Item (string description, int inWeight, float inValue);
     Item (string description);
-	string getShortDescription();
+    string getShortDescription();
     string getLongDescription();
-	int getWeight();
-	void setWeight(int weightGrams);
-	float getValue();
-	void setValue(float value);
-	int getWeaponCheck();
-	void setWeaponCheck(int weaponCheck);
+    int getWeight();
+    void setWeight(int weightGrams);
+    float getValue();
+    void setValue(float value);
+    int getWeaponCheck();
+    void setWeaponCheck(int weaponCheck);
+    bool isCarryable();
+    bool isSearchable();
 };
 
 #endif /*ITEM_H_*/
