@@ -5,7 +5,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     //zorkHome n;
     //n.show();
-
+    //test
     ZorkUL temp;
     temp.play();
     return a.exec();
