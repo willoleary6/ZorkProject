@@ -6,6 +6,7 @@ floor::floor(){
 floor::floor(int basement){
     rooms.push_back(new Room("Basement",0));
     rooms[0]->addItem(new carryableItem("hammer"));
+      rooms[0]->addItem(new searchableItem("chest"));
     //rooms[0]->addItem(new Item("hammer"));
     //rooms[0]->addItem(new Item("saw"));
     //rooms[0]->addItem(new Item("box"));

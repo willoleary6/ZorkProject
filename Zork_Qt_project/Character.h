@@ -16,8 +16,6 @@ private:
 public:
 	void addItems(string Item);
     void addItem(Item item);
-    void addItem(Item &item);
-    void addItem(Item *item);
     Character(string description);
     Character();
     string shortDescription();

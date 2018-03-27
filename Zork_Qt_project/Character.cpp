@@ -8,14 +8,6 @@ Character::Character(string description) {
 	this->description = description;
 }
 
-void Character::addItem(Item &item) {
-    itemsInCharacter.push_back(item);
-}
-
-void Character::addItem(Item *item) {
-    itemsInCharacter.push_back(*item);
-    delete item;
-}
 
 void Character::addItem(Item item) {
     itemsInCharacter.push_back(item);

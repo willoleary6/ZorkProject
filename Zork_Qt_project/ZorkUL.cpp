@@ -3,11 +3,11 @@ using namespace std;
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    zorkHome n;
-    n.show();
+    //zorkHome n;
+    //n.show();
 
-    //ZorkUL temp;
-    //temp.play();
+    ZorkUL temp;
+    temp.play();
     return a.exec();
 
    // return 0;
@@ -109,6 +109,30 @@ bool ZorkUL::processCommand(Command command) {
                     cout << user.longDescription() << endl;
                 }else{
                     cout << currentRoom->getItem(location).getShortDescription() << " seems to be nailed to the fucking floor you bell end." << endl;
+                }
+            }
+        }
+    }else if(commandWord.compare("search") == 0){
+        // added functionality for user to take items out of a room
+        if (!command.hasSecondWord()) {
+            cout << "incomplete input"<< endl;
+        }else if (command.hasSecondWord()) {
+            cout << "you're trying to search " + command.getSecondWord() << endl;
+            int location = currentRoom->isItemInRoom(command.getSecondWord());
+            if (location  < 0 ){
+                cout << "item is not in room" << endl;
+            }else{
+                //checking to see if the item is carryable
+
+                if(currentRoom->getItem(location).isSearchable()){
+                    /*//adding item to user's inventory while also removing it from the room
+                    //user.addItem(currentRoom->removeItem(location));
+                    searchableItem *box = &(currentRoom->getItem(location));
+                    box->search(&user);
+                    cout << endl;
+                    cout << user.longDescription() << endl;*/
+                }else{
+                    cout << currentRoom->getItem(location).getShortDescription() << " cant be searched you fucking cunt!" << endl;
                 }
             }
         }

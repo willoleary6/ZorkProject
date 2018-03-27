@@ -6,6 +6,7 @@
 #include <vector>
 #include "item.h"
 #include "carryableItem.h"
+#include "searchableitem.h"
 #include "Command.h"
 
 using namespace std;
