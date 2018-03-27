@@ -3,11 +3,11 @@ using namespace std;
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    //zorkHome n;
-    //n.show();
+    zorkHome n;
+    n.show();
     //test
-    ZorkUL temp;
-    temp.play();
+    /*ZorkUL temp;
+    temp.play();*/
     return a.exec();
 
    // return 0;
@@ -18,7 +18,7 @@ ZorkUL::ZorkUL() {
         if(i == 0){
             floors.push_back(new floor(0));
         }else{
-            floors.push_back(new floor());
+            //floors.push_back(new floor());
         }
     }
     currentFloor = 0;

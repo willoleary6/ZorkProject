@@ -4,6 +4,7 @@
 #include "mainwindow.h"
 #include "ZorkUL.h"
 #include <QMessageBox>
+#include <QDesktopWidget>
 
 newGame::newGame(QWidget *parent) :
 
@@ -27,8 +28,8 @@ void newGame::on_startGameButton_clicked() {
     else {
 
         // Call Main window
-        //close();
         MainWindow *w = new MainWindow(this);
+        w->move(QApplication::desktop()->screen()->rect().center() - w->rect().center());
         w->show();
         //MainWindow w();
         //w.show();
