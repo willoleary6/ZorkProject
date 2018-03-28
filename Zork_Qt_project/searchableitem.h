@@ -11,12 +11,12 @@ class searchableItem: public Item
 public:
     searchableItem();
     searchableItem(string description);
-    void insertItem(carryableItem item);
-    void search(Character *user);
-private:
+    void insertItem(carryableItem *item);
     void transferItemsToCharacter(Character *user);
+private:
+
     void setProperties();
-    vector <Item> storedItems;
+    vector <Item*> storedItems;
 };
 
 #endif // SEARCHABLEITEM_H

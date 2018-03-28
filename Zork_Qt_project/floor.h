@@ -7,6 +7,7 @@ using namespace std;
 class floor {
 
     private:
+        int floorId;
         vector <Room *> rooms;
         void generateRandomFloorPlan();
         void pushNULLsToEnd(Room* rooms[]);

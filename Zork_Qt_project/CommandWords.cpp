@@ -17,6 +17,7 @@ CommandWords::CommandWords() {
         validCommands.push_back("teleport");
         validCommands.push_back("inventory");
         validCommands.push_back("search");
+        validCommands.push_back("unlock");
 	}
 }
 

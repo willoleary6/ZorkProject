@@ -5,7 +5,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     //zorkHome n;
     //n.show();
-    //test
+
     ZorkUL temp;
     temp.play();
     return a.exec();
@@ -15,16 +15,14 @@ int main(int argc, char *argv[])
 ZorkUL::ZorkUL() {
     srand(time(NULL));
     for(int i =0; i < 3; i++){
-        if(i == 0){
-            floors.push_back(new floor(0));
-        }else{
-            floors.push_back(new floor());
-        }
+        floors.push_back(new floor(i));
+
     }
     currentFloor = 0;
     addStairSystem();
     rooms = floors[currentFloor]->getRooms();
     currentRoom = rooms[0];
+    populateRoomsWithItems();
 }
 /**
  *  Main play routine.  Loops until end of play.
@@ -47,6 +45,19 @@ void ZorkUL::play() {
     cout << endl;
     cout << "end" << endl;
 }
+void ZorkUL::populateRoomsWithItems(){
+    /*searchableItem *chest = new searchableItem("chest");
+    chest->insertItem(new carryableItem("hammer"));
+    currentRoom->addItem(chest);*/
+     vector <Room *> floorRooms = floors[1]->getRooms();
+
+     key* roomKey = floorRooms[0]->lockRoom();
+     //cout << roomKey.getShortDescription()<<endl;
+     currentRoom->addItem(roomKey);
+     currentRoom->addItem(new key("bad",0,0));
+     //cout<<"test"<<endl;
+}
+
 void ZorkUL::addStairSystem(){
     vector <Room *> lowerFloor;
     vector <Room *> upperFloor;
@@ -102,16 +113,55 @@ bool ZorkUL::processCommand(Command command) {
             }else{
                 //checking to see if the item is carryable
 
-                if(currentRoom->getItem(location).isCarryable()){
+                if(currentRoom->getItem(location)->isCarryable()){
                     //adding item to user's inventory while also removing it from the room
                     user.addItem(currentRoom->removeItem(location));
                     cout << endl;
                     cout << user.longDescription() << endl;
                 }else{
-                    cout << currentRoom->getItem(location).getShortDescription() << " seems to be nailed to the fucking floor you bell end." << endl;
+                    cout << currentRoom->getItem(location)->getShortDescription() << " seems to be nailed to the fucking floor you bell end." << endl;
                 }
             }
         }
+    }else if(commandWord.compare("unlock") == 0){
+        if (!command.hasSecondWord()) {
+            cout << "incomplete input"<< endl;
+        }else{
+            string direction = command.getSecondWord();
+            // Try to leave current room.
+            Room* roomToUnlock = currentRoom->nextRoom(direction);
+            if (roomToUnlock == NULL){
+                cout << "underdefined input"<< endl;
+            }else if(!(roomToUnlock->isLocked())){
+                cout << "Room is already unlocked" << endl;
+            }else{
+                vector <Item*> usersInventory = user.getItemList();
+                bool found = false;
+                if(usersInventory.size() > 0){
+                   for(int i = 0; i < usersInventory.size(); i++){
+                       try{
+                        key *roomKey = static_cast<key*>(usersInventory[i]);
+                        if(roomKey == roomToUnlock->getKey()){
+                            found = true;
+                            roomToUnlock->unlockRoom();
+                            cout << "Success! "<<roomToUnlock->shortDescription()<<" is now unlocked"<<endl;
+                            goRoom(Command("go",direction));
+                        }
+                       }catch(const exception& e){
+
+                       }
+                   }
+                   if(!found){
+                       cout << "You dont have the key for this door" << endl;
+                   }
+                   //cout << "Found key" << endl;
+                }else{
+                    cout << "You dont have any keys!" << endl;
+
+                }
+            }
+        }
+        //TODO implement a system that checks user inventory for a key of the locked door
     }else if(commandWord.compare("search") == 0){
         // added functionality for user to take items out of a room
         if (!command.hasSecondWord()) {
@@ -124,15 +174,16 @@ bool ZorkUL::processCommand(Command command) {
             }else{
                 //checking to see if the item is carryable
 
-                if(currentRoom->getItem(location).isSearchable()){
-                    /*//adding item to user's inventory while also removing it from the room
+                if(currentRoom->getItem(location)->isSearchable()){
+
+                    //adding item to user's inventory while also removing it from the room
                     //user.addItem(currentRoom->removeItem(location));
-                    searchableItem *box = &(currentRoom->getItem(location));
-                    box->search(&user);
+                    searchableItem *box = static_cast<searchableItem*>(currentRoom->getItem(location));
+                    box->transferItemsToCharacter(&user);
                     cout << endl;
-                    cout << user.longDescription() << endl;*/
+                    cout << user.longDescription() << endl;
                 }else{
-                    cout << currentRoom->getItem(location).getShortDescription() << " cant be searched you fucking cunt!" << endl;
+                    cout << currentRoom->getItem(location)->getShortDescription() << " cant be searched you fucking cunt!" << endl;
                 }
             }
         }
@@ -210,6 +261,8 @@ void ZorkUL::goRoom(Command command) {
     Room* nextRoom = currentRoom->nextRoom(direction);
     if (nextRoom == NULL){
         cout << "underdefined input"<< endl;
+    }else if(nextRoom->isLocked()){
+        cout << nextRoom->shortDescription()<<" is locked, find the key and unlock it !" << endl;
     }else {
         if(direction == "upstairs"){
             currentFloor++;

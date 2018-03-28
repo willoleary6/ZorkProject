@@ -9,7 +9,7 @@ Character::Character(string description) {
 }
 
 
-void Character::addItem(Item item) {
+void Character::addItem(Item* item) {
     itemsInCharacter.push_back(item);
 }
 
@@ -17,17 +17,20 @@ string Character::shortDescription(){
     return  this->description;
 }
 
-Item Character::removeItem(int itemIndex){
-    Item Temp = itemsInCharacter.at(itemIndex);
+Item* Character::removeItem(int itemIndex){
+    Item *Temp = itemsInCharacter.at(itemIndex);
     itemsInCharacter.erase(itemsInCharacter.begin() + itemIndex);
     return Temp;
 }
+ vector <Item*> Character::getItemList(){
+     return itemsInCharacter;
+ }
 
 string Character::longDescription(){
     string ret = this->description;
     ret += "\n Item list:\n";
-    for (vector<Item>::iterator i = itemsInCharacter.begin(); i != itemsInCharacter.end(); i++){
-        ret += "\t"+ (*i).getLongDescription() + "\n";
+    for (vector<Item*>::iterator i = itemsInCharacter.begin(); i != itemsInCharacter.end(); i++){
+        ret += "\t"+ (*i)->getLongDescription() + "\n";
     }
     return ret;
 }
@@ -40,7 +43,7 @@ int Character::isItemOnCharacter(string inString){
         int x = (0);
         for (int n = sizeItems; n > 0; n--) {
             // compare inString with short description
-            int tempFlag = inString.compare( itemsInCharacter[x].getShortDescription());
+            int tempFlag = inString.compare( itemsInCharacter[x]->getShortDescription());
             if (tempFlag == 0) {
                 return x;
             }

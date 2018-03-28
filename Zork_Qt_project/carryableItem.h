@@ -8,7 +8,7 @@ public:
     //testing
     carryableItem();
     carryableItem(string description);
-private:
+protected:
     void setProperties();
 
 };

@@ -1,16 +1,26 @@
 #include "floor.h"
 
-floor::floor(){
-     generateRandomFloorPlan();
+floor::floor(int floorId){
+    this->floorId = floorId;
+    if(floorId == 0){
+        rooms.push_back(new Room("Basement",0,floorId));
+        /*searchableItem *chest = new searchableItem("chest");
+        chest->insertItem(new carryableItem("hammer"));
+        rooms[0]->addItem(chest);*/
+    }else{
+        generateRandomFloorPlan();
+    }
 }
-floor::floor(int basement){
-    rooms.push_back(new Room("Basement",0));
-    rooms[0]->addItem(new carryableItem("hammer"));
-      rooms[0]->addItem(new searchableItem("chest"));
+/*floor::floor(){
+
+    //rooms[0]->addItem();
+    //searchableItem *chest = new searchableItem("chest");
+    //chest->insertItem(new carryableItem("hammer"));
+    //rooms[0]->addItem(chest);
     //rooms[0]->addItem(new Item("hammer"));
     //rooms[0]->addItem(new Item("saw"));
     //rooms[0]->addItem(new Item("box"));
-}
+}*/
 vector<Room *> floor::getRooms(){
     return rooms;
 }
@@ -41,7 +51,7 @@ void floor::generateRandomFloorPlan(){
              }else{
                  count++;
                  //create a new room and set its ID number to that of the count.
-                 floorPlan[i][j] = new Room(count);
+                 floorPlan[i][j] = new Room(count,floorId);
              }
          }
      }

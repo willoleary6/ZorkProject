@@ -1,17 +1,23 @@
 #include "Room.h"
-Room::Room(string description, int IDNumber ) {
+Room::Room(string description, int IDNumber, int floorId) {
     this->description = description;
     this->name = description;
     this->IDnumber = IDNumber;
+    this->floorId = floorId;
+    locked = false;
     exits["north"] = NULL;
     exits["east"] = NULL;
     exits["south"] = NULL;
     exits["west"] = NULL;
+    exits["upstairs"] = NULL;
+    exits["downstairs"] = NULL;
 }
-Room::Room(int IDNumber) {
+Room::Room(int IDNumber,int floorId) {
     this->description = to_string(IDNumber);
     this->name = to_string(IDNumber);
     this->IDnumber = IDNumber;
+    this->floorId = floorId;
+    locked = false;
     exits["north"] = NULL;
     exits["east"] = NULL;
     exits["south"] = NULL;
@@ -22,7 +28,24 @@ Room::Room(int IDNumber) {
 int Room::getIdNumber(){
     return IDnumber;
 }
-
+int Room::getFloorID(){
+    return floorId;
+}
+key* Room::lockRoom(){
+    locked = true;
+    KeyForRoom =  key(description,IDnumber,floorId);
+    return &KeyForRoom;
+}
+bool Room::isLocked(){
+    return locked;
+}
+void Room::unlockRoom(){
+    locked = false;
+    //cout << this->shortDescription() << " is now unlocked."<<endl;
+}
+key* Room::getKey(){
+    return &KeyForRoom;
+}
 
 void Room::setExits(Room *north, Room *east, Room *south, Room *west) {
     if (north != NULL){
@@ -105,16 +128,9 @@ Room* Room::nextRoom(string direction) {
 }
 
 void Room::addItem(Item *inItem) {
-    itemsInRoom.push_back(*inItem);
+    itemsInRoom.push_back(inItem);
 }
 
-void Room::addItem(Item &item) {
-    itemsInRoom.push_back(item);
-}
-
-void Room::addItem(Item item) {
-    itemsInRoom.push_back(item);
-}
 
 string Room::displayItem() {
     string tempString = "items in room = ";
@@ -125,7 +141,7 @@ string Room::displayItem() {
     else if (itemsInRoom.size() > 0) {
         int x = (0);
         for (int n = sizeItems; n > 0; n--) {
-            tempString = tempString + itemsInRoom[x].getShortDescription() + "  " ;
+            tempString = tempString + itemsInRoom[x]->getShortDescription() + "  " ;
             x++;
         }
     }
@@ -145,7 +161,7 @@ int Room::isItemInRoom(string inString)
         int x = (0);
         for (int n = sizeItems; n > 0; n--) {
             // compare inString with short description
-            int tempFlag = inString.compare( itemsInRoom[x].getShortDescription());
+            int tempFlag = inString.compare( itemsInRoom[x]->getShortDescription());
             if (tempFlag == 0) {
                 return x;
             }
@@ -155,13 +171,13 @@ int Room::isItemInRoom(string inString)
     return -1;
 }
 
-Item Room::removeItem(int itemIndex){
-    Item Temp = itemsInRoom.at(itemIndex);
+Item* Room::removeItem(int itemIndex){
+    Item* Temp = itemsInRoom.at(itemIndex);
     itemsInRoom.erase(itemsInRoom.begin() + itemIndex);
     return Temp;
 }
-Item Room::getItem(int itemIndex){
-    return itemsInRoom.at(itemIndex);;
+Item* Room::getItem(int itemIndex){
+    return itemsInRoom.at(itemIndex);
 }
 map<string, Room*> Room::getExits(){
     return exits;

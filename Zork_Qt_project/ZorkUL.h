@@ -18,6 +18,7 @@ using namespace std;
 
 class ZorkUL {
 private:
+    void populateRoomsWithItems();
     int currentFloor =0;
     vector<floor*> floors;
     Character user;

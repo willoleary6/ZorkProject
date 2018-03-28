@@ -12,15 +12,15 @@ using std::vector;
 class Character {
 private:
 	string description;
-    vector <Item> itemsInCharacter;
+    vector <Item*> itemsInCharacter;
 public:
-	void addItems(string Item);
-    void addItem(Item item);
+    vector <Item*> getItemList();
+    void addItem(Item* item);
     Character(string description);
     Character();
     string shortDescription();
 	string longDescription();
-    Item removeItem(int itemIndex);
+    Item* removeItem(int itemIndex);
     int isItemOnCharacter(string inString);
 
 };

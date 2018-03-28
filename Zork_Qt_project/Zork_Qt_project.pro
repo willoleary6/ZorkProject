@@ -35,7 +35,8 @@ SOURCES += mainwindow.cpp\
     zorkhome.cpp \
     newGame.cpp \
     carryableItem.cpp \
-    searchableitem.cpp
+    searchableitem.cpp \
+    key.cpp
 
 
 
@@ -51,7 +52,8 @@ HEADERS  += mainwindow.h\
     zorkhome.h \
     newGame.h \
     carryableItem.h \
-    searchableitem.h
+    searchableitem.h \
+    key.h
 
 FORMS    += mainwindow.ui \
     newGame.ui \
