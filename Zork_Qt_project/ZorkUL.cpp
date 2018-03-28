@@ -3,9 +3,9 @@ using namespace std;
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    //zorkHome n;
-    //n.show();
-
+    /*zorkHome n;
+    n.show();*/
+    //test
     ZorkUL temp;
     temp.play();
     return a.exec();
@@ -16,7 +16,6 @@ ZorkUL::ZorkUL() {
     srand(time(NULL));
     for(int i =0; i < 3; i++){
         floors.push_back(new floor(i));
-
     }
     currentFloor = 0;
     addStairSystem();

@@ -3,7 +3,6 @@
 #include "newGame.h"
 #include <QtCore>
 
-
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -14,4 +13,9 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::on_actionClose_triggered()
+{
+    close();
 }
