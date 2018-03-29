@@ -3,9 +3,10 @@ using namespace std;
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    //UI
     /*zorkHome n;
     n.show();*/
-    //test
+    //game
     ZorkUL temp;
     temp.play();
     return a.exec();
@@ -22,7 +23,19 @@ ZorkUL::ZorkUL() {
     rooms = floors[currentFloor]->getRooms();
     currentRoom = rooms[0];
     populateRoomsWithItems();
+
 }
+ZorkUL::~ZorkUL(){
+    delete currentRoom;
+    int i;
+    for(i = 0; i < floors.size(); i++){
+        delete floors[i];
+    }
+    for(i = 0; i < rooms.size(); i++){
+        delete rooms[i];
+    }
+}
+
 /**
  *  Main play routine.  Loops until end of play.
  */
@@ -45,16 +58,64 @@ void ZorkUL::play() {
     cout << "end" << endl;
 }
 void ZorkUL::populateRoomsWithItems(){
-    /*searchableItem *chest = new searchableItem("chest");
-    chest->insertItem(new carryableItem("hammer"));
-    currentRoom->addItem(chest);*/
-     vector <Room *> floorRooms = floors[1]->getRooms();
+    int downstairsIndex,randomValue;
+    vector <Room *> floorRooms;
+    map<string, Room*> exits;
+    Room* lockedRoom;
+    for(int i =1; i < floors.size(); i++){
+        floorRooms = floors[i]->getRooms();
+        for(int j =0; j < floorRooms.size(); j++){
+            exits = floorRooms[j]->getExits();
+            if(exits["downstairs"] != NULL){
+                downstairsIndex = j;
+            }
+        }
+        randomValue = rand() % floorRooms.size();
+        int limit = (randomValue/1.5);
+        if(limit == 0){
+            limit++;
+        }
+        for(int k = 0; k < limit; k++){
+            while(floorRooms[randomValue]->isLocked()){
+                randomValue = rand() % floorRooms.size();
+            }
+            lockedRoom = floorRooms[randomValue];
+            //key is downstairs
+            if(randomValue == downstairsIndex){
+                floorRooms = floors[i-1]->getRooms();
+                randomValue = rand() % floorRooms.size();
+                floorRooms[randomValue]->addItem(lockedRoom->lockRoom());
 
-     key* roomKey = floorRooms[0]->lockRoom();
-     //cout << roomKey.getShortDescription()<<endl;
-     currentRoom->addItem(roomKey);
-     currentRoom->addItem(new key("bad",0,0));
-     //cout<<"test"<<endl;
+            }else{
+                key *temp = lockedRoom->lockRoom();
+                vector <Room *> validRoomsForKeys;
+                getValidRooms(&validRoomsForKeys, floorRooms[downstairsIndex]);
+                int keyRoom= rand() % validRoomsForKeys.size();
+                validRoomsForKeys[keyRoom]->addItem(temp);
+            }
+        }
+
+    }
+}
+void ZorkUL::getValidRooms(vector <Room *> *validRoomsForKeys, Room* validRoom){
+    map<string, Room*> exits = validRoom->getExits();
+    (*validRoomsForKeys).push_back(validRoom);
+    vector <string> directions = {"north","south","west","east","upstairs","downstairs"};
+    for(int i =0; i< directions.size(); i++){
+        if(exits[directions[i]] != NULL){
+            if(checkForDublicates(*validRoomsForKeys,exits[directions[i]]) && exits[directions[i]]->isLocked() == false){
+                getValidRooms(validRoomsForKeys, exits[directions[i]]);
+            }
+        }
+    }
+}
+bool ZorkUL::checkForDublicates(vector <Room *> validRoomsForKeys, Room* newRoom){
+    for(int i =0; i < validRoomsForKeys.size(); i++){
+        if(validRoomsForKeys[i] == newRoom){
+            return false;
+        }
+    }
+    return true;
 }
 
 void ZorkUL::addStairSystem(){
@@ -137,10 +198,12 @@ bool ZorkUL::processCommand(Command command) {
                 vector <Item*> usersInventory = user.getItemList();
                 bool found = false;
                 if(usersInventory.size() > 0){
-                   for(int i = 0; i < usersInventory.size(); i++){
+                    key *roomKey;
+                    for(int i = 0; i < usersInventory.size(); i++){
                        try{
-                        key *roomKey = static_cast<key*>(usersInventory[i]);
+                        roomKey = static_cast<key*>(usersInventory[i]);
                         if(roomKey == roomToUnlock->getKey()){
+                            user.removeItem(i);
                             found = true;
                             roomToUnlock->unlockRoom();
                             cout << "Success! "<<roomToUnlock->shortDescription()<<" is now unlocked"<<endl;

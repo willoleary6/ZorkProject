@@ -34,14 +34,16 @@ int Room::getFloorID(){
 key* Room::lockRoom(){
     locked = true;
     KeyForRoom =  key(description,IDnumber,floorId);
+    name += "[L]";
     return &KeyForRoom;
 }
 bool Room::isLocked(){
     return locked;
+
 }
 void Room::unlockRoom(){
     locked = false;
-    //cout << this->shortDescription() << " is now unlocked."<<endl;
+    name.erase(name.find("[L]"),3);
 }
 key* Room::getKey(){
     return &KeyForRoom;
@@ -66,11 +68,11 @@ void Room::setNorthExit(Room *north){
 }
 void Room::setUpstairsExit(Room *upstairs){
     exits["upstairs"] = upstairs;
-    this->name += "[^]";
+    name += "[^]";
 }
 void Room::setDownstairsExit(Room *downstairs){
     exits["downstairs"] = downstairs;
-    this->name += "[v]";
+    name += "[v]";
 }
 
 void Room::setEastExit(Room *east){
