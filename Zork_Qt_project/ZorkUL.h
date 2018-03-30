@@ -18,6 +18,9 @@ using namespace std;
 
 class ZorkUL {
 private:
+
+    void getValidRooms(vector <Room *> *validRoomsForKeys, Room* nextRoom);
+    bool checkForDublicates(vector <Room *> validRoomsForKeys, Room* newRoom);
     void populateRoomsWithItems();
     int currentFloor =0;
     vector<floor*> floors;
@@ -35,6 +38,7 @@ private:
     string go(string direction);
 public:
 	ZorkUL();
+    ~ZorkUL();
     void play();
 };
 
