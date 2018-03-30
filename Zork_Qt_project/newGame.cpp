@@ -4,6 +4,7 @@
 #include "mainwindow.h"
 #include "ZorkUL.h"
 #include <QMessageBox>
+#include <QPixmap>
 #include <QDesktopWidget>
 
 newGame::newGame(QWidget *parent) :
@@ -14,6 +15,9 @@ newGame::newGame(QWidget *parent) :
 {
     ui->setupUi(this);
     currentParent = parent;
+
+    QPixmap zork(":/zorkLogo.png");
+    ui->zorkLogo->setPixmap(zork);
 }
 
 newGame::~newGame() {

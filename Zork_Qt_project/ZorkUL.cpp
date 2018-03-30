@@ -3,14 +3,13 @@ using namespace std;
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    /*zorkHome n;
-    n.show();*/
+    zorkHome n;
+    n.show();
     //test
-    ZorkUL temp;
-    temp.play();
+    /*ZorkUL temp;
+    temp.play();*/
     return a.exec();
-
-   // return 0;
+    // return 0;
 }
 ZorkUL::ZorkUL() {
     srand(time(NULL));

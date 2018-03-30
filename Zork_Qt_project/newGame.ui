@@ -16,6 +16,9 @@
   <property name="windowTitle">
    <string>Zork - New Game</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(46, 52, 54);</string>
+  </property>
   <widget class="QLabel" name="userLabel">
    <property name="geometry">
     <rect>
@@ -58,13 +61,13 @@
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QLabel" name="gameTitleLabel">
+  <widget class="QLabel" name="zorkLogo">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>381</width>
-     <height>90</height>
+     <x>90</x>
+     <y>0</y>
+     <width>230</width>
+     <height>100</height>
     </rect>
    </property>
    <property name="font">
@@ -77,7 +80,13 @@
     </font>
    </property>
    <property name="text">
-    <string>Zork</string>
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="imglib.qrc">:/zorkLogo.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -108,7 +117,7 @@
    <property name="geometry">
     <rect>
      <x>90</x>
-     <y>90</y>
+     <y>93</y>
      <width>231</width>
      <height>20</height>
     </rect>
@@ -177,11 +186,16 @@
    <property name="layoutDirection">
     <enum>Qt::LeftToRight</enum>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(35, 39, 41);</string>
+   </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="imglib.qrc"/>
+ </resources>
  <connections/>
 </ui>

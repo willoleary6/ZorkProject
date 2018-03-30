@@ -19,6 +19,10 @@ public:
 private slots:
     void on_actionClose_triggered();
 
+    void on_actionSettings_triggered();
+
+    void on_actionAbout_triggered();
+
 private:
     Ui::MainWindow *ui;
 };

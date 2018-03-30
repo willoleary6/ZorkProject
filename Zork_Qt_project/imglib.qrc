@@ -1,5 +1,8 @@
 <RCC>
-    <qresource prefix="/new/prefix1">
-        <file>settings-17-32.png</file>
+    <qresource prefix="/">
+        <file>zorkLogo.png</file>
+        <file>CSIS.png</file>
+        <file>ul_White.png</file>
+        <file>zorkIcon.png</file>
     </qresource>
 </RCC>

@@ -22,6 +22,8 @@ private slots:
 
     void on_settingsButton_clicked();
 
+    void on_leaderboardButton_clicked();
+
 private:
     Ui::zorkHome *ui;
 };
