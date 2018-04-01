@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/sounds">
+        <file>gameMusic_Power Core.mp3</file>
+        <file>lockSoundEffect.mp3</file>
+        <file>doorSoundEffect.mp3</file>
+        <file>buttonClick.mp3</file>
+    </qresource>
+</RCC>

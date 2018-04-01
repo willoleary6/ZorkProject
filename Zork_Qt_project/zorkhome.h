@@ -1,6 +1,8 @@
 #ifndef ZORKHOME_H
 #define ZORKHOME_H
+
 #include <QDialog>
+#include <QMediaPlayer>
 #include <newGame.h>
 
 namespace Ui {
@@ -26,6 +28,7 @@ private slots:
 
 private:
     Ui::zorkHome *ui;
+    QMediaPlayer *button;
 };
 
 #endif // ZORKHOME_H

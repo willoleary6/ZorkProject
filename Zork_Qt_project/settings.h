@@ -20,6 +20,8 @@ private slots:
 
     void on_soundfxCB_2_clicked();
 
+    void on_musicCB_clicked();
+
 private:
     Ui::settings *ui;
 };

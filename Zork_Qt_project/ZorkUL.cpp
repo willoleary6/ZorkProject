@@ -1,22 +1,16 @@
 #include "ZorkUL.h"
 using namespace std;
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-<<<<<<< HEAD
+    // UI
     zorkHome n;
     n.show();
-    //test
+
+    // Game
     /*ZorkUL temp;
     temp.play();*/
-=======
-    //UI
-    /*zorkHome n;
-    n.show();*/
-    //game
-    ZorkUL temp;
-    temp.play();
->>>>>>> 6099126df9411b697176e29866c9b4c46b4e369f
     return a.exec();
     // return 0;
 }

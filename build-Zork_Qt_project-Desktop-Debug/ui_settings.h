@@ -30,7 +30,7 @@ public:
     QCheckBox *soundfxCB;
     QPushButton *backButton;
     QLabel *zork;
-    QCheckBox *soundfxCB_2;
+    QCheckBox *debugCB;
 
     void setupUi(QDialog *settings)
     {
@@ -69,11 +69,14 @@ public:
         font2.setFamily(QStringLiteral("Montserrat"));
         font2.setPointSize(14);
         musicCB->setFont(font2);
+        musicCB->setCheckable(true);
+        musicCB->setChecked(true);
         musicCB->setTristate(false);
         soundfxCB = new QCheckBox(settings);
         soundfxCB->setObjectName(QStringLiteral("soundfxCB"));
         soundfxCB->setGeometry(QRect(60, 250, 170, 26));
         soundfxCB->setFont(font2);
+        soundfxCB->setChecked(true);
         soundfxCB->setTristate(false);
         backButton = new QPushButton(settings);
         backButton->setObjectName(QStringLiteral("backButton"));
@@ -89,11 +92,11 @@ public:
         zork->setGeometry(QRect(30, 10, 230, 90));
         zork->setPixmap(QPixmap(QString::fromUtf8("../../Downloads/zorkLogo.png")));
         zork->setScaledContents(true);
-        soundfxCB_2 = new QCheckBox(settings);
-        soundfxCB_2->setObjectName(QStringLiteral("soundfxCB_2"));
-        soundfxCB_2->setGeometry(QRect(60, 190, 160, 26));
-        soundfxCB_2->setFont(font2);
-        soundfxCB_2->setTristate(false);
+        debugCB = new QCheckBox(settings);
+        debugCB->setObjectName(QStringLiteral("debugCB"));
+        debugCB->setGeometry(QRect(60, 190, 160, 26));
+        debugCB->setFont(font2);
+        debugCB->setTristate(false);
 
         retranslateUi(settings);
 
@@ -112,7 +115,7 @@ public:
         soundfxCB->setText(QApplication::translate("settings", "Sound FX", Q_NULLPTR));
         backButton->setText(QApplication::translate("settings", "Back", Q_NULLPTR));
         zork->setText(QString());
-        soundfxCB_2->setText(QApplication::translate("settings", "Debug Mode", Q_NULLPTR));
+        debugCB->setText(QApplication::translate("settings", "Debug Mode", Q_NULLPTR));
     } // retranslateUi
 
 };

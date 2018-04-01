@@ -89,6 +89,12 @@ Aaron Dunne (15148602)</string>
    <property name="text">
     <string>Music</string>
    </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
    <property name="tristate">
     <bool>false</bool>
    </property>
@@ -110,6 +116,9 @@ Aaron Dunne (15148602)</string>
    </property>
    <property name="text">
     <string>Sound FX</string>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
    </property>
    <property name="tristate">
     <bool>false</bool>
@@ -155,7 +164,7 @@ Aaron Dunne (15148602)</string>
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QCheckBox" name="soundfxCB_2">
+  <widget class="QCheckBox" name="debugCB">
    <property name="geometry">
     <rect>
      <x>60</x>

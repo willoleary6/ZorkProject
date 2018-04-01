@@ -19,6 +19,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QProgressBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTextEdit>
@@ -50,6 +51,8 @@ public:
     QLabel *itemInRoomLabel;
     QListView *listView;
     QLabel *userInGame;
+    QProgressBar *noiseBar;
+    QLabel *noiseLabel;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
     QMenuBar *menuBar;
@@ -194,6 +197,19 @@ public:
         font4.setKerning(true);
         userInGame->setFont(font4);
         userInGame->setAlignment(Qt::AlignCenter);
+        noiseBar = new QProgressBar(centralWidget);
+        noiseBar->setObjectName(QStringLiteral("noiseBar"));
+        noiseBar->setGeometry(QRect(720, 580, 200, 20));
+        noiseBar->setValue(40);
+        noiseBar->setTextVisible(false);
+        noiseLabel = new QLabel(centralWidget);
+        noiseLabel->setObjectName(QStringLiteral("noiseLabel"));
+        noiseLabel->setGeometry(QRect(720, 560, 200, 20));
+        QFont font5;
+        font5.setFamily(QStringLiteral("Montserrat"));
+        font5.setPointSize(12);
+        noiseLabel->setFont(font5);
+        noiseLabel->setAlignment(Qt::AlignCenter);
         MainWindow->setCentralWidget(centralWidget);
         compassLogo->raise();
         eastButton->raise();
@@ -209,6 +225,8 @@ public:
         itemInRoomLabel->raise();
         listView->raise();
         userInGame->raise();
+        noiseBar->raise();
+        noiseLabel->raise();
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
         mainToolBar->setEnabled(false);
@@ -220,12 +238,12 @@ public:
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
         menuBar->setGeometry(QRect(0, 0, 1200, 24));
-        QFont font5;
-        font5.setFamily(QStringLiteral("Montserrat"));
-        font5.setPointSize(11);
-        font5.setBold(false);
-        font5.setWeight(50);
-        menuBar->setFont(font5);
+        QFont font6;
+        font6.setFamily(QStringLiteral("Montserrat"));
+        font6.setPointSize(11);
+        font6.setBold(false);
+        font6.setWeight(50);
+        menuBar->setFont(font6);
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         menuEdit = new QMenu(menuBar);
@@ -273,6 +291,7 @@ public:
         inventoryLabel->setText(QApplication::translate("MainWindow", "Item Inventory", Q_NULLPTR));
         itemInRoomLabel->setText(QApplication::translate("MainWindow", "Currenet Room Items", Q_NULLPTR));
         userInGame->setText(QApplication::translate("MainWindow", "**player name goes here**", Q_NULLPTR));
+        noiseLabel->setText(QApplication::translate("MainWindow", "Nosie-O-Meter", Q_NULLPTR));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", Q_NULLPTR));
         menuEdit->setTitle(QApplication::translate("MainWindow", "Edit", Q_NULLPTR));
         menuHelp->setTitle(QApplication::translate("MainWindow", "Help", Q_NULLPTR));

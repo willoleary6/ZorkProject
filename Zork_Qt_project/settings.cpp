@@ -1,5 +1,7 @@
 #include "settings.h"
 #include "ui_settings.h"
+#include "zorkhome.h"
+#include <QMediaPlayer>
 
 settings::settings(QWidget *parent) :
     QDialog(parent),
@@ -16,4 +18,9 @@ settings::~settings()
 void settings::on_backButton_clicked()
 {
     close();
+}
+
+void settings::on_musicCB_clicked()
+{
+
 }

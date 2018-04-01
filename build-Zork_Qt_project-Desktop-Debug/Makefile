@@ -12,10 +12,10 @@ MAKEFILE      = Makefile
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_QML_DEBUG -DQT_MULTIMEDIA_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I../Zork_Qt_project -I. -isystem /usr/include/qt5 -isystem /usr/include/qt5/QtWidgets -isystem /usr/include/qt5/QtGui -isystem /usr/include/qt5/QtCore -I. -isystem /usr/include/libdrm -I. -I/usr/lib64/qt5/mkspecs/linux-g++
+INCPATH       = -I../Zork_Qt_project -I. -isystem /usr/include/qt5 -isystem /usr/include/qt5/QtMultimedia -isystem /usr/include/qt5/QtWidgets -isystem /usr/include/qt5/QtGui -isystem /usr/include/qt5/QtNetwork -isystem /usr/include/qt5/QtCore -I. -isystem /usr/include/libdrm -I. -I/usr/lib64/qt5/mkspecs/linux-g++
 QMAKE         = /bin/qmake-qt5
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -38,7 +38,7 @@ DISTNAME      = Zork_Qt_project1.0.0
 DISTDIR = /home/aarond203/zorkv2/build-Zork_Qt_project-Desktop-Debug/.tmp/Zork_Qt_project1.0.0
 LINK          = g++
 LFLAGS        = 
-LIBS          = $(SUBLIBS) -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
+LIBS          = $(SUBLIBS) -lQt5Multimedia -lQt5Widgets -lQt5Gui -lQt5Network -lQt5Core -lGL -lpthread 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -65,6 +65,7 @@ SOURCES       = ../Zork_Qt_project/mainwindow.cpp \
 		../Zork_Qt_project/searchableitem.cpp \
 		../Zork_Qt_project/key.cpp \
 		../Zork_Qt_project/settings.cpp qrc_imglib.cpp \
+		qrc_sounds.cpp \
 		moc_mainwindow.cpp \
 		moc_zorkhome.cpp \
 		moc_newGame.cpp \
@@ -85,6 +86,7 @@ OBJECTS       = mainwindow.o \
 		key.o \
 		settings.o \
 		qrc_imglib.o \
+		qrc_sounds.o \
 		moc_mainwindow.o \
 		moc_zorkhome.o \
 		moc_newGame.o \
@@ -501,8 +503,11 @@ Makefile: ../Zork_Qt_project/Zork_Qt_project.pro /usr/lib64/qt5/mkspecs/linux-g+
 		/usr/lib64/qt5/mkspecs/features/lex.prf \
 		../Zork_Qt_project/Zork_Qt_project.pro \
 		../Zork_Qt_project/imglib.qrc \
+		../Zork_Qt_project/sounds.qrc \
+		/usr/lib64/libQt5Multimedia.prl \
 		/usr/lib64/libQt5Widgets.prl \
 		/usr/lib64/libQt5Gui.prl \
+		/usr/lib64/libQt5Network.prl \
 		/usr/lib64/libQt5Core.prl
 	$(QMAKE) -o Makefile ../Zork_Qt_project/Zork_Qt_project.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug
 /usr/lib64/qt5/mkspecs/features/spec_pre.prf:
@@ -692,8 +697,11 @@ Makefile: ../Zork_Qt_project/Zork_Qt_project.pro /usr/lib64/qt5/mkspecs/linux-g+
 /usr/lib64/qt5/mkspecs/features/lex.prf:
 ../Zork_Qt_project/Zork_Qt_project.pro:
 ../Zork_Qt_project/imglib.qrc:
+../Zork_Qt_project/sounds.qrc:
+/usr/lib64/libQt5Multimedia.prl:
 /usr/lib64/libQt5Widgets.prl:
 /usr/lib64/libQt5Gui.prl:
+/usr/lib64/libQt5Network.prl:
 /usr/lib64/libQt5Core.prl:
 qmake: FORCE
 	@$(QMAKE) -o Makefile ../Zork_Qt_project/Zork_Qt_project.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug
@@ -709,7 +717,7 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../Zork_Qt_project/imglib.qrc $(DISTDIR)/
+	$(COPY_FILE) --parents ../Zork_Qt_project/imglib.qrc ../Zork_Qt_project/sounds.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib64/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../Zork_Qt_project/mainwindow.h ../Zork_Qt_project/Character.h ../Zork_Qt_project/Command.h ../Zork_Qt_project/CommandWords.h ../Zork_Qt_project/item.h ../Zork_Qt_project/Parser.h ../Zork_Qt_project/Room.h ../Zork_Qt_project/ZorkUL.h ../Zork_Qt_project/floor.h ../Zork_Qt_project/zorkhome.h ../Zork_Qt_project/newGame.h ../Zork_Qt_project/carryableItem.h ../Zork_Qt_project/searchableitem.h ../Zork_Qt_project/key.h ../Zork_Qt_project/settings.h $(DISTDIR)/
 	$(COPY_FILE) --parents ../Zork_Qt_project/mainwindow.cpp ../Zork_Qt_project/Character.cpp ../Zork_Qt_project/Command.cpp ../Zork_Qt_project/CommandWords.cpp ../Zork_Qt_project/item.cpp ../Zork_Qt_project/Parser.cpp ../Zork_Qt_project/Room.cpp ../Zork_Qt_project/ZorkUL.cpp ../Zork_Qt_project/floor.cpp ../Zork_Qt_project/zorkhome.cpp ../Zork_Qt_project/newGame.cpp ../Zork_Qt_project/carryableItem.cpp ../Zork_Qt_project/searchableitem.cpp ../Zork_Qt_project/key.cpp ../Zork_Qt_project/settings.cpp $(DISTDIR)/
@@ -737,9 +745,9 @@ check: first
 
 benchmark: first
 
-compiler_rcc_make_all: qrc_imglib.cpp
+compiler_rcc_make_all: qrc_imglib.cpp qrc_sounds.cpp
 compiler_rcc_clean:
-	-$(DEL_FILE) qrc_imglib.cpp
+	-$(DEL_FILE) qrc_imglib.cpp qrc_sounds.cpp
 qrc_imglib.cpp: ../Zork_Qt_project/imglib.qrc \
 		/usr/lib64/qt5/bin/rcc \
 		../Zork_Qt_project/zorkIcon.png \
@@ -747,6 +755,13 @@ qrc_imglib.cpp: ../Zork_Qt_project/imglib.qrc \
 		../Zork_Qt_project/ul_White.png \
 		../Zork_Qt_project/zorkLogo.png
 	/usr/lib64/qt5/bin/rcc -name imglib ../Zork_Qt_project/imglib.qrc -o qrc_imglib.cpp
+
+qrc_sounds.cpp: ../Zork_Qt_project/sounds.qrc \
+		/usr/lib64/qt5/bin/rcc \
+		../Zork_Qt_project/lockSoundEffect.mp3 \
+		../Zork_Qt_project/doorSoundEffect.mp3 \
+		../Zork_Qt_project/buttonClick.mp3
+	/usr/lib64/qt5/bin/rcc -name sounds ../Zork_Qt_project/sounds.qrc -o qrc_sounds.cpp
 
 compiler_moc_predefs_make_all: moc_predefs.h
 compiler_moc_predefs_clean:
@@ -761,23 +776,23 @@ moc_mainwindow.cpp: ../Zork_Qt_project/newGame.h \
 		../Zork_Qt_project/mainwindow.h \
 		moc_predefs.h \
 		/usr/lib64/qt5/bin/moc
-	/usr/lib64/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/aarond203/zorkv2/Zork_Qt_project -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I. -I/usr/include/c++/7 -I/usr/include/c++/7/x86_64-redhat-linux -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-redhat-linux/7/include -I/usr/local/include -I/usr/include ../Zork_Qt_project/mainwindow.h -o moc_mainwindow.cpp
+	/usr/lib64/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/aarond203/zorkv2/Zork_Qt_project -I/usr/include/qt5 -I/usr/include/qt5/QtMultimedia -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I. -I/usr/include/c++/7 -I/usr/include/c++/7/x86_64-redhat-linux -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-redhat-linux/7/include -I/usr/local/include -I/usr/include ../Zork_Qt_project/mainwindow.h -o moc_mainwindow.cpp
 
 moc_zorkhome.cpp: ../Zork_Qt_project/newGame.h \
 		../Zork_Qt_project/zorkhome.h \
 		moc_predefs.h \
 		/usr/lib64/qt5/bin/moc
-	/usr/lib64/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/aarond203/zorkv2/Zork_Qt_project -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I. -I/usr/include/c++/7 -I/usr/include/c++/7/x86_64-redhat-linux -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-redhat-linux/7/include -I/usr/local/include -I/usr/include ../Zork_Qt_project/zorkhome.h -o moc_zorkhome.cpp
+	/usr/lib64/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/aarond203/zorkv2/Zork_Qt_project -I/usr/include/qt5 -I/usr/include/qt5/QtMultimedia -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I. -I/usr/include/c++/7 -I/usr/include/c++/7/x86_64-redhat-linux -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-redhat-linux/7/include -I/usr/local/include -I/usr/include ../Zork_Qt_project/zorkhome.h -o moc_zorkhome.cpp
 
 moc_newGame.cpp: ../Zork_Qt_project/newGame.h \
 		moc_predefs.h \
 		/usr/lib64/qt5/bin/moc
-	/usr/lib64/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/aarond203/zorkv2/Zork_Qt_project -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I. -I/usr/include/c++/7 -I/usr/include/c++/7/x86_64-redhat-linux -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-redhat-linux/7/include -I/usr/local/include -I/usr/include ../Zork_Qt_project/newGame.h -o moc_newGame.cpp
+	/usr/lib64/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/aarond203/zorkv2/Zork_Qt_project -I/usr/include/qt5 -I/usr/include/qt5/QtMultimedia -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I. -I/usr/include/c++/7 -I/usr/include/c++/7/x86_64-redhat-linux -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-redhat-linux/7/include -I/usr/local/include -I/usr/include ../Zork_Qt_project/newGame.h -o moc_newGame.cpp
 
 moc_settings.cpp: ../Zork_Qt_project/settings.h \
 		moc_predefs.h \
 		/usr/lib64/qt5/bin/moc
-	/usr/lib64/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/aarond203/zorkv2/Zork_Qt_project -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I. -I/usr/include/c++/7 -I/usr/include/c++/7/x86_64-redhat-linux -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-redhat-linux/7/include -I/usr/local/include -I/usr/include ../Zork_Qt_project/settings.h -o moc_settings.cpp
+	/usr/lib64/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/aarond203/zorkv2/Zork_Qt_project -I/usr/include/qt5 -I/usr/include/qt5/QtMultimedia -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I. -I/usr/include/c++/7 -I/usr/include/c++/7/x86_64-redhat-linux -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-redhat-linux/7/include -I/usr/local/include -I/usr/include ../Zork_Qt_project/settings.h -o moc_settings.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -908,11 +923,16 @@ key.o: ../Zork_Qt_project/key.cpp ../Zork_Qt_project/key.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o key.o ../Zork_Qt_project/key.cpp
 
 settings.o: ../Zork_Qt_project/settings.cpp ../Zork_Qt_project/settings.h \
-		ui_settings.h
+		ui_settings.h \
+		../Zork_Qt_project/zorkhome.h \
+		../Zork_Qt_project/newGame.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o settings.o ../Zork_Qt_project/settings.cpp
 
 qrc_imglib.o: qrc_imglib.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_imglib.o qrc_imglib.cpp
+
+qrc_sounds.o: qrc_sounds.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_sounds.o qrc_sounds.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
