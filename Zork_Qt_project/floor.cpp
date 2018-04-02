@@ -42,7 +42,7 @@ void floor::generateRandomFloorPlan(){
     int cols = sizeof floorPlan[0]/sizeof(Room*);
     int count = 0;
     int randomValue =0;
-    vector <string> roomNames = {"Gallery","library","bedrm","kitchen","Dinning","Sitting",
+    vector <string> roomNames = {"Gallery","library","Bedrm","kitchen","Dinning","Sitting",
                                 "Mstr-bedrm","Bathrm","Garage","Cloak-rm","Conservatory","Pantry","Office",
                                 "Lounge", "Closet", "Guest-bedrm","Lndry-rm","Game-rm","Storage"};
     /*Basic idea of the floor plan is a matt of 4X4 NULLs
