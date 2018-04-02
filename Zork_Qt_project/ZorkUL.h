@@ -11,31 +11,42 @@
 #include "Room.h"
 #include "item.h"
 #include "floor.h"
+#include "readtxtfile.h"
 #include "zorkhome.h"
 #include <iostream>
 #include <string>
+
 using namespace std;
 
 class ZorkUL {
 private:
-
+    void randomTeleport();
+    void teleport(Command command);
+    void unlockRoom(Room* roomToUnlock,string direction);
+    void takeItem(Command command);
+    void searchItem(int location);
     void getValidRooms(vector <Room *> *validRoomsForKeys, Room* nextRoom);
-    bool checkForDublicates(vector <Room *> validRoomsForKeys, Room* newRoom);
+    void printWelcome();
     void populateRoomsWithItems();
+    void printHelp();
+    void goRoom(Command command);
+    void createItems();
+    void displayItems();
+    void addStairSystem();
+
+    bool checkForDublicates(vector <Room *> validRoomsForKeys, Room* newRoom);
+    bool processCommand(Command command);
+
+    string go(string direction);
+
+    //Global private Variables
     int currentFloor =0;
     vector<floor*> floors;
     Character user;
     Parser parser;
 	Room *currentRoom;
     vector <Room *> rooms;
-	void printWelcome();
-	bool processCommand(Command command);
-    void printHelp();
-	void goRoom(Command command);
-    void createItems();
-    void displayItems();
-    void addStairSystem();
-    string go(string direction);
+
 public:
 	ZorkUL();
     ~ZorkUL();

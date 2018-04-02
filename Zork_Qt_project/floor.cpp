@@ -1,59 +1,68 @@
 #include "floor.h"
 
+/**
+ * @brief floor::floor
+ * @param floorId
+ * Constructor that creates and populates a vector of rooms.
+ */
 floor::floor(int floorId){
     this->floorId = floorId;
     if(floorId == 0){
         rooms.push_back(new Room("Basement",0,floorId));
-        /*searchableItem *chest = new searchableItem("chest");
-        chest->insertItem(new carryableItem("hammer"));
-        rooms[0]->addItem(chest);*/
     }else{
         generateRandomFloorPlan();
     }
 }
-/*floor::floor(){
 
-    //rooms[0]->addItem();
-    //searchableItem *chest = new searchableItem("chest");
-    //chest->insertItem(new carryableItem("hammer"));
-    //rooms[0]->addItem(chest);
-    //rooms[0]->addItem(new Item("hammer"));
-    //rooms[0]->addItem(new Item("saw"));
-    //rooms[0]->addItem(new Item("box"));
-}*/
+/**
+ * @brief floor::~floor
+ */
+floor::~floor(){
+   for(int i =0; i < rooms.size(); i++){
+       delete rooms[i];
+   }
+}
+
+/**
+ * @brief floor::getRooms
+ * @return returns the vector of rooms on the floor
+ */
 vector<Room *> floor::getRooms(){
     return rooms;
 }
+
+/**
+ * @brief floor::generateRandomFloorPlan
+ * Function that generates a random floor plan for a map.
+ */
 void floor::generateRandomFloorPlan(){
     //This function generates a random floor plan of the map.
     Room* floorPlan[4][4];
-     /*Room* floorPlan[4][4] = {{NULL,new Room(1),new Room(2),new Room(3)},
-                              {new Room(4),NULL,new Room(5),new Room(6)},
-                              {NULL,new Room(7),NULL,NULL},
-                              {new Room(8),new Room(9),NULL,NULL}};*/
-     int rows = sizeof floorPlan/sizeof floorPlan[0];
-     int cols = sizeof floorPlan[0]/sizeof(Room*);
-     int count = 0;
-     int randomValue =0;
-     /* TODO: ok we need to sort the randomly generated arrays so that the NULLs are all together in one side to avoid problems
-      *
-      */
-     /*Basic idea of the floor plan is a matt of 4X4 NULLs
-      * and we change some of them to actual rooms depending on a random value.
-      */
-     for(int i =0; i < rows; i++){
-         for(int j = 0; j < cols; j++){
-             //generating random value
-             randomValue = rand() % 9;
-             //about a 60% chance that each index will be populated with a room.
-             if(randomValue > 5){
-                 floorPlan[i][j] = NULL;
-             }else{
-                 count++;
-                 //create a new room and set its ID number to that of the count.
-                 floorPlan[i][j] = new Room(count,floorId);
-             }
-         }
+    int rows = sizeof floorPlan/sizeof floorPlan[0];
+    int cols = sizeof floorPlan[0]/sizeof(Room*);
+    int count = 0;
+    int randomValue =0;
+    vector <string> roomNames = {"Gallery","library","bedrm","kitchen","Dinning","Sitting",
+                                "Mstr-bedrm","Bathrm","Garage","Cloak-rm","Conservatory","Pantry","Office",
+                                "Lounge", "Closet", "Guest-bedrm","Lndry-rm","Game-rm","Storage"};
+    /*Basic idea of the floor plan is a matt of 4X4 NULLs
+     * and we change some of them to actual rooms depending on a random value.
+     */
+    for(int i =0; i < rows; i++){
+        for(int j = 0; j < cols; j++){
+            //generating random value
+            randomValue = rand() % 9;
+            //about a 60% chance that each index will be populated with a room.
+            if(randomValue > 5){
+                floorPlan[i][j] = NULL;
+            }else{
+                count++;
+                //create a new room and set its ID number to that of the count.
+                int roomNameIndex = rand() % roomNames.size();
+                floorPlan[i][j] = new Room(roomNames[roomNameIndex],count,floorId);
+                roomNames.erase(roomNames.begin() + roomNameIndex);
+            }
+        }
      }
      //sorting this row so nulls are all to the right
      for(int row = 0; row < rows;row++){
@@ -100,7 +109,13 @@ void floor::generateRandomFloorPlan(){
          }
 
      }
- }
+}
+
+/**
+ * @brief floor::pushNULLsToEnd
+ * @param rooms
+ * function that sorts NULL values on the floor plan to the end of the row.
+ */
 void floor::pushNULLsToEnd(Room* rooms[]){
     /*This function sorts eash row of a floorPlan
      * so all the NULLs in it are pushed to the right
@@ -113,6 +128,12 @@ void floor::pushNULLsToEnd(Room* rooms[]){
     while(count < sizeof(rooms))
         rooms[count++] = NULL;
 }
+
+/**
+ * @brief floor::getNumberOfValidRooms
+ * @param rooms
+ * @return returns the number of non NULL rooms on a row of a floor plan.
+ */
 int floor::getNumberOfValidRooms(Room* rooms[]){
     /*this function gets the number of rooms in a row so we
      * can generate a random index to connect it vertically to a room on the upper row.
@@ -125,6 +146,14 @@ int floor::getNumberOfValidRooms(Room* rooms[]){
     }
     return count;
 }
+/**
+ * @brief floor::findMapCoordinates
+ * @param rooms
+ * @param x_position
+ * @param y_position
+ * @param mapDisplay
+ * @return returns the coordinates on the 2D floor plan vector of the current room
+ */
 bool floor::findMapCoordinates(Room* rooms,int *x_position, int *y_position, vector<vector<string>> mapDisplay){
     //this function finds the x-y coordinates of a room that we know is already on the map.
     for(int j = 0; j < mapDisplay.size(); j++){
@@ -138,15 +167,22 @@ bool floor::findMapCoordinates(Room* rooms,int *x_position, int *y_position, vec
     }
     return false;
 }
+
+/**
+ * @brief floor::printMap
+ * @return returns the string of the floor plan for this floor
+ */
 string floor::printMap(){
+    //initialising variables
     vector<vector<string>> mapDisplay;
     int x_position = 0,y_position = 0;
+    //starting the recursive process with the first room on the floor
     addMapIndex(x_position, y_position , &mapDisplay, rooms[0]);
     string textMap;
     vector<int> LargestIndex;
-
+    //get the largest value in each index so we can properly keep the map formatted
     for(int x = 0; x < mapDisplay.size(); x++){
-    for(int y=0; y < mapDisplay[x].size();y++){
+        for(int y=0; y < mapDisplay[x].size();y++){
             while(LargestIndex.size() <= y){
                 LargestIndex.push_back(0);
             }
@@ -155,9 +191,11 @@ string floor::printMap(){
             }
         }
     }
+    //now building the string of the text map to be returned
     for(int i = 0; i < mapDisplay.size(); i++){
         for(int j =0; j < mapDisplay[i].size();j++){
            if(LargestIndex[j] > mapDisplay[i][j].length()){
+                //padd each element of the map so each room is in line
                 textMap += string(((LargestIndex[j]+1)-(mapDisplay[i][j].length()))/2,' ');
                 textMap += mapDisplay[i][j];
                 textMap += string(((LargestIndex[j]+1)-(mapDisplay[i][j].length()))/2,' ');
@@ -169,6 +207,13 @@ string floor::printMap(){
     }
     return textMap;
 }
+
+/**
+ * @brief floor::fillEmptySlots
+ * @param x_position
+ * @param invisible
+ * @return returns an empty vector which is used to format the string map
+ */
 vector<string> floor::fillEmptySlots(int x_position, bool invisible){
     //This function populates empty parts of the map with the neccessary text
     vector<string> temp;
@@ -186,6 +231,17 @@ vector<string> floor::fillEmptySlots(int x_position, bool invisible){
     }
     return temp;
 }
+/**
+ * @brief floor::traverseExits
+ * @param x_position
+ * @param y_position
+ * @param mapString
+ * @param currentRoomExits
+ * @param temp
+ * @param currentRoom
+ * @return
+ * a recursive function which returns a vector of vectors of all rooms on the floor, travelling recursively through each room.
+ */
 vector<vector<string>> floor::traverseExits(int x_position, int y_position,
                            vector<vector<string>> mapString,map<string,Room*> currentRoomExits,
                            vector<string> temp,Room* currentRoom){
@@ -194,6 +250,9 @@ vector<vector<string>> floor::traverseExits(int x_position, int y_position,
      * The method works recursively to get a full map.*/
     if(currentRoomExits["east"] != NULL){
         if(mapString[y_position].size() < (x_position)+2){
+                /* Add new indexes to the mapString and call this function again
+                 * setting the last index to be replaced with the eastern exit.
+                 */
                 mapString[y_position].push_back("---");
                 mapString[y_position].push_back("");
                 addMapIndex(x_position+2, y_position, &mapString, currentRoomExits["east"]);
@@ -201,19 +260,29 @@ vector<vector<string>> floor::traverseExits(int x_position, int y_position,
     }
     if(currentRoomExits["west"] != NULL){
         if(x_position < 2 && mapString[y_position][(x_position)] != currentRoomExits["west"]->roomName()){
+            /* We've determined that we need to insert new indexes at the start of the vector
+             * and we then set the new first index by calling this function again.
+             */
             mapString[y_position].insert(mapString[y_position].begin(),"---");
             mapString[y_position].insert(mapString[y_position].begin(),"");
+            //ensuring x_position doesnt go off target
             if(x_position < 0){
                x_position = 0;
             }
             addMapIndex(x_position, y_position, &mapString, currentRoomExits["west"]);
         }else if(mapString[y_position][(x_position)-2] != currentRoom->roomName()){
+            /*the index 2 spaces to our left needs to be
+             * set so we call this function again to set its new value.
+             */
             addMapIndex(x_position-2, y_position, &mapString, currentRoomExits["west"]);
         }
     }
     if(currentRoomExits["south"] != NULL){
         findMapCoordinates(currentRoom,&x_position, &y_position, mapString);
         if(y_position+1 == mapString.size()){
+            /*We've to created a new row on the map so we must
+             * now populate it with empty values and set the relevant values by calling this fuction again...
+             */
             temp.clear();
             temp = fillEmptySlots(x_position,true);
             temp.push_back("|");
@@ -225,6 +294,7 @@ vector<vector<string>> floor::traverseExits(int x_position, int y_position,
             temp.clear();
             addMapIndex(x_position, y_position+2, &mapString, currentRoomExits["south"]);
         }else{
+            //index below us already exists so we simply set the value
             addMapIndex(x_position, y_position+2, &mapString, currentRoomExits["south"]);
         }
 
@@ -232,30 +302,55 @@ vector<vector<string>> floor::traverseExits(int x_position, int y_position,
     return mapString;
 }
 
+/**
+ * @brief floor::addMapIndex
+ * @param x_position
+ * @param y_position
+ * @param mapDisplay
+ * @param currentRoom
+ * sets values of the mapString vector with that of room names
+ */
 void floor::addMapIndex(int x_position, int y_position, vector<vector<string>> *mapDisplay, Room* currentRoom){
+    //initialising variables
     map<string,Room*> currentRoomExits;
     vector<string> temp;
     vector<vector<string>> mapString = *mapDisplay;
+    //first run through
     if(x_position == 0 && y_position == 0 && mapString.size() == 0){
+        //first index of the map will be the room
         temp.push_back(currentRoom->roomName());
         mapString.push_back(temp);
         currentRoomExits = currentRoom->getExits();
+        //get next room
         mapString = traverseExits(x_position, y_position,
                                   mapString,currentRoomExits,
                                   temp,currentRoom);
 
      }else if(y_position < mapString.size()){
+        //checking were not out of bounds
         if(x_position < mapString[y_position].size()){
+            /*mapString already has the indexes initialised
+             * so we simply set the value of right index with the room name.
+             */
             mapString[y_position][x_position] = currentRoom->roomName();
             currentRoomExits = currentRoom->getExits();
+            //get next room
             mapString = traverseExits(x_position, y_position,
                                       mapString,currentRoomExits,
                                       temp,currentRoom);
        }
     }
+    //update the mapDisplay vector(the final product of this recursion).
     *mapDisplay = mapString;
 }
 
+/**
+ * @brief floor::getLargestIndex
+ * @param mapDisplay
+ * @param j
+ * @return
+ * returns the largest index in this column of the map so we can properly format the map.
+ */
 int floor::getLargestIndex(vector<vector<string>> mapDisplay, int j){
     /*this function goes through the selected column
      * and returns the size of the largest value in that columns.
