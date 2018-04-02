@@ -32,6 +32,7 @@ void newGame::on_startGameButton_clicked() {
     else {
 
         // Call Main window
+        cout << "test" << endl;
         MainWindow *w = new MainWindow(this);
         w->move(QApplication::desktop()->screen()->rect().center() - w->rect().center());
         w->show();

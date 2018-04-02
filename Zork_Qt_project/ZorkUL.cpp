@@ -11,13 +11,12 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     //UI
-    /*zorkHome n;
-    n.show();*/
+    zorkHome n;
+    n.show();
 
-    //readTxtFile test = readTxtFile("searchableNames.txt");
     //game
-    ZorkUL temp;
-    temp.play();
+    //ZorkUL temp;
+   // temp.play();
     return a.exec();
 }
 
