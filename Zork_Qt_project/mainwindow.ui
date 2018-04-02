@@ -44,7 +44,7 @@
    <enum>Qt::LeftToRight</enum>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(46, 52, 54);</string>
+   <string notr="true">background-color: rgb(79, 87, 88);</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QPushButton" name="westButton">
@@ -419,7 +419,7 @@ border-radius: 10px;</string>
      <x>0</x>
      <y>0</y>
      <width>1200</width>
-     <height>24</height>
+     <height>23</height>
     </rect>
    </property>
    <property name="font">
