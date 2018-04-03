@@ -36,6 +36,7 @@ Room::Room(int IDNumber,int floorId) {
  * @brief Room::~Room
  */
 Room::~Room(){
+    KeyForRoom = NULL;
     for(int i = 0; i < itemsInRoom.size(); i++){
         delete itemsInRoom[i];
     }
@@ -77,9 +78,9 @@ int Room::getFloorID(){
  */
 key* Room::lockRoom(){
     locked = true;
-    KeyForRoom =  key(description,IDnumber,floorId);
+    KeyForRoom = new key(description,IDnumber,floorId);
     name += "[L]";
-    return &KeyForRoom;
+    return KeyForRoom;
 }
 
 /**
@@ -104,7 +105,7 @@ void Room::unlockRoom(){
  * @return returns a pointer to the key that matches to this room
  */
 key* Room::getKey(){
-    return &KeyForRoom;
+    return KeyForRoom;
 }
 
 /**
@@ -245,6 +246,7 @@ Room* Room::nextRoom(string direction) {
  */
 void Room::addItem(Item *inItem) {
     itemsInRoom.push_back(inItem);
+    inItem = NULL;
 }
 
 /**

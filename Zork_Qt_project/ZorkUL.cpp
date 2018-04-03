@@ -1,24 +1,24 @@
 #include "ZorkUL.h"
 using namespace std;
 
-/**
- * @brief main
- * @param argc
- * @param argv
- * @return
- */
-int main(int argc, char *argv[])
+
+/*int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     //UI
-    zorkHome n;
-    n.show();
+    //zorkHome n;
+    //n.show();
 
     //game
-    //ZorkUL temp;
+    cout << "Starting" << endl;
+    ZorkUL *temp = new ZorkUL();
+    //temp->play();
+    delete temp;
+    cout << "Finished termination" <<endl;
    // temp.play();
+
     return a.exec();
-}
+}*/
 
 /**
  * @brief ZorkUL::ZorkUL
@@ -48,13 +48,10 @@ ZorkUL::ZorkUL() {
  * Destructor clearing memory once the object is finished
  */
 ZorkUL::~ZorkUL(){
-    delete currentRoom;
-    int i;
-    for(i = 0; i < floors.size(); i++){
-        delete floors[i];
-    }
-    for(i = 0; i < rooms.size(); i++){
-        delete rooms[i];
+    if(floors.size() > 0){
+        for(int i = 0; i < floors.size(); i++){
+           delete floors[i];
+        }
     }
 }
 
@@ -116,6 +113,7 @@ void ZorkUL::populateRoomsWithItems(){
             limit++;
         }
         searchableItem *chest;
+        key *lockedRoomKey;
         //now locking random rooms on the floor
         for(int k = 0; k < limit; k++){
             //find a room that isnt already locked.
@@ -127,24 +125,26 @@ void ZorkUL::populateRoomsWithItems(){
             lockedRoom = floorRooms[randomValue];
             //if the door were locking contains the downstairs exit for this floor we move the key the lower floor.
             if(randomValue == downstairsIndex){
+
                 //Set the current floor to that of the floor below it.
                 floorRooms = floors[i-1]->getRooms();
                 //Repurposing the randomValue to generate a random index of the rooms on the floors below us.
                 randomValue = rand() % floorRooms.size();
+                lockedRoomKey = lockedRoom->lockRoom();
                 if((rand() % 10) < 7){
                     chest = new searchableItem(searchableNames[rand() % searchableNames.size()]);
-                    chest->insertItem(lockedRoom->lockRoom());
-                    //cout <<chest->getShortDescription()<<endl;
+                    chest->insertItem(lockedRoomKey);
                     floorRooms[randomValue]->addItem(chest);
                }else{
-                   floorRooms[randomValue]->addItem(lockedRoom->lockRoom());
+                   floorRooms[randomValue]->addItem(lockedRoomKey);
                }
+
             }else{
                 /*Otherwise we lock the room and going from the entry point of the floor(Room with downstairs exit)
                  * we recursivly go through every room on the floor and build
                  * a list of potential rooms we can place the key in.
                  */
-                key *lockedRoomKey = lockedRoom->lockRoom();
+                lockedRoomKey = lockedRoom->lockRoom();
                 vector <Room *> validRoomsForKeys;
                 //calling the function to start the recursion process.
                 getValidRooms(&validRoomsForKeys, floorRooms[downstairsIndex]);
@@ -157,10 +157,13 @@ void ZorkUL::populateRoomsWithItems(){
                     validRoomsForKeys[rand() % validRoomsForKeys.size()]->addItem(chest);
                }else{
                     validRoomsForKeys[rand() % validRoomsForKeys.size()]->addItem(lockedRoomKey);
-                }
+               }
+               validRoomsForKeys.clear();
             }
         }
     }
+    floorRooms.clear();
+    exits.clear();
 }
 
 /**
@@ -204,6 +207,7 @@ bool ZorkUL::checkForDublicates(vector <Room *> validRoomsForKeys, Room* newRoom
             return false;
         }
     }
+    validRoomsForKeys.clear();
     //if we went through the entire list of rooms and didn't find any duplicates we return a true value.
     return true;
 }

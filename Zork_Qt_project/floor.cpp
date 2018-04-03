@@ -18,9 +18,9 @@ floor::floor(int floorId){
  * @brief floor::~floor
  */
 floor::~floor(){
-   for(int i =0; i < rooms.size(); i++){
-       delete rooms[i];
-   }
+    for(int i =0; i < rooms.size(); i++){
+        delete rooms[i];
+    }
 }
 
 /**
@@ -107,7 +107,6 @@ void floor::generateRandomFloorPlan(){
                 rooms.push_back(floorPlan[i][j]);
              }
          }
-
      }
 }
 

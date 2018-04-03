@@ -4,6 +4,11 @@
 searchableItem::searchableItem(){
     setProperties();
 }
+searchableItem::~searchableItem(){
+    for(int i =0; i < storedItems.size(); i++){
+        delete storedItems[i];
+    }
+}
 searchableItem::searchableItem(string description){
     this->description = description;
     setProperties();
@@ -14,6 +19,7 @@ void searchableItem::setProperties(){
 }
 void searchableItem::insertItem(carryableItem *item){
     storedItems.push_back(item);
+    item = NULL;
 }
 void searchableItem::transferItemsToCharacter(Character *user){
     if(storedItems.size() > 0){

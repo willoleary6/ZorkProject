@@ -10,13 +10,24 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
-{
-    ui->setupUi(this);
-}
+    {
+        ui->setupUi(this);
+        ZorkUL *game = new ZorkUL();
+        //game->play();
+        delete game;
+        //cout << "finish" << endl;
+        //game.play();
+        //updateMap();
+    }
 
 MainWindow::~MainWindow()
 {
+    cout << "test" << endl;
     delete ui;
+}
+void MainWindow::updateMap(){
+    ui->gameMap->clear();
+    ui->gameMap->append("");
 }
 
 void MainWindow::on_actionClose_triggered()

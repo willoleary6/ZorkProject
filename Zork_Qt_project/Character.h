@@ -18,6 +18,7 @@ public:
     void addItem(Item* item);
     Character(string description);
     Character();
+    ~Character();
     string shortDescription();
 	string longDescription();
     Item* removeItem(int itemIndex);

@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include "newGame.h"
-
+#include "ZorkUL.h"
 namespace Ui {
 class MainWindow;
 }
@@ -15,6 +15,8 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+private:
+    void updateMap();
 
 private slots:
     void on_actionClose_triggered();

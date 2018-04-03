@@ -5,7 +5,8 @@ key::key(){
     roomId = 0;
     floorId = 0;
 }
-
+key::~key(){
+}
 key::key(string roomName,int roomId,int floorId){
     description = "floor:"+to_string(floorId)+"-room:"+roomName+"-key";
     this->roomId = roomId;

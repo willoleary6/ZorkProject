@@ -17,6 +17,18 @@ zorkHome::zorkHome(QWidget *parent) :
     ui->csisLogo->setPixmap(csis);
 }
 
+int main(int argc, char *argv[])
+{
+    QApplication a(argc, argv);
+    //UI
+    zorkHome n;
+    n.show();
+
+    //game
+    //ZorkUL temp;
+   // temp.play();
+    return a.exec();
+}
 zorkHome::~zorkHome()
 {
     delete ui;

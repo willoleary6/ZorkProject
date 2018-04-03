@@ -10,6 +10,7 @@ class searchableItem: public Item
 {
 public:
     searchableItem();
+    ~searchableItem();
     searchableItem(string description);
     void insertItem(carryableItem *item);
     void transferItemsToCharacter(Character *user);
