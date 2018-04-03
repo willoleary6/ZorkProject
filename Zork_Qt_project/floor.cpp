@@ -179,6 +179,7 @@ string floor::printMap(){
     addMapIndex(x_position, y_position , &mapDisplay, rooms[0]);
     string textMap;
     vector<int> LargestIndex;
+    int before, after;
     //get the largest value in each index so we can properly keep the map formatted
     for(int x = 0; x < mapDisplay.size(); x++){
         for(int y=0; y < mapDisplay[x].size();y++){
@@ -195,11 +196,13 @@ string floor::printMap(){
         for(int j =0; j < mapDisplay[i].size();j++){
            if(LargestIndex[j] > mapDisplay[i][j].length()){
                 //padd each element of the map so each room is in line
-                textMap += string(((LargestIndex[j]+1)-(mapDisplay[i][j].length()))/2,' ');
+                before = ((LargestIndex[j])-(mapDisplay[i][j].length()))/2;
+                after = ((LargestIndex[j])-(mapDisplay[i][j].length())) - before;
+                textMap += ' '+string(before+1,' ');//to_string();//string(((LargestIndex[j])-(mapDisplay[i][j].length()))/2,'_');
                 textMap += mapDisplay[i][j];
-                textMap += string(((LargestIndex[j]+1)-(mapDisplay[i][j].length()))/2,' ');
+                textMap += string(after+1,' ')+' ';//to_string(/2);//string(((LargestIndex[j])-(mapDisplay[i][j].length()))/2,'_');
            }else{
-                textMap += " "+mapDisplay[i][j];
+                textMap += ' '+mapDisplay[i][j]+' ';
            }
         }
         textMap += "\n";
@@ -222,7 +225,7 @@ vector<string> floor::fillEmptySlots(int x_position, bool invisible){
         }else{
             //every second row is a blank row so any text entered must be made invisible for those rows.
             if(invisible){
-                temp.push_back("   ");
+                temp.push_back(" ");
             }else{
                 temp.push_back("---");
             }

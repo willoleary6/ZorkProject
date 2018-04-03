@@ -13,7 +13,9 @@
 #include "floor.h"
 #include <iostream>
 #include <string>
-
+#include <QString>
+#include <QDebug>
+class MainWindow;
 using namespace std;
 
 class ZorkUL {
@@ -24,18 +26,19 @@ private:
     void takeItem(Command command);
     void searchItem(int location);
     void getValidRooms(vector <Room *> *validRoomsForKeys, Room* nextRoom);
-    void printWelcome();
+
     void populateRoomsWithItems();
     void printHelp();
-    void goRoom(Command command);
     void createItems();
     void displayItems();
     void addStairSystem();
+
 
     bool checkForDublicates(vector <Room *> validRoomsForKeys, Room* newRoom);
     bool processCommand(Command command);
 
     string go(string direction);
+
 
     //Global private Variables
     int currentFloor =0;
@@ -44,11 +47,16 @@ private:
     Parser parser;
 	Room *currentRoom;
     vector <Room *> rooms;
+    MainWindow *ui;
 
 public:
-	ZorkUL();
+    ZorkUL(MainWindow *ui);
     ~ZorkUL();
     void play();
+    void getMap();
+    void printWelcome();
+    void goRoom(string direction);
+    map<string, Room*> getCurrentRoomExits();
 };
 
 #endif /*ZORKUL_H_*/

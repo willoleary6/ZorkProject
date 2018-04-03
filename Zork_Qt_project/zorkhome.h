@@ -2,6 +2,7 @@
 #define ZORKHOME_H
 #include <QDialog>
 #include <newGame.h>
+#include <iostream>
 
 namespace Ui {
 class zorkHome;

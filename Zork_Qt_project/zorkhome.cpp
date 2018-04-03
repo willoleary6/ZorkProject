@@ -5,6 +5,8 @@
 #include <QPixmap>
 #include <QtCore>
 
+using namespace std;
+
 zorkHome::zorkHome(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::zorkHome)
@@ -27,6 +29,7 @@ int main(int argc, char *argv[])
     //game
     //ZorkUL temp;
    // temp.play();
+    cout << "finished" << endl;
     return a.exec();
 }
 zorkHome::~zorkHome()
