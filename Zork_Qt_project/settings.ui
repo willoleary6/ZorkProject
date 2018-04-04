@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Zork - Settings</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="imglib.qrc">
+    <normaloff>:/zorkIcon.png</normaloff>:/zorkIcon.png</iconset>
+  </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(46, 52, 54);</string>
   </property>
@@ -187,6 +191,8 @@ Aaron Dunne (15148602)</string>
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="imglib.qrc"/>
+ </resources>
  <connections/>
 </ui>

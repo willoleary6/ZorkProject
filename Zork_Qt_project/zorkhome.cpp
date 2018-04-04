@@ -4,6 +4,7 @@
 #include "settings.h"
 #include <QPixmap>
 #include <QMediaPlayer>
+#include <QMessageBox>
 #include <QMediaPlaylist>
 #include <QtCore>
 
@@ -13,15 +14,6 @@ zorkHome::zorkHome(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QMediaPlaylist *gameMusic = new QMediaPlaylist();
-    gameMusic->addMedia(QUrl("qrc:/sounds/gameMusic_Power Core.mp3"));
-    gameMusic->setPlaybackMode(QMediaPlaylist::Loop);
-
-    QMediaPlayer *soundtrack = new QMediaPlayer();
-    soundtrack->setPlaylist(gameMusic);
-    soundtrack->setVolume(50);
-    soundtrack->play();
-    // Bug: bg music plays multiple times when returning from main menu
 
     button = new QMediaPlayer();
     button->setMedia(QUrl("qrc:/sounds/buttonClick.mp3"));
@@ -52,7 +44,22 @@ void zorkHome::on_newGameButton_clicked()
 void zorkHome::on_exitButton_clicked()
 {
     button->play();
-    close();
+    // Popup for Exit button
+    QMessageBox ex;
+    ex.setText("Are you sure you wish to exit Zork?");
+    ex.setWindowTitle("Exit Zork");
+    ex.setStandardButtons(QMessageBox::Close | QMessageBox::Cancel);
+    ex.setDefaultButton(QMessageBox::Cancel);
+    int ret = ex.exec();
+
+    switch (ret) {
+        case QMessageBox::Cancel:
+            button->play();
+            break;
+        case QMessageBox::Close:
+            close();
+            break;
+    }
 }
 
 void zorkHome::on_settingsButton_clicked()

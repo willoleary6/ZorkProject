@@ -31,10 +31,12 @@ void newGame::on_startGameButton_clicked() {
         QMessageBox::information(this, "Error", "Please enter a username to continue", 2);
     else {
 
-        // Call Main window
-        MainWindow *w = new MainWindow(this);
+        this->hide();
+        // Call Main window      
+        MainWindow *w = new MainWindow();
         w->move(QApplication::desktop()->screen()->rect().center() - w->rect().center());
         w->show();
+        //close();
         //MainWindow w();
         //w.show();
         //ZorkUL zork;

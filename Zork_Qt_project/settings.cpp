@@ -22,5 +22,15 @@ void settings::on_backButton_clicked()
 
 void settings::on_musicCB_clicked()
 {
+    // Checked by default. Mutes bg music if unchecked
+}
 
+void settings::on_debugCB_clicked()
+{
+    // Unchecked by default. Activates teleport if checked
+}
+
+void settings::on_soundfxCB_clicked()
+{
+    // Checked by default. Mutes sound fx if unchecked
 }

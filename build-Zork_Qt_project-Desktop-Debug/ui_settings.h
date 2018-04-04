@@ -37,6 +37,9 @@ public:
         if (settings->objectName().isEmpty())
             settings->setObjectName(QStringLiteral("settings"));
         settings->resize(290, 340);
+        QIcon icon;
+        icon.addFile(QStringLiteral(":/zorkIcon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        settings->setWindowIcon(icon);
         settings->setStyleSheet(QStringLiteral("background-color: rgb(46, 52, 54);"));
         authors = new QLabel(settings);
         authors->setObjectName(QStringLiteral("authors"));
