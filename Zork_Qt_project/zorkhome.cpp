@@ -32,14 +32,20 @@ zorkHome::zorkHome(QWidget *parent) :
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    //UI
+
+    // Game Background music
+    QMediaPlaylist *gameMusic = new QMediaPlaylist();
+    gameMusic->addMedia(QUrl("qrc:/sounds/gameMusic_Power Core.mp3"));
+    gameMusic->setPlaybackMode(QMediaPlaylist::Loop);
+
+    QMediaPlayer *soundtrack = new QMediaPlayer();
+    soundtrack->setPlaylist(gameMusic);
+    soundtrack->setVolume(50);
+    soundtrack->play();
+
+    // UI
     zorkHome n;
     n.show();
-
-    //game
-    //ZorkUL temp;
-   // temp.play();
-    cout << "finished" << endl;
     return a.exec();
 }
 zorkHome::~zorkHome()

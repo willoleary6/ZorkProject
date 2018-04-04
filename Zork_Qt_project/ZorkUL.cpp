@@ -4,30 +4,8 @@
 
 using namespace std;
 
-<<<<<<< HEAD
-int main(int argc, char *argv[])
-{
-    QApplication a(argc, argv);
 
-    // Game Background music
-    QMediaPlaylist *gameMusic = new QMediaPlaylist();
-    gameMusic->addMedia(QUrl("qrc:/sounds/gameMusic_Power Core.mp3"));
-    gameMusic->setPlaybackMode(QMediaPlaylist::Loop);
 
-    QMediaPlayer *soundtrack = new QMediaPlayer();
-    soundtrack->setPlaylist(gameMusic);
-    soundtrack->setVolume(50);
-    soundtrack->play();
-
-    // UI
-    zorkHome n;
-    n.show();
-    return a.exec();
-}
-    // Game
-    /*ZorkUL temp;
-    temp.play();*/
-=======
 
 /*int main(int argc, char *argv[])
 {
@@ -47,7 +25,6 @@ int main(int argc, char *argv[])
     return a.exec();
 }*/
 
->>>>>>> d79f4f2a63d4e82ab7c61acaca0d0a3ea7ab1957
 /**
  * @brief main
  * @param argc
