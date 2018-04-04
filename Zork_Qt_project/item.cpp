@@ -13,6 +13,8 @@ Item::Item(string inDescription) {
 Item::Item() {
     description = "Untitled";
 }
+Item::~Item() {
+}
 bool Item::isCarryable(){
     return carryable;
 }

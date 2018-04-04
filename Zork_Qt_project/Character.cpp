@@ -8,6 +8,11 @@ Character::Character(string description) {
 	this->description = description;
 }
 
+Character::~Character() {
+    for(int i =0; i < itemsInCharacter.size(); i++){
+        delete itemsInCharacter[i];
+    }
+}
 
 void Character::addItem(Item* item) {
     itemsInCharacter.push_back(item);

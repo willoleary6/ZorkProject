@@ -4,6 +4,7 @@
 
 using namespace std;
 
+<<<<<<< HEAD
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -26,6 +27,27 @@ int main(int argc, char *argv[])
     // Game
     /*ZorkUL temp;
     temp.play();*/
+=======
+
+/*int main(int argc, char *argv[])
+{
+    QApplication a(argc, argv);
+    //UI
+    //zorkHome n;
+    //n.show();
+
+    //game
+    cout << "Starting" << endl;
+    ZorkUL *temp = new ZorkUL();
+    //temp->play();
+    delete temp;
+    cout << "Finished termination" <<endl;
+   // temp.play();
+
+    return a.exec();
+}*/
+
+>>>>>>> d79f4f2a63d4e82ab7c61acaca0d0a3ea7ab1957
 /**
  * @brief main
  * @param argc
@@ -37,7 +59,9 @@ int main(int argc, char *argv[])
  * Constructor that seeds the random number generator.
  * populates the floors of the map and populates the map with items.
  */
-ZorkUL::ZorkUL() {
+ZorkUL::ZorkUL(MainWindow *ui) {
+    this->ui = ui;
+    //ui->updateMap();
     //seeding the random numbers with the current timestamp
     srand(time(NULL));
     for(int i =0; i < 3; i++){
@@ -48,11 +72,24 @@ ZorkUL::ZorkUL() {
     currentFloor = 0;
     //connecting the floors with a "upstairs/downstairs" exits
     addStairSystem();
+
     //setting the rooms on the current floor and current room
     rooms = floors[currentFloor]->getRooms();
     currentRoom = rooms[0];
     //spawn items onto the map and set the lock system with corresponding keys
     populateRoomsWithItems();
+
+    //cout << floors[currentFloor]->printMap();
+    //QString test = QString::fromStdString(floors[currentFloor]->printMap());
+    //ui->updateMap(test);
+}
+
+map<string, Room*> ZorkUL::getCurrentRoomExits(){
+    return currentRoom->getExits();
+}
+
+void ZorkUL:: getMap(){
+    ui->updateMap(QString::fromStdString(floors[currentFloor]->printMap()));
 }
 
 /**
@@ -60,13 +97,10 @@ ZorkUL::ZorkUL() {
  * Destructor clearing memory once the object is finished
  */
 ZorkUL::~ZorkUL(){
-    delete currentRoom;
-    int i;
-    for(i = 0; i < floors.size(); i++){
-        delete floors[i];
-    }
-    for(i = 0; i < rooms.size(); i++){
-        delete rooms[i];
+    if(floors.size() > 0){
+        for(int i = 0; i < floors.size(); i++){
+           delete floors[i];
+        }
     }
 }
 
@@ -128,6 +162,7 @@ void ZorkUL::populateRoomsWithItems(){
             limit++;
         }
         searchableItem *chest;
+        key *lockedRoomKey;
         //now locking random rooms on the floor
         for(int k = 0; k < limit; k++){
             //find a room that isnt already locked.
@@ -139,24 +174,26 @@ void ZorkUL::populateRoomsWithItems(){
             lockedRoom = floorRooms[randomValue];
             //if the door were locking contains the downstairs exit for this floor we move the key the lower floor.
             if(randomValue == downstairsIndex){
+
                 //Set the current floor to that of the floor below it.
                 floorRooms = floors[i-1]->getRooms();
                 //Repurposing the randomValue to generate a random index of the rooms on the floors below us.
                 randomValue = rand() % floorRooms.size();
+                lockedRoomKey = lockedRoom->lockRoom();
                 if((rand() % 10) < 7){
                     chest = new searchableItem(searchableNames[rand() % searchableNames.size()]);
-                    chest->insertItem(lockedRoom->lockRoom());
-                    //cout <<chest->getShortDescription()<<endl;
+                    chest->insertItem(lockedRoomKey);
                     floorRooms[randomValue]->addItem(chest);
                }else{
-                   floorRooms[randomValue]->addItem(lockedRoom->lockRoom());
+                   floorRooms[randomValue]->addItem(lockedRoomKey);
                }
+
             }else{
                 /*Otherwise we lock the room and going from the entry point of the floor(Room with downstairs exit)
                  * we recursivly go through every room on the floor and build
                  * a list of potential rooms we can place the key in.
                  */
-                key *lockedRoomKey = lockedRoom->lockRoom();
+                lockedRoomKey = lockedRoom->lockRoom();
                 vector <Room *> validRoomsForKeys;
                 //calling the function to start the recursion process.
                 getValidRooms(&validRoomsForKeys, floorRooms[downstairsIndex]);
@@ -169,7 +206,7 @@ void ZorkUL::populateRoomsWithItems(){
                     validRoomsForKeys[rand() % validRoomsForKeys.size()]->addItem(chest);
                }else{
                     validRoomsForKeys[rand() % validRoomsForKeys.size()]->addItem(lockedRoomKey);
-                }
+               }
             }
         }
     }
@@ -216,6 +253,7 @@ bool ZorkUL::checkForDublicates(vector <Room *> validRoomsForKeys, Room* newRoom
             return false;
         }
     }
+    validRoomsForKeys.clear();
     //if we went through the entire list of rooms and didn't find any duplicates we return a true value.
     return true;
 }
@@ -247,10 +285,8 @@ void ZorkUL::addStairSystem(){
  * @brief ZorkUL::printWelcome
  */
 void ZorkUL::printWelcome() {
-    cout << "start"<< endl;
-    cout << "info for help"<< endl;
-    cout << endl;
-    cout << currentRoom->longDescription() << endl;
+    ui->updateLog(QString::fromStdString("start"));
+    ui->updateLog(QString::fromStdString(currentRoom->longDescription()));
 }
 
 
@@ -275,7 +311,7 @@ bool ZorkUL::processCommand(Command command) {
         cout << currentRoom->longDescription() << endl;
     }else if (commandWord.compare("go") == 0){
         //change the current room to that of the direction specified my the user.
-        goRoom(command);
+        //goRoom(command);
     }else if (commandWord.compare("take") == 0){
         // added functionality for user to take items out of a room
         if (!command.hasSecondWord()) {
@@ -436,7 +472,7 @@ void ZorkUL::unlockRoom(Room* roomToUnlock,string direction){
                 found = true;
                 roomToUnlock->unlockRoom();
                 cout << "Success! "<<roomToUnlock->shortDescription()<<" is now unlocked"<<endl;
-                goRoom(Command("go",direction));
+                //goRoom(Command("go",direction));
             }
            }catch(const exception& e){
                 /*We dont want the program to crash if a non
@@ -485,12 +521,7 @@ void ZorkUL::printHelp() {
  * @param command
  * goRoom allows users to traverse the map using the rooms exits.
  */
-void ZorkUL::goRoom(Command command) {
-    if (!command.hasSecondWord()) {
-        cout << "incomplete input"<< endl;
-        return;
-    }
-    string direction = command.getSecondWord();
+void ZorkUL::goRoom(string direction) {
     // Try to leave current room.
     Room* nextRoom = currentRoom->nextRoom(direction);
     if (nextRoom == NULL){
@@ -501,13 +532,16 @@ void ZorkUL::goRoom(Command command) {
         if(direction == "upstairs"){
             currentFloor++;
             cout << "Going Up stairs!"<<endl;
+            getMap();
         }else if(direction == "downstairs"){
             currentFloor--;
             cout << "Going downStairs!"<<endl;
+            getMap();
         }
         rooms = floors[currentFloor]->getRooms();
         currentRoom = nextRoom;
-        cout << currentRoom->longDescription() << endl;
+        ui->updateLog(QString::fromStdString("Moving "+direction));
+        ui->updateLog(QString::fromStdString(currentRoom->longDescription()));
     }
 }
 

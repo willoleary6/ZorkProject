@@ -8,6 +8,7 @@ public:
     //testing
     carryableItem();
     carryableItem(string description);
+    virtual ~carryableItem();
 protected:
     void setProperties();
 

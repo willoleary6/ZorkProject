@@ -8,6 +8,7 @@ private:
     int roomId;
 public:
     key();
+    ~key();
     key(string roomName,int roomId,int floorId);
     int getRoomId();
     int getFloorId();

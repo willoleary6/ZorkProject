@@ -3,6 +3,8 @@
 carryableItem::carryableItem(){
     setProperties();
 }
+carryableItem::~carryableItem(){
+}
 carryableItem::carryableItem(string description){
     this->description = description;
     setProperties();

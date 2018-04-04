@@ -3,7 +3,10 @@
 
 #include <QMainWindow>
 #include "newGame.h"
+#include "ZorkUL.h"
+#include <map>
 
+class ZorkUL;
 namespace Ui {
 class MainWindow;
 }
@@ -15,6 +18,14 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+     void updateMap(QString map);
+     void updateLog(QString log);
+private:
+    void initialiseUI();
+    ZorkUL *game;
+    void lockButton(QPushButton *button);
+    void unlockButton(QPushButton *button);
+    void ValidButtons();
 
 private slots:
     void on_actionClose_triggered();
@@ -22,6 +33,18 @@ private slots:
     void on_actionSettings_triggered();
 
     void on_actionAbout_triggered();
+
+    void on_northButton_clicked();
+
+    void on_upstairsButton_clicked();
+
+    void on_downstairsButton_clicked();
+
+    void on_westButton_clicked();
+
+    void on_eastButton_clicked();
+
+    void on_southButton_clicked();
 
 private:
     Ui::MainWindow *ui;

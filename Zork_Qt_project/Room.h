@@ -34,7 +34,7 @@ private:
     int floorId;
     bool locked;
 
-    key KeyForRoom;
+    key *KeyForRoom;
 
 public:
     Room(string description, int IDnumber, int floorId);

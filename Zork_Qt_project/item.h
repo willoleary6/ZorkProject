@@ -19,6 +19,7 @@ protected:
     bool searchable;
 public:
     Item();
+    virtual ~Item();
     Item (string description, int inWeight, float inValue);
     Item (string description);
     string getShortDescription();

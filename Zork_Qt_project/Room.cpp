@@ -36,6 +36,7 @@ Room::Room(int IDNumber,int floorId) {
  * @brief Room::~Room
  */
 Room::~Room(){
+    KeyForRoom = NULL;
     for(int i = 0; i < itemsInRoom.size(); i++){
         delete itemsInRoom[i];
     }
@@ -77,9 +78,9 @@ int Room::getFloorID(){
  */
 key* Room::lockRoom(){
     locked = true;
-    KeyForRoom =  key(description,IDnumber,floorId);
+    KeyForRoom = new key(description,IDnumber,floorId);
     name += "[L]";
-    return &KeyForRoom;
+    return KeyForRoom;
 }
 
 /**
@@ -104,7 +105,7 @@ void Room::unlockRoom(){
  * @return returns a pointer to the key that matches to this room
  */
 key* Room::getKey(){
-    return &KeyForRoom;
+    return KeyForRoom;
 }
 
 /**
@@ -195,7 +196,7 @@ string Room::roomName(){
  * @return returns the description of the room, all the items stored in it and all the valid exits.
  */
 string Room::longDescription() {
-    return "room = " + description + ".\n" + displayItem() + exitString();
+    return "room : " + description + ".\n" + displayItem() + exitString()+"\n";
 }
 
 /**
@@ -203,26 +204,26 @@ string Room::longDescription() {
  * @return returns all the valid exits of the room.
  */
 string Room::exitString() {
-    string returnString = "\nexits =";
+    string returnString = "exits: ";
     if (exits["north"] != NULL){
-        returnString += " north";
+        returnString += " north,";
     }
     if (exits["east"] != NULL){
-        returnString += " east";
+        returnString += " east,";
     }
     if (exits["south"] != NULL){
-        returnString += " south";
+        returnString += " south,";
     }
     if (exits["west"] != NULL){
-        returnString += " west";
+        returnString += " west,";
     }
     if(exits["upstairs"] != NULL){
-        returnString += " upstairs";
+        returnString += " upstairs,";
     }
     if(exits["downstairs"] != NULL){
-        returnString += " downstairs";
+        returnString += " downstairs,";
     }
-    return returnString;
+    return returnString+"\n";
 }
 
 /**
@@ -245,6 +246,7 @@ Room* Room::nextRoom(string direction) {
  */
 void Room::addItem(Item *inItem) {
     itemsInRoom.push_back(inItem);
+    inItem = NULL;
 }
 
 /**
@@ -252,17 +254,16 @@ void Room::addItem(Item *inItem) {
  * @return returns the descriptions of every item in the room.
  */
 string Room::displayItem() {
-    string tempString = "items in room = ";
+    string tempString;
+
     int sizeItems = (itemsInRoom.size());
-    if (itemsInRoom.size() < 1) {
-        tempString = "no items in room";
+    int x = (0);
+    for (int n = sizeItems; n > 0; n--) {
+        tempString = tempString + itemsInRoom[x]->getShortDescription() + "," ;
+        x++;
     }
-    else if (itemsInRoom.size() > 0) {
-        int x = (0);
-        for (int n = sizeItems; n > 0; n--) {
-            tempString = tempString + itemsInRoom[x]->getShortDescription() + "  " ;
-            x++;
-        }
+    if(itemsInRoom.size()>0){
+        tempString= "items in room : "+tempString+"\n";
     }
     return tempString;
 }
