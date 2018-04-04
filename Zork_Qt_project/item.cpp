@@ -21,6 +21,7 @@ bool Item::isCarryable(){
 bool Item::isSearchable(){
     return searchable;
 }
+//virtual vector<string> validRoomCommandsList() =0;
 
 void Item::setWeight(int inWeightGrams){
     if (inWeightGrams > 9999 || inWeightGrams < 0){

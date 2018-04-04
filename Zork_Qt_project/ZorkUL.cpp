@@ -1,33 +1,6 @@
 #include "ZorkUL.h"
-#include <QMediaPlayer>
-#include <QMediaPlaylist>
-
 using namespace std;
 
-<<<<<<< HEAD
-int main(int argc, char *argv[])
-{
-    QApplication a(argc, argv);
-
-    // Game Background music
-    QMediaPlaylist *gameMusic = new QMediaPlaylist();
-    gameMusic->addMedia(QUrl("qrc:/sounds/gameMusic_Power Core.mp3"));
-    gameMusic->setPlaybackMode(QMediaPlaylist::Loop);
-
-    QMediaPlayer *soundtrack = new QMediaPlayer();
-    soundtrack->setPlaylist(gameMusic);
-    soundtrack->setVolume(50);
-    soundtrack->play();
-
-    // UI
-    zorkHome n;
-    n.show();
-    return a.exec();
-}
-    // Game
-    /*ZorkUL temp;
-    temp.play();*/
-=======
 
 /*int main(int argc, char *argv[])
 {
@@ -47,14 +20,7 @@ int main(int argc, char *argv[])
     return a.exec();
 }*/
 
->>>>>>> d79f4f2a63d4e82ab7c61acaca0d0a3ea7ab1957
 /**
- * @brief main
- * @param argc
- * @param argv
- * @return
-
-/*
  * @brief ZorkUL::ZorkUL
  * Constructor that seeds the random number generator.
  * populates the floors of the map and populates the map with items.
@@ -87,9 +53,22 @@ ZorkUL::ZorkUL(MainWindow *ui) {
 map<string, Room*> ZorkUL::getCurrentRoomExits(){
     return currentRoom->getExits();
 }
+vector<string> ZorkUL::getItemValidCommands(string ItemName){
+    int index = currentRoom->isItemInRoom(ItemName);
+    Item* foundItem = currentRoom->getItem(index);
+    return foundItem->validRoomCommandsList();
+}
 
 void ZorkUL:: getMap(){
     ui->updateMap(QString::fromStdString(floors[currentFloor]->printMap()));
+}
+vector<string> ZorkUL::getCurrentRoomItemNames(){
+    vector<Item*> itemsInRoom = currentRoom->getItemsInRoom();
+    vector <string> ItemNames;
+    for(int i =0; i < itemsInRoom.size(); i++){
+        ItemNames.push_back(itemsInRoom[i]->getShortDescription());
+    }
+    return ItemNames;
 }
 
 /**

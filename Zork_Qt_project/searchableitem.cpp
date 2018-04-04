@@ -16,11 +16,16 @@ searchableItem::searchableItem(string description){
 void searchableItem::setProperties(){
     carryable = false;
     searchable = true;
+    validRoomCommands = {"Search"};
 }
 void searchableItem::insertItem(carryableItem *item){
     storedItems.push_back(item);
     item = NULL;
 }
+vector<string> searchableItem:: validRoomCommandsList(){
+    return validRoomCommands;
+}
+
 void searchableItem::transferItemsToCharacter(Character *user){
     if(storedItems.size() > 0){
         cout << "You found ";

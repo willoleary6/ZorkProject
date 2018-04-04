@@ -4,15 +4,20 @@ key::key(){
     description = "NULL Key";
     roomId = 0;
     floorId = 0;
+    setProperties();
 }
 key::~key(){
 }
 key::key(string roomName,int roomId,int floorId){
-    description = "floor:"+to_string(floorId)+"-room:"+roomName+"-key";
+    description = "Key for "+roomName+" on floor "+to_string(floorId);
     this->roomId = roomId;
     this->floorId = floorId;
     setProperties();
 }
+vector<string> key::validRoomCommandsList(){
+    return validRoomCommandsList();
+}
+
 int key::getRoomId(){
     return roomId;
 }

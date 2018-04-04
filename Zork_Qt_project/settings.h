@@ -18,11 +18,7 @@ public:
 private slots:
     void on_backButton_clicked();
 
-    void on_musicCB_clicked();
-
-    void on_debugCB_clicked();
-
-    void on_soundfxCB_clicked();
+    void on_soundfxCB_2_clicked();
 
 private:
     Ui::settings *ui;

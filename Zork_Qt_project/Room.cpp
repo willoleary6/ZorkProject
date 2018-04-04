@@ -41,6 +41,10 @@ Room::~Room(){
         delete itemsInRoom[i];
     }
 }
+vector <Item*> Room::getItemsInRoom(){
+    return itemsInRoom;
+}
+
 /**
  * @brief Room::nullifyExits
  * Initialises exits map
@@ -78,7 +82,7 @@ int Room::getFloorID(){
  */
 key* Room::lockRoom(){
     locked = true;
-    KeyForRoom = new key(description,IDnumber,floorId);
+    KeyForRoom = new key(name,IDnumber,floorId);
     name += "[L]";
     return KeyForRoom;
 }

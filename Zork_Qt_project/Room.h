@@ -50,6 +50,7 @@ public:
     int isItemInRoom(string inString);
 
     bool isLocked();
+    vector <Item*> getItemsInRoom();
 
     string roomName();
     string shortDescription();

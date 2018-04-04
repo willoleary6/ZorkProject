@@ -16,10 +16,6 @@
   <property name="windowTitle">
    <string>Zork - New Game</string>
   </property>
-  <property name="windowIcon">
-   <iconset resource="imglib.qrc">
-    <normaloff>:/zorkIcon.png</normaloff>:/zorkIcon.png</iconset>
-  </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(46, 52, 54);</string>
   </property>
@@ -193,23 +189,8 @@
    <property name="styleSheet">
     <string notr="true">background-color: rgb(35, 39, 41);</string>
    </property>
-   <property name="maxLength">
-    <number>10</number>
-   </property>
-   <property name="frame">
-    <bool>true</bool>
-   </property>
-   <property name="echoMode">
-    <enum>QLineEdit::Normal</enum>
-   </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
-   </property>
-   <property name="dragEnabled">
-    <bool>false</bool>
-   </property>
-   <property name="placeholderText">
-    <string>Username</string>
    </property>
   </widget>
  </widget>

@@ -5,6 +5,7 @@
 #include "newGame.h"
 #include "ZorkUL.h"
 #include <map>
+#include <QTreeWidgetItem>
 
 class ZorkUL;
 namespace Ui {
@@ -26,8 +27,14 @@ private:
     void lockButton(QPushButton *button);
     void unlockButton(QPushButton *button);
     void ValidButtons();
+    void buildRoomList();
+
+public slots:
+
 
 private slots:
+
+
     void on_actionClose_triggered();
 
     void on_actionSettings_triggered();
@@ -45,6 +52,10 @@ private slots:
     void on_eastButton_clicked();
 
     void on_southButton_clicked();
+
+    //void on_roomItems_itemClicked(QListWidgetItem *item);
+
+    void on_roomItems_itemClicked(QTreeWidgetItem *item, int column);
 
 private:
     Ui::MainWindow *ui;

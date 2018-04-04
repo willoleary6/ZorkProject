@@ -10,6 +10,7 @@ public:
     key();
     ~key();
     key(string roomName,int roomId,int floorId);
+    vector<string> validRoomCommandsList();
     int getRoomId();
     int getFloorId();
 };

@@ -56,6 +56,8 @@ public:
     void getMap();
     void printWelcome();
     void goRoom(string direction);
+    vector<string> getItemValidCommands(string ItemName);
+    vector<string> getCurrentRoomItemNames();
     map<string, Room*> getCurrentRoomExits();
 };
 

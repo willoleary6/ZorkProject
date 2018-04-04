@@ -7,6 +7,8 @@
 #include <QImage>
 #include <QtCore>
 #include <QString>
+#include <QToolButton>
+#include <QTextStream>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -26,7 +28,41 @@ void MainWindow::initialiseUI(){
         game->getMap();
         game->printWelcome();
         ValidButtons();
+        buildRoomList();
+        //connect(ui->roomItems, SIGNAL(itemClicked(QListWidgetItem*)),this,SLOT(on_roomItems_itemClicked(QListWidgetItem *item)));
 }
+void MainWindow::buildRoomList(){
+    ui->roomItems->clear();
+    vector <string> itemsInRoom = game->getCurrentRoomItemNames();
+    vector <string> validCommands;
+    QList<QTreeWidgetItem*> items;
+    QTreeWidgetItem *currentItem;
+    for(int i =0; i < itemsInRoom.size(); i++){
+         //new QTreeWidgetItem(ui->roomItems,0);
+        currentItem = new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString(QString::fromStdString(itemsInRoom[i]).arg(i))));
+        validCommands = game->getItemValidCommands(itemsInRoom[i]);
+        for(int j = 0; j < validCommands.size(); j++){
+            currentItem->addChild(new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString(QString::fromStdString(validCommands[j]).arg(0)))));
+        }
+        //currentItem->addChild(new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString(QString::fromStdString("test").arg(0)))));
+        items.append(currentItem);
+        //ui->roomItems->addTopLevelItem(new QTreeWidgetItem(QString::fromStdString(itemsInRoom[i]),0));
+
+    }
+    ui->roomItems->insertTopLevelItems(0,items);
+    /*QTreeWidgetItem *test = new QTreeWidgetItem();
+    QList<QVariant> dataList;
+    dataList.append("first");
+    dataList.append("Second");
+    QVariant data(dataList);
+    test->setData(0,Qt::UserRole,data);*/
+    //QListWidgetItem *test = new QListWidgetItem();
+    //test->setText("Test");
+    //
+    //ui->roomItems->addItem(test);
+   // ui->roomItems->
+}
+
 
 MainWindow::~MainWindow()
 {
@@ -112,29 +148,53 @@ void MainWindow::unlockButton(QPushButton *button){
 void MainWindow::on_northButton_clicked(){
     game->goRoom("north");
     ValidButtons();
+    buildRoomList();
 }
 
 void MainWindow::on_upstairsButton_clicked(){
     game->goRoom("upstairs");
     ValidButtons();
+    buildRoomList();
 }
 
 void MainWindow::on_downstairsButton_clicked(){
     game->goRoom("downstairs");
     ValidButtons();
+    buildRoomList();
 }
 
 void MainWindow::on_westButton_clicked(){
      game->goRoom("west");
      ValidButtons();
+     buildRoomList();
 }
 
 void MainWindow::on_eastButton_clicked(){
      game->goRoom("east");
      ValidButtons();
+     buildRoomList();
 }
 
 void MainWindow::on_southButton_clicked(){
      game->goRoom("south");
      ValidButtons();
+     buildRoomList();
+}
+
+
+
+
+
+/*void MainWindow::on_roomItems_itemClicked(QListWidgetItem *item)
+{
+    //QTextStream out(stdout);
+    //out << item->text() << endl;
+
+}*/
+
+void MainWindow::on_roomItems_itemClicked(QTreeWidgetItem *item, int column)
+{
+    QTextStream out(stdout);
+    out << item->text(column) << endl;
+    //item->addChild();*/
 }

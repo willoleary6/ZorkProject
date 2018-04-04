@@ -4,6 +4,7 @@
 #include <map>
 #include <string>
 #include <iostream>
+#include <vector>
 using namespace std;
 
 class Item {
@@ -17,9 +18,11 @@ protected:
     bool weaponCheck;
     bool carryable;
     bool searchable;
+    vector<string> validRoomCommands;
 public:
     Item();
     virtual ~Item();
+    virtual vector<string> validRoomCommandsList() = 0;
     Item (string description, int inWeight, float inValue);
     Item (string description);
     string getShortDescription();

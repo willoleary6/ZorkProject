@@ -4,8 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui \
-         multimedia
+QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -64,5 +63,4 @@ FORMS    += mainwindow.ui \
     settings.ui
 
 RESOURCES += \
-    imglib.qrc \
-    sounds.qrc
+    imglib.qrc

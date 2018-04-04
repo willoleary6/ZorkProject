@@ -14,6 +14,8 @@ public:
     searchableItem(string description);
     void insertItem(carryableItem *item);
     void transferItemsToCharacter(Character *user);
+    vector<string> validRoomCommandsList();
+
 private:
 
     void setProperties();
