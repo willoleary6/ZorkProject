@@ -3,6 +3,7 @@
 #include <QDialog>
 #include <newGame.h>
 #include <iostream>
+#include <QMediaPlaylist>
 
 namespace Ui {
 class zorkHome;
