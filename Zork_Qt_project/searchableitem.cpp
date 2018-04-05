@@ -16,7 +16,7 @@ searchableItem::searchableItem(string description){
 void searchableItem::setProperties(){
     carryable = false;
     searchable = true;
-    validRoomCommands = {"Search"};
+    validRoomCommands = {"search"};
 }
 void searchableItem::insertItem(carryableItem *item){
     storedItems.push_back(item);
@@ -24,6 +24,9 @@ void searchableItem::insertItem(carryableItem *item){
 }
 vector<string> searchableItem:: validRoomCommandsList(){
     return validRoomCommands;
+}
+vector<string> searchableItem:: validUserCommandsList(){
+    return validUserCommands;
 }
 
 void searchableItem::transferItemsToCharacter(Character *user){

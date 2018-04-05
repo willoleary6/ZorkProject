@@ -19,10 +19,12 @@ protected:
     bool carryable;
     bool searchable;
     vector<string> validRoomCommands;
+    vector<string> validUserCommands;
 public:
     Item();
     virtual ~Item();
     virtual vector<string> validRoomCommandsList() = 0;
+    virtual vector<string> validUserCommandsList() = 0;
     Item (string description, int inWeight, float inValue);
     Item (string description);
     string getShortDescription();

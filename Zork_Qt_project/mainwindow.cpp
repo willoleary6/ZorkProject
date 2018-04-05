@@ -28,41 +28,77 @@ void MainWindow::initialiseUI(){
         game->getMap();
         game->printWelcome();
         ValidButtons();
-        buildRoomList();
+        buildInventoryAndRoom();
         //connect(ui->roomItems, SIGNAL(itemClicked(QListWidgetItem*)),this,SLOT(on_roomItems_itemClicked(QListWidgetItem *item)));
 }
 void MainWindow::buildRoomList(){
-    ui->roomItems->clear();
+    /*ui->roomItems->clear();
     vector <string> itemsInRoom = game->getCurrentRoomItemNames();
     vector <string> validCommands;
     QList<QTreeWidgetItem*> items;
     QTreeWidgetItem *currentItem;
     for(int i =0; i < itemsInRoom.size(); i++){
          //new QTreeWidgetItem(ui->roomItems,0);
-        currentItem = new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString(QString::fromStdString(itemsInRoom[i]).arg(i))));
-        validCommands = game->getItemValidCommands(itemsInRoom[i]);
+        currentItem = new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString(QString::fromStdString(itemsInRoom[i]))));
+        validCommands = game->getItemValidRoomCommands(itemsInRoom[i]);
         for(int j = 0; j < validCommands.size(); j++){
-            currentItem->addChild(new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString(QString::fromStdString(validCommands[j]).arg(0)))));
+            currentItem->addChild(new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString(QString::fromStdString(validCommands[j]+" "+itemsInRoom[i])))));
         }
         //currentItem->addChild(new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString(QString::fromStdString("test").arg(0)))));
         items.append(currentItem);
         //ui->roomItems->addTopLevelItem(new QTreeWidgetItem(QString::fromStdString(itemsInRoom[i]),0));
 
     }
-    ui->roomItems->insertTopLevelItems(0,items);
-    /*QTreeWidgetItem *test = new QTreeWidgetItem();
-    QList<QVariant> dataList;
-    dataList.append("first");
-    dataList.append("Second");
-    QVariant data(dataList);
-    test->setData(0,Qt::UserRole,data);*/
-    //QListWidgetItem *test = new QListWidgetItem();
-    //test->setText("Test");
-    //
-    //ui->roomItems->addItem(test);
-   // ui->roomItems->
+    ui->roomItems->insertTopLevelItems(0,items);*/
 }
+void MainWindow::buildInventory(){
+    /*ui->inventory->clear();
+    vector <string> itemsInInventory = game->getCurrentUserItemNames();
+    vector <string> validCommands;
+    QList<QTreeWidgetItem*> items;
+    QTreeWidgetItem *currentItem;
+    for(int i =0; i < itemsInInventory.size(); i++){
+         //new QTreeWidgetItem(ui->roomItems,0);
+        currentItem = new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString(QString::fromStdString(itemsInInventory[i]))));
+        validCommands = game->getItemValidUserCommands(itemsInInventory[i]);
+        for(int j = 0; j < validCommands.size(); j++){
+            currentItem->addChild(new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString(QString::fromStdString(validCommands[j]+" "+itemsInInventory[i])))));
+        }
+        //currentItem->addChild(new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString(QString::fromStdString("test").arg(0)))));
+        items.append(currentItem);
+        //ui->roomItems->addTopLevelItem(new QTreeWidgetItem(QString::fromStdString(itemsInRoom[i]),0));
 
+    }
+    ui->inventory->insertTopLevelItems(0,items);*/
+}
+void MainWindow::buildInventoryAndRoom(){
+    vector <string> itemNames;
+    vector <string> validCommands;
+    QList<QTreeWidgetItem*> items;
+    QTreeWidgetItem *currentItem;
+    for(int k =0; k <2; k++){
+        if(k==0){
+            itemNames = game->getCurrentItemNames(k);
+            ui->inventory->clear();
+        }else{
+            itemNames = game->getCurrentItemNames(k);
+            ui->roomItems->clear();
+        }
+        for(int i =0; i < itemNames.size(); i++){
+            currentItem = new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString(QString::fromStdString(itemNames[i]))));
+            validCommands = game->getItemValidCommands(itemNames[i],k);
+            for(int j = 0; j < validCommands.size(); j++){
+                currentItem->addChild(new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString(QString::fromStdString(validCommands[j]+" "+itemNames[i])))));
+            }
+            items.append(currentItem);
+      }
+      if(k==0){
+         ui->inventory->insertTopLevelItems(0,items);
+      }else{
+         ui->roomItems->insertTopLevelItems(0,items);
+      }
+   }
+}
 
 MainWindow::~MainWindow()
 {
@@ -148,37 +184,37 @@ void MainWindow::unlockButton(QPushButton *button){
 void MainWindow::on_northButton_clicked(){
     game->goRoom("north");
     ValidButtons();
-    buildRoomList();
+    buildInventoryAndRoom();
 }
 
 void MainWindow::on_upstairsButton_clicked(){
     game->goRoom("upstairs");
     ValidButtons();
-    buildRoomList();
+    buildInventoryAndRoom();
 }
 
 void MainWindow::on_downstairsButton_clicked(){
     game->goRoom("downstairs");
     ValidButtons();
-    buildRoomList();
+    buildInventoryAndRoom();
 }
 
 void MainWindow::on_westButton_clicked(){
      game->goRoom("west");
      ValidButtons();
-     buildRoomList();
+     buildInventoryAndRoom();
 }
 
 void MainWindow::on_eastButton_clicked(){
      game->goRoom("east");
      ValidButtons();
-     buildRoomList();
+     buildInventoryAndRoom();
 }
 
 void MainWindow::on_southButton_clicked(){
      game->goRoom("south");
      ValidButtons();
-     buildRoomList();
+     buildInventoryAndRoom();
 }
 
 
@@ -194,7 +230,15 @@ void MainWindow::on_southButton_clicked(){
 
 void MainWindow::on_roomItems_itemClicked(QTreeWidgetItem *item, int column)
 {
-    QTextStream out(stdout);
-    out << item->text(column) << endl;
+    //QTextStream out(stdout);
+    //out << item->text(column) << endl;
+    game->runCommand(item->text(column).toUtf8().constData());
+    buildInventoryAndRoom();
     //item->addChild();*/
+}
+
+void MainWindow::on_inventory_itemClicked(QTreeWidgetItem *item, int column)
+{
+    game->runCommand(item->text(column).toUtf8().constData());
+    buildInventoryAndRoom();
 }

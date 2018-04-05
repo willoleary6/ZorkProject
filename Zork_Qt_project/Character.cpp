@@ -27,7 +27,7 @@ Item* Character::removeItem(int itemIndex){
     itemsInCharacter.erase(itemsInCharacter.begin() + itemIndex);
     return Temp;
 }
- vector <Item*> Character::getItemList(){
+vector <Item*> Character::getItemList(){
      return itemsInCharacter;
  }
 
@@ -43,7 +43,7 @@ string Character::longDescription(){
 int Character::isItemOnCharacter(string inString){
     int sizeItems = (itemsInCharacter.size());
     if (itemsInCharacter.size() < 1) {
-        return false;
+        return -1;
     }else if (itemsInCharacter.size() > 0) {
         int x = (0);
         for (int n = sizeItems; n > 0; n--) {

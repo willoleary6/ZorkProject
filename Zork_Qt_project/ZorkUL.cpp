@@ -44,7 +44,9 @@ ZorkUL::ZorkUL(MainWindow *ui) {
     rooms = floors[currentFloor]->getRooms();
     currentRoom = rooms[0];
     //spawn items onto the map and set the lock system with corresponding keys
+    cout << "population test start" <<endl;
     populateRoomsWithItems();
+    cout << "population test complete" << endl;
 
     //cout << floors[currentFloor]->printMap();
     //QString test = QString::fromStdString(floors[currentFloor]->printMap());
@@ -54,22 +56,68 @@ ZorkUL::ZorkUL(MainWindow *ui) {
 map<string, Room*> ZorkUL::getCurrentRoomExits(){
     return currentRoom->getExits();
 }
-vector<string> ZorkUL::getItemValidCommands(string ItemName){
-    int index = currentRoom->isItemInRoom(ItemName);
-    Item* foundItem = currentRoom->getItem(index);
-    return foundItem->validRoomCommandsList();
-}
 
+vector<string> ZorkUL::getItemValidCommands(string ItemName,bool isRoom){
+    int index;
+    if(isRoom){
+        index = currentRoom->isItemInRoom(ItemName);
+        return currentRoom->getItem(index)->validRoomCommandsList();
+    }else{
+        index = user.isItemOnCharacter(ItemName);
+        vector <Item*> itemsOnUser = user.getItemList();
+        return itemsOnUser[index]->validUserCommandsList();
+    }
+
+}
 void ZorkUL:: getMap(){
     ui->updateMap(QString::fromStdString(floors[currentFloor]->printMap()));
 }
-vector<string> ZorkUL::getCurrentRoomItemNames(){
-    vector<Item*> itemsInRoom = currentRoom->getItemsInRoom();
+
+vector<string> ZorkUL::getCurrentItemNames(bool isRoom){
+    vector<Item*> items;
+    if(isRoom){
+        items = currentRoom->getItemsInRoom();
+    }else{
+        items = user.getItemList();
+    }
     vector <string> ItemNames;
-    for(int i =0; i < itemsInRoom.size(); i++){
-        ItemNames.push_back(itemsInRoom[i]->getShortDescription());
+    for(int i =0; i < items.size(); i++){
+        ItemNames.push_back(items[i]->getShortDescription());
     }
     return ItemNames;
+}
+void ZorkUL::runCommand(string commandString){
+    string word1;
+    string word2;
+    vector<string> words;
+
+    string::size_type pos = 0, last_pos = 0;
+
+    // Break "buffer" up by spaces
+    bool finished = false;
+    while (!finished) {
+        pos = commandString.find_first_of(' ', last_pos);	// find and remember first space.
+        if (pos == string::npos ) {			// if we found the last word,
+            words.push_back(commandString.substr(last_pos));	// add it to vector "words"
+            finished = true;				// and finish searching.
+        } else {					// otherwise add to vector and move on to next word.
+            words.push_back(commandString.substr(last_pos, pos - last_pos));
+            last_pos = pos + 1;
+        }
+    }
+
+    if (words.size() == 1) //was only 1 word entered?
+        word1 = words[0]; //get first word
+    else if (words.size() >= 2) { //were at least 2 words entered?
+        word1 = words[0]; //get first word
+        word2 = words[1]; //get second word
+    }
+
+    // note: we just ignore the rest of the input line.
+    // Now check whether this word is known. If so, create a command with it.
+    // If not, create a "nil" command (empty string for unknown command).
+    processCommand(Command(word1, word2));
+
 }
 
 /**
@@ -145,6 +193,7 @@ void ZorkUL::populateRoomsWithItems(){
         key *lockedRoomKey;
         //now locking random rooms on the floor
         for(int k = 0; k < limit; k++){
+            floorRooms = floors[i]->getRooms();
             //find a room that isnt already locked.
             do{
                 //now repurposing randomValue to generate a room index that isnt already locked.
@@ -154,7 +203,6 @@ void ZorkUL::populateRoomsWithItems(){
             lockedRoom = floorRooms[randomValue];
             //if the door were locking contains the downstairs exit for this floor we move the key the lower floor.
             if(randomValue == downstairsIndex){
-
                 //Set the current floor to that of the floor below it.
                 floorRooms = floors[i-1]->getRooms();
                 //Repurposing the randomValue to generate a random index of the rooms on the floors below us.
@@ -297,6 +345,7 @@ bool ZorkUL::processCommand(Command command) {
         if (!command.hasSecondWord()) {
             cout << "incomplete input"<< endl;
         }else if (command.hasSecondWord()) {
+
             takeItem(command);
         }
     }else if(commandWord.compare("unlock") == 0){

@@ -15,7 +15,7 @@ public:
     void insertItem(carryableItem *item);
     void transferItemsToCharacter(Character *user);
     vector<string> validRoomCommandsList();
-
+    vector<string> validUserCommandsList();
 private:
 
     void setProperties();

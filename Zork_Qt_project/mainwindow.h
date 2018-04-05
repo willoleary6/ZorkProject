@@ -28,6 +28,8 @@ private:
     void unlockButton(QPushButton *button);
     void ValidButtons();
     void buildRoomList();
+    void buildInventory();
+    void buildInventoryAndRoom();
 
 public slots:
 
@@ -56,6 +58,8 @@ private slots:
     //void on_roomItems_itemClicked(QListWidgetItem *item);
 
     void on_roomItems_itemClicked(QTreeWidgetItem *item, int column);
+
+    void on_inventory_itemClicked(QTreeWidgetItem *item, int column);
 
 private:
     Ui::MainWindow *ui;

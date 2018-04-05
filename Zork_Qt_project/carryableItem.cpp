@@ -12,9 +12,13 @@ carryableItem::carryableItem(string description){
 vector<string> Item::validRoomCommandsList(){
     return validRoomCommands;
 }
+vector<string> Item::validUserCommandsList(){
+    return validUserCommands;
+}
 void carryableItem::setProperties(){
     carryable = true;
     searchable = false;
     validRoomCommands = {"take"};
+    validUserCommands = {"drop"};
 }
 

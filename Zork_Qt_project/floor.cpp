@@ -48,28 +48,35 @@ void floor::generateRandomFloorPlan(){
     /*Basic idea of the floor plan is a matt of 4X4 NULLs
      * and we change some of them to actual rooms depending on a random value.
      */
+    bool populationCheck;
     for(int i =0; i < rows; i++){
-        for(int j = 0; j < cols; j++){
-            //generating random value
-            randomValue = rand() % 9;
-            //about a 60% chance that each index will be populated with a room.
-            if(randomValue > 5){
-                floorPlan[i][j] = NULL;
-            }else{
-                count++;
-                //create a new room and set its ID number to that of the count.
-                int roomNameIndex = rand() % roomNames.size();
-                floorPlan[i][j] = new Room(roomNames[roomNameIndex],count,floorId);
-                roomNames.erase(roomNames.begin() + roomNameIndex);
+        populationCheck = false;
+        do{
+            for(int j = 0; j < cols; j++){
+                //generating random value
+                randomValue = rand() % 9;
+                //about a 60% chance that each index will be populated with a room.
+                if(randomValue > 5){
+                    floorPlan[i][j] = NULL;
+                }else{
+                    populationCheck = true;
+                    count++;
+                    //create a new room and set its ID number to that of the count.
+                    int roomNameIndex = rand() % roomNames.size();
+                    floorPlan[i][j] = new Room(roomNames[roomNameIndex],count,floorId);
+                    roomNames.erase(roomNames.begin() + roomNameIndex);
+                }
             }
-        }
+        }while(!populationCheck);
      }
      //sorting this row so nulls are all to the right
+
      for(int row = 0; row < rows;row++){
          pushNULLsToEnd(floorPlan[row]);
      }
      map<string, Room*> roomExits;
      //Linking each room together so a player can traverse the map.
+
      for(int i = 0; i < rows;i++){
          for(int j=0; j < cols;j++){
              if(floorPlan[i][j] != NULL){
@@ -77,6 +84,7 @@ void floor::generateRandomFloorPlan(){
                  roomExits = floorPlan[i][j]->getExits();
                  //range horizontal right populating the eastern exit possibly
                  //making sure there is actually space to move right
+
                  if(j < cols-1 && roomExits["east"] == NULL){
                      //this block adds a link to all rooms horizontally
                      for(int rangeRight = j+1; rangeRight < rows; rangeRight++){
@@ -89,6 +97,8 @@ void floor::generateRandomFloorPlan(){
                      }
                  }
                  upWard:
+
+
                  if(i > 0 && j ==0 && roomExits["north"] == NULL){
                      //This block adds a vertical link to one of the rooms on this row(Chosen Randomly)
                      do{
@@ -97,9 +107,11 @@ void floor::generateRandomFloorPlan(){
                      floorPlan[i][randomValue]->setNorthExit(floorPlan[i-1][randomValue]);
                      floorPlan[i-1][randomValue]->setSouthExit(floorPlan[i][randomValue]);
                  }
+
              }
          }
      }
+
      //adding randomly generated rooms to the rooms list
      for(int i = 0; i < rows; i++){
          for(int j = 0; j < cols; j++){
@@ -127,6 +139,7 @@ void floor::pushNULLsToEnd(Room* rooms[]){
     while(count < sizeof(rooms))
         rooms[count++] = NULL;
 }
+
 
 /**
  * @brief floor::getNumberOfValidRooms

@@ -20,6 +20,7 @@ class floor {
 
         bool findMapCoordinates(Room* rooms,int *x_position, int *y_position, vector<vector<string>> mapDisplay);
 
+
         vector<string> fillEmptySlots(int x_position, bool invisible);
         vector<vector<string>> traverseExits(int x_position, int y_position,
                                    vector<vector<string>> mapString,map<string,Room*> currentRoomExits,
