@@ -6,6 +6,7 @@
 #include "ZorkUL.h"
 #include <map>
 #include <QTreeWidgetItem>
+#include <string>
 
 class ZorkUL;
 namespace Ui {
@@ -27,9 +28,8 @@ private:
     void lockButton(QPushButton *button);
     void unlockButton(QPushButton *button);
     void ValidButtons();
-    void buildRoomList();
-    void buildInventory();
     void buildInventoryAndRoom();
+    int getNumberOfSpaces(std::string text);
 
 public slots:
 

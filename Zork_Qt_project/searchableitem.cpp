@@ -28,18 +28,16 @@ vector<string> searchableItem:: validRoomCommandsList(){
 vector<string> searchableItem:: validUserCommandsList(){
     return validUserCommands;
 }
+int searchableItem:: getNumberOfStoredItems(){
+    return storedItems.size();
+}
 
 void searchableItem::transferItemsToCharacter(Character *user){
     if(storedItems.size() > 0){
-        cout << "You found ";
-        for(int i =0; i < storedItems.size(); i++){
-            cout << storedItems[i]->getShortDescription()<<", ";
+      for(int i =0; i < storedItems.size(); i++){
             user->addItem(storedItems[i]);
         }
         storedItems.clear();
-        cout << endl;
-    }else{
-        cout << description << " is empty." << endl;
     }
 }
 

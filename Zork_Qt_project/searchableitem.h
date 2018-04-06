@@ -16,6 +16,7 @@ public:
     void transferItemsToCharacter(Character *user);
     vector<string> validRoomCommandsList();
     vector<string> validUserCommandsList();
+    int getNumberOfStoredItems();
 private:
 
     void setProperties();
