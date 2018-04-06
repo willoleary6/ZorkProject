@@ -94,6 +94,22 @@ key* Room::lockRoom(){
 bool Room::isLocked(){
     return locked;
 }
+void Room::setAsCurrentRoom(Room *oldCurrent){
+    oldCurrent->ReinitialiseName();
+    name = "<"+name+">";
+}
+void Room::ReinitialiseName(){
+    name = description;
+    if(this->isLocked()){
+        name+="[L]";
+    }
+    if(exits["upstairs"] != NULL){
+        name += "[^]";
+    }
+    if(exits["downstairs"] != NULL){
+        name += "[v]";
+    }
+}
 
 /**
  * @brief Room::unlockRoom

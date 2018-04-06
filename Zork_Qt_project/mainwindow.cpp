@@ -149,11 +149,13 @@ void MainWindow::ValidButtons(){
 }
 void MainWindow::lockButton(QPushButton *button){
     button->setEnabled(false);
-    button->hide();
+    button->setStyleSheet("background-color: #474746");
+    //button->hide();
 }
 void MainWindow::unlockButton(QPushButton *button){
     button->setEnabled(true);
-    button->show();
+    button->setStyleSheet("background-color: #83847f");
+    //button->show();
 }
 
 void MainWindow::on_northButton_clicked(){

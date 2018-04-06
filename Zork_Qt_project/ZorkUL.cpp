@@ -42,6 +42,7 @@ ZorkUL::ZorkUL(MainWindow *ui) {
 
     //setting the rooms on the current floor and current room
     rooms = floors[currentFloor]->getRooms();
+    rooms[0]->setAsCurrentRoom(rooms[0]);
     currentRoom = rooms[0];
     //spawn items onto the map and set the lock system with corresponding keys
     populateRoomsWithItems();
@@ -361,6 +362,7 @@ bool ZorkUL::processCommand(Command command) {
                 ui->updateLog(QString::fromStdString(roomToUnlock->shortDescription()+" is already unlocked."));
             }else{
                 unlockRoom(roomToUnlock,direction);
+                getMap();
             }
         }
     }else if(commandWord.compare("search") == 0){
@@ -422,8 +424,11 @@ void ZorkUL::randomTeleport(){
            randomNum = rand() % rooms.size();
         }while(currentRoom == rooms.at(randomNum));
         //set room to the room that was randomly generated.
+        rooms.at(randomNum)->setAsCurrentRoom(currentRoom);
         currentRoom = rooms.at(randomNum);
+
         ui->updateLog(QString::fromStdString("Teleported to "+currentRoom->shortDescription()));
+        getMap();
     }else{
         ui->updateLog(QString::fromStdString("There is only one room on this floor."));
     }
@@ -439,6 +444,7 @@ void ZorkUL::teleport(Command command){
     //go through each room to check if the room specified matches any of the rooms short description.
     for(unsigned int i = 0; i < rooms.size(); i++){
         if(rooms.at(i)->shortDescription() == command.getSecondWord()){
+            rooms.at(i)->setAsCurrentRoom(currentRoom);
             currentRoom = rooms.at(i);
             ui->updateLog(QString::fromStdString("Teleported to "+currentRoom->shortDescription()));
             found = true;
@@ -558,13 +564,13 @@ void ZorkUL::goRoom(string direction) {
     }else {
         if(direction == "upstairs"){
             currentFloor++;
-            getMap();
         }else if(direction == "downstairs"){
             currentFloor--;
-            getMap();
         }
         rooms = floors[currentFloor]->getRooms();
+        nextRoom->setAsCurrentRoom(currentRoom);
         currentRoom = nextRoom;
+        getMap();
         ui->updateLog(QString::fromStdString("Moving "+direction));
         ui->updateLog(QString::fromStdString("Now in "+currentRoom->shortDescription()));
         //ui->updateLog(QString::fromStdString(currentRoom->longDescription()));
@@ -583,6 +589,7 @@ string ZorkUL::go(string direction) {
         return("direction null");
     }else{
         //set the current room to room were going too
+        nextRoom->setAsCurrentRoom(currentRoom);
         currentRoom = nextRoom;
         return currentRoom->longDescription();
     }

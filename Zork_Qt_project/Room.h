@@ -60,6 +60,7 @@ public:
     Item* removeItem(int itemIndex);
     Item* getItem(int itemIndex);
 
+    void ReinitialiseName();
     void unlockRoom();
     void setExits(Room *north, Room *east, Room *south, Room *west);
     void setNorthExit(Room *north);
@@ -69,6 +70,7 @@ public:
     void setUpstairsExit(Room *upstairs);
     void setDownstairsExit(Room *downstairs);
     void addItem(Item *item);
+    void setAsCurrentRoom(Room *oldCurrent);
 
     Room* nextRoom(string direction);
 
