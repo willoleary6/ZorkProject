@@ -33,6 +33,7 @@ private:
     int lowerFloor;
     int floorId;
     bool locked;
+    bool exit;
 
     key *KeyForRoom;
 
@@ -50,6 +51,7 @@ public:
     int isItemInRoom(string inString);
 
     bool isLocked();
+    bool isExit();
     vector <Item*> getItemsInRoom();
 
     string roomName();
@@ -71,6 +73,7 @@ public:
     void setDownstairsExit(Room *downstairs);
     void addItem(Item *item);
     void setAsCurrentRoom(Room *oldCurrent);
+    void makeExit();
 
     Room* nextRoom(string direction);
 

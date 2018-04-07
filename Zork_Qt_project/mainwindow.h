@@ -61,6 +61,8 @@ private slots:
 
     void on_inventory_itemClicked(QTreeWidgetItem *item, int column);
 
+    void on_escapeButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

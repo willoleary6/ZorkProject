@@ -146,6 +146,11 @@ void MainWindow::ValidButtons(){
     }else{
         lockButton(ui->downstairsButton);
     }
+    if(game->isExit()){
+        ui->escapeButton->show();
+    }else{
+        ui->escapeButton->hide();
+    }
 }
 void MainWindow::lockButton(QPushButton *button){
     button->setEnabled(false);
@@ -218,4 +223,9 @@ void MainWindow::on_inventory_itemClicked(QTreeWidgetItem *item, int column)
 {
     game->runCommand(item->text(column).toUtf8().constData());
     buildInventoryAndRoom();
+}
+
+void MainWindow::on_escapeButton_clicked()
+{
+
 }

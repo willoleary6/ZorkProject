@@ -37,6 +37,7 @@ private:
     bool checkForDublicates(vector <Room *> validRoomsForKeys, Room* newRoom);
     bool processCommand(Command command);
 
+
     string go(string direction);
 
 
@@ -57,6 +58,7 @@ public:
     void printWelcome();
     void goRoom(string direction);
     void runCommand(string commandString);
+    bool isExit();
     vector<string> getItemValidCommands(string ItemName, bool isRoom);
     vector<string> getItemValidUserCommands(string ItemName);
     vector<string> getCurrentItemNames( bool isRoom);

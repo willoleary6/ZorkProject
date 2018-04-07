@@ -72,6 +72,9 @@ vector<string> ZorkUL::getItemValidCommands(string ItemName,bool isRoom){
 void ZorkUL:: getMap(){
     ui->updateMap(QString::fromStdString(floors[currentFloor]->printMap()));
 }
+bool ZorkUL::isExit(){
+    return currentRoom->isExit();
+}
 
 vector<string> ZorkUL::getCurrentItemNames(bool isRoom){
     vector<Item*> items;
@@ -162,6 +165,7 @@ void ZorkUL::populateRoomsWithItems(){
      * so we can play with them with out bad consequences....
      */
     int downstairsIndex,randomValue;
+    vector <Room *> lockedRooms;
     vector <Room *> floorRooms;
     map<string, Room*> exits;
     Room* lockedRoom;
@@ -201,6 +205,7 @@ void ZorkUL::populateRoomsWithItems(){
             }while(floorRooms[randomValue]->isLocked());
             //passing the pointer of the selected room to the lockedRoom variable.
             lockedRoom = floorRooms[randomValue];
+            lockedRooms.push_back(lockedRoom);
             //if the door were locking contains the downstairs exit for this floor we move the key the lower floor.
             if(randomValue == downstairsIndex){
                 //Set the current floor to that of the floor below it.
@@ -235,6 +240,12 @@ void ZorkUL::populateRoomsWithItems(){
                }else{
                     validRoomsForKeys[rand() % validRoomsForKeys.size()]->addItem(lockedRoomKey);
                }
+            }
+        }
+        for(int i = 0; i < lockedRooms.size(); i++){
+            if(lockedRooms[i]->getFloorID() > 1){
+                lockedRooms[i]->makeExit();
+                break;
             }
         }
     }

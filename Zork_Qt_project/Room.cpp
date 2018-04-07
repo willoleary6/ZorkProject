@@ -14,6 +14,7 @@ Room::Room(string description, int IDNumber, int floorId) {
     this->IDnumber = IDNumber;
     this->floorId = floorId;
     locked = false;
+    exit = false;
     //initially we set all exits to null
     nullifyExits();
 }
@@ -30,6 +31,7 @@ Room::Room(int IDNumber,int floorId) {
     this->IDnumber = IDNumber;
     this->floorId = floorId;
     locked = false;
+    exit = false;
     nullifyExits();
 }
 /**
@@ -86,6 +88,10 @@ key* Room::lockRoom(){
     name += "[L]";
     return KeyForRoom;
 }
+void Room::makeExit(){
+    exit = true;
+    name += "[E]";
+}
 
 /**
  * @brief Room::isLocked
@@ -94,6 +100,10 @@ key* Room::lockRoom(){
 bool Room::isLocked(){
     return locked;
 }
+bool Room::isExit(){
+    return exit;
+}
+
 void Room::setAsCurrentRoom(Room *oldCurrent){
     oldCurrent->ReinitialiseName();
     name = "<"+name+">";
