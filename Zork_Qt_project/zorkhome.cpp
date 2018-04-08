@@ -6,6 +6,7 @@
 #include <QtCore>
 #include <QMediaPlayer>
 #include <QMediaPlaylist>
+#include <QMessageBox>
 
 using namespace std;
 
@@ -15,8 +16,8 @@ zorkHome::zorkHome(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QPixmap zork (":/zorkLogo.png");
-    QPixmap csis(":/CSIS.png");
+    QPixmap zork (":/images/zorkLogo.png");
+    QPixmap csis(":/images/CSIS.png");
     ui->zorkLogo->setPixmap(zork);
     ui->csisLogo->setPixmap(csis);
 }
@@ -27,7 +28,7 @@ int main(int argc, char *argv[])
 
     // Game Background music
     QMediaPlaylist *gameMusic = new QMediaPlaylist();
-    gameMusic->addMedia(QUrl("qrc:/sounds/gameMusic_Power Core.mp3"));
+    gameMusic->addMedia(QUrl("qrc:/sounds/Power Glove - Power Core.mp3"));
     gameMusic->setPlaybackMode(QMediaPlaylist::Loop);
 
     QMediaPlayer *soundtrack = new QMediaPlayer();
@@ -55,7 +56,21 @@ void zorkHome::on_newGameButton_clicked()
 
 void zorkHome::on_exitButton_clicked()
 {
-    close();
+    QMessageBox confirmExit;
+    confirmExit.setWindowTitle("Exit Zork");
+    confirmExit.setText("Are you sure you want to quit Zork?");
+    confirmExit.setIcon(QMessageBox::Question);
+    confirmExit.setStandardButtons(QMessageBox::Cancel | QMessageBox::Close);
+    confirmExit.setDefaultButton(QMessageBox::Cancel);
+    int ret = confirmExit.exec();
+
+    switch (ret) {
+        case QMessageBox::Cancel:
+            break;
+        case QMessageBox::Close:
+            close();
+        break;
+    }
 }
 
 void zorkHome::on_settingsButton_clicked()

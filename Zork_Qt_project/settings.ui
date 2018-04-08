@@ -13,8 +13,13 @@
   <property name="windowTitle">
    <string>Zork - Settings</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="imglib.qrc">
+    <normaloff>:/images/zorkIcon.png</normaloff>:/images/zorkIcon.png</iconset>
+  </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(46, 52, 54);</string>
+   <string notr="true">background-color: rgb(79, 87, 88);
+</string>
   </property>
   <widget class="QLabel" name="authors">
    <property name="geometry">
@@ -40,9 +45,9 @@
       <colorrole role="Button">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>46</red>
-         <green>52</green>
-         <blue>54</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
@@ -67,18 +72,18 @@
       <colorrole role="Base">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>46</red>
-         <green>52</green>
-         <blue>54</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
       <colorrole role="Window">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>46</red>
-         <green>52</green>
-         <blue>54</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
@@ -96,9 +101,9 @@
       <colorrole role="Button">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>46</red>
-         <green>52</green>
-         <blue>54</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
@@ -123,18 +128,18 @@
       <colorrole role="Base">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>46</red>
-         <green>52</green>
-         <blue>54</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
       <colorrole role="Window">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>46</red>
-         <green>52</green>
-         <blue>54</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
@@ -152,9 +157,9 @@
       <colorrole role="Button">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>46</red>
-         <green>52</green>
-         <blue>54</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
@@ -179,18 +184,18 @@
       <colorrole role="Base">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>46</red>
-         <green>52</green>
-         <blue>54</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
       <colorrole role="Window">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>46</red>
-         <green>52</green>
-         <blue>54</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
@@ -267,9 +272,9 @@ Aaron Dunne (15148602)</string>
       <colorrole role="Button">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
@@ -339,18 +344,18 @@ Aaron Dunne (15148602)</string>
       <colorrole role="Base">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
       <colorrole role="Window">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
@@ -404,9 +409,9 @@ Aaron Dunne (15148602)</string>
       <colorrole role="Button">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
@@ -476,18 +481,18 @@ Aaron Dunne (15148602)</string>
       <colorrole role="Base">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
       <colorrole role="Window">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
@@ -541,9 +546,9 @@ Aaron Dunne (15148602)</string>
       <colorrole role="Button">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
@@ -613,18 +618,18 @@ Aaron Dunne (15148602)</string>
       <colorrole role="Base">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
       <colorrole role="Window">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
@@ -676,6 +681,9 @@ Aaron Dunne (15148602)</string>
    <property name="text">
     <string>Music</string>
    </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
    <property name="tristate">
     <bool>false</bool>
    </property>
@@ -704,9 +712,9 @@ Aaron Dunne (15148602)</string>
       <colorrole role="Button">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
@@ -776,18 +784,18 @@ Aaron Dunne (15148602)</string>
       <colorrole role="Base">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
       <colorrole role="Window">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
@@ -841,9 +849,9 @@ Aaron Dunne (15148602)</string>
       <colorrole role="Button">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
@@ -913,18 +921,18 @@ Aaron Dunne (15148602)</string>
       <colorrole role="Base">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
       <colorrole role="Window">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
@@ -978,9 +986,9 @@ Aaron Dunne (15148602)</string>
       <colorrole role="Button">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
@@ -1050,18 +1058,18 @@ Aaron Dunne (15148602)</string>
       <colorrole role="Base">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
       <colorrole role="Window">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
@@ -1113,6 +1121,9 @@ Aaron Dunne (15148602)</string>
    <property name="text">
     <string>Sound FX</string>
    </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
    <property name="tristate">
     <bool>false</bool>
    </property>
@@ -1132,9 +1143,9 @@ Aaron Dunne (15148602)</string>
       <colorrole role="Button">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>46</red>
-         <green>52</green>
-         <blue>54</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
@@ -1150,18 +1161,18 @@ Aaron Dunne (15148602)</string>
       <colorrole role="Base">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>46</red>
-         <green>52</green>
-         <blue>54</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
       <colorrole role="Window">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>46</red>
-         <green>52</green>
-         <blue>54</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
@@ -1170,9 +1181,9 @@ Aaron Dunne (15148602)</string>
       <colorrole role="Button">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>46</red>
-         <green>52</green>
-         <blue>54</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
@@ -1188,18 +1199,18 @@ Aaron Dunne (15148602)</string>
       <colorrole role="Base">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>46</red>
-         <green>52</green>
-         <blue>54</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
       <colorrole role="Window">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>46</red>
-         <green>52</green>
-         <blue>54</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
@@ -1208,9 +1219,9 @@ Aaron Dunne (15148602)</string>
       <colorrole role="Button">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>46</red>
-         <green>52</green>
-         <blue>54</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
@@ -1226,18 +1237,18 @@ Aaron Dunne (15148602)</string>
       <colorrole role="Base">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>46</red>
-         <green>52</green>
-         <blue>54</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
       <colorrole role="Window">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>46</red>
-         <green>52</green>
-         <blue>54</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
@@ -1275,7 +1286,7 @@ Aaron Dunne (15148602)</string>
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QCheckBox" name="soundfxCB_2">
+  <widget class="QCheckBox" name="debugCB">
    <property name="geometry">
     <rect>
      <x>60</x>
@@ -1299,9 +1310,9 @@ Aaron Dunne (15148602)</string>
       <colorrole role="Button">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
@@ -1326,18 +1337,18 @@ Aaron Dunne (15148602)</string>
       <colorrole role="Base">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
       <colorrole role="Window">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
@@ -1355,9 +1366,9 @@ Aaron Dunne (15148602)</string>
       <colorrole role="Button">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
@@ -1382,18 +1393,18 @@ Aaron Dunne (15148602)</string>
       <colorrole role="Base">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
       <colorrole role="Window">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
@@ -1411,9 +1422,9 @@ Aaron Dunne (15148602)</string>
       <colorrole role="Button">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
@@ -1438,18 +1449,18 @@ Aaron Dunne (15148602)</string>
       <colorrole role="Base">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
       <colorrole role="Window">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>79</red>
+         <green>87</green>
+         <blue>88</blue>
         </color>
        </brush>
       </colorrole>
@@ -1470,6 +1481,8 @@ Aaron Dunne (15148602)</string>
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="imglib.qrc"/>
+ </resources>
  <connections/>
 </ui>

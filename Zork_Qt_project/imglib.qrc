@@ -1,8 +1,13 @@
 <RCC>
-    <qresource prefix="/">
+    <qresource prefix="/images">
         <file>zorkLogo.png</file>
         <file>CSIS.png</file>
         <file>ul_White.png</file>
         <file>zorkIcon.png</file>
+    </qresource>
+    <qresource prefix="/sounds">
+        <file>doorSoundEffect.mp3</file>
+        <file>lockSoundEffect.mp3</file>
+        <file>Power Glove - Power Core.mp3</file>
     </qresource>
 </RCC>

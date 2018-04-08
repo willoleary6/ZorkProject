@@ -88,6 +88,7 @@ void MainWindow::buildInventoryAndRoom(){
       }
    }
 }
+
 int MainWindow::getNumberOfSpaces(string text){
      int spaceCount = 0;
      for(int i =0; i < text.length(); i++){
@@ -98,41 +99,41 @@ int MainWindow::getNumberOfSpaces(string text){
      return spaceCount;
 }
 
-MainWindow::~MainWindow(){
+MainWindow::~MainWindow() {
     delete game;
     delete ui;
 }
-void MainWindow::updateMainWindow(QString gameWindowText){
+
+void MainWindow::updateMainWindow(QString gameWindowText) {
     ui->mainGameWindow->clear();
     ui->mainGameWindow->append(gameWindowText);
 }
-void MainWindow::appendMainWindow(QString gameWindowText){
+
+void MainWindow::appendMainWindow(QString gameWindowText) {
     ui->mainGameWindow->append(gameWindowText);
 }
 
-void MainWindow::updateMap(QString map){
+void MainWindow::updateMap(QString map) {
     ui->gameMap->clear();
     ui->gameMap->append(map);
 }
-void MainWindow::updateLog(QString log){
+
+void MainWindow::updateLog(QString log) {
     ui->gameHistory->append(log);
 }
 
-void MainWindow::on_actionClose_triggered()
-{
+void MainWindow::on_actionClose_triggered() {
     close();
 }
 
-void MainWindow::on_actionSettings_triggered()
-{
+void MainWindow::on_actionSettings_triggered() {
     settings s;
     s.setModal(true);
     s.exec();
 }
 
-void MainWindow::on_actionAbout_triggered()
-{
-    QImage ulLogo(":/ul_White.png");
+void MainWindow::on_actionAbout_triggered() {
+    QImage ulLogo(":/images/ul_White.png");
     QImage image = ulLogo.scaled(150, 150, Qt::KeepAspectRatio);
 
     QMessageBox about;
@@ -142,51 +143,59 @@ void MainWindow::on_actionAbout_triggered()
     about.setInformativeText("2018 © University of Limerick.\n\nWilliam O'Leary (15155528)\nAaron Dunne (15148602)");
     about.show();
     about.exec();
-
 }
-void MainWindow::ValidButtons(){
+
+void MainWindow::ValidButtons() {
     map<string, Room*> exits = game->getCurrentRoomExits();
     if(exits["north"] != NULL){
         unlockButton(ui->northButton);
     }else{
         lockButton(ui->northButton);
     }
+
     if(exits["west"] != NULL){
         unlockButton(ui->westButton);
     }else{
         lockButton(ui->westButton);
     }
+
     if(exits["south"] != NULL){
         unlockButton(ui->southButton);
     }else{
         lockButton(ui->southButton);
     }
+
     if(exits["east"] != NULL){
         unlockButton(ui->eastButton);
     }else{
         lockButton(ui->eastButton);
     }
+
     if(exits["upstairs"] != NULL){
         unlockButton(ui->upstairsButton);
     }else{
         lockButton(ui->upstairsButton);
     }
+
     if(exits["downstairs"] != NULL){
         unlockButton(ui->downstairsButton);
     }else{
         lockButton(ui->downstairsButton);
     }
+
     if(game->isExit()){
         ui->escapeButton->show();
     }else{
         ui->escapeButton->hide();
     }
 }
+
 void MainWindow::lockButton(QPushButton *button){
     button->setEnabled(false);
     button->setStyleSheet("background-color: #474746");
     //button->hide();
 }
+
 void MainWindow::unlockButton(QPushButton *button){
     button->setEnabled(true);
     button->setStyleSheet("background-color: #83847f");
@@ -229,10 +238,6 @@ void MainWindow::on_southButton_clicked(){
      buildInventoryAndRoom();
 }
 
-
-
-
-
 /*void MainWindow::on_roomItems_itemClicked(QListWidgetItem *item)
 {
     //QTextStream out(stdout);
@@ -240,8 +245,7 @@ void MainWindow::on_southButton_clicked(){
 
 }*/
 
-void MainWindow::on_roomItems_itemClicked(QTreeWidgetItem *item, int column)
-{
+void MainWindow::on_roomItems_itemClicked(QTreeWidgetItem *item, int column) {
     //QTextStream out(stdout);
     //out << item->text(column) << endl;
     game->runCommand(item->text(column).toUtf8().constData());
@@ -249,13 +253,11 @@ void MainWindow::on_roomItems_itemClicked(QTreeWidgetItem *item, int column)
     //item->addChild();*/
 }
 
-void MainWindow::on_inventory_itemClicked(QTreeWidgetItem *item, int column)
-{
+void MainWindow::on_inventory_itemClicked(QTreeWidgetItem *item, int column) {
     game->runCommand(item->text(column).toUtf8().constData());
     buildInventoryAndRoom();
 }
 
-void MainWindow::on_escapeButton_clicked()
-{
+void MainWindow::on_escapeButton_clicked() {
     this->close();
 }

@@ -16,7 +16,7 @@ newGame::newGame(QWidget *parent) :
     ui->setupUi(this);
     currentParent = parent;
 
-    QPixmap zork(":/zorkLogo.png");
+    QPixmap zork(":/images/zorkLogo.png");
     ui->zorkLogo->setPixmap(zork);
 }
 
@@ -28,7 +28,7 @@ void newGame::on_startGameButton_clicked() {
     QString username = ui->usernameEnter->text();
 
     if (username.isEmpty())
-        QMessageBox::information(this, "Error", "Please enter a username to continue", 2);
+        QMessageBox::warning(this, "Error", "Please enter a username to continue");
     else {
 
         this->hide();

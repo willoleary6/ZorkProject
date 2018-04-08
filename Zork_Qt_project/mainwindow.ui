@@ -37,8 +37,8 @@
    <string>Zork</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>../../Downloads/images.png</normaloff>../../Downloads/images.png</iconset>
+   <iconset resource="imglib.qrc">
+    <normaloff>:/images/zorkIcon.png</normaloff>:/images/zorkIcon.png</iconset>
   </property>
   <property name="layoutDirection">
    <enum>Qt::LeftToRight</enum>
@@ -2235,6 +2235,13 @@ border-radius: 10px;</string>
       <verstretch>0</verstretch>
      </sizepolicy>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>30</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
    </widget>
    <widget class="QLabel" name="gameLogLabel_2">
     <property name="geometry">
@@ -2278,7 +2285,7 @@ border-radius: 10px;</string>
      </font>
     </property>
     <property name="text">
-     <string>DIsplay</string>
+     <string>Display</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -2395,6 +2402,8 @@ border-radius: 10px;</string>
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="imglib.qrc"/>
+ </resources>
  <connections/>
 </ui>
