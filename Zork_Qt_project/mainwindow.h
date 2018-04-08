@@ -4,12 +4,14 @@
 #include <QMainWindow>
 #include "newGame.h"
 #include "ZorkUL.h"
+#include "gameover.h"
 #include <map>
 #include <QTreeWidgetItem>
 #include <string>
 #include <QTimer>
 
 class ZorkUL;
+class gameOver;
 namespace Ui {
 class MainWindow;
 }
@@ -28,6 +30,7 @@ public:
 private:
     void initialiseUI();
     ZorkUL *game;
+    gameOver *go;
     int minutes;
     int seconds;
     QTimer *timer;

@@ -59,6 +59,7 @@ void zorkHome::on_exitButton_clicked()
     QMessageBox confirmExit;
     confirmExit.setWindowTitle("Exit Zork");
     confirmExit.setText("Are you sure you want to quit Zork?");
+    confirmExit.setStyleSheet("color : white; background : rgb(79, 87, 88)");
     confirmExit.setIcon(QMessageBox::Question);
     confirmExit.setStandardButtons(QMessageBox::Cancel | QMessageBox::Close);
     confirmExit.setDefaultButton(QMessageBox::Cancel);

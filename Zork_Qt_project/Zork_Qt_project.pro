@@ -38,7 +38,8 @@ SOURCES += mainwindow.cpp\
     carryableItem.cpp \
     searchableitem.cpp \
     key.cpp \
-    settings.cpp
+    settings.cpp \
+    gameover.cpp
 
 
 
@@ -56,12 +57,14 @@ HEADERS  += mainwindow.h\
     carryableItem.h \
     searchableitem.h \
     key.h \
-    settings.h
+    settings.h \
+    gameover.h
 
 FORMS    += mainwindow.ui \
     newGame.ui \
     zorkhome.ui \
-    settings.ui
+    settings.ui \
+    gameover.ui
 
 RESOURCES += \
     imglib.qrc

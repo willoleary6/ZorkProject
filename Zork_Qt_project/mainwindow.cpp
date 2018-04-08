@@ -42,8 +42,10 @@ void MainWindow::showTime(){
     if(minutes == 0 && seconds == 0){
         timer->stop();
         //PUT SHUTDOWN COMMAND HERE
+        gameOver go;
+        go.exec();
         hide();
-        close();
+        //close();
     }else if(seconds == 0){
         --minutes;
         seconds = 59;
@@ -134,11 +136,12 @@ void MainWindow::on_actionSettings_triggered() {
 
 void MainWindow::on_actionAbout_triggered() {
     QImage ulLogo(":/images/ul_White.png");
-    QImage image = ulLogo.scaled(150, 150, Qt::KeepAspectRatio);
+    QImage image = ulLogo.scaled(200, 200, Qt::KeepAspectRatio);
 
     QMessageBox about;
     about.setIconPixmap(QPixmap::fromImage(image));
     about.setText("Zork");
+    about.setStyleSheet("color : white; background : rgb(46, 52, 54)");
     about.setWindowTitle("About Zork");
     about.setInformativeText("2018 © University of Limerick.\n\nWilliam O'Leary (15155528)\nAaron Dunne (15148602)");
     about.show();
@@ -260,4 +263,6 @@ void MainWindow::on_inventory_itemClicked(QTreeWidgetItem *item, int column) {
 
 void MainWindow::on_escapeButton_clicked() {
     this->close();
+    gameOver go;
+    go.exec();
 }
