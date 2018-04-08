@@ -7,6 +7,7 @@
 #include <map>
 #include <QTreeWidgetItem>
 #include <string>
+#include <QTimer>
 
 class ZorkUL;
 namespace Ui {
@@ -20,11 +21,16 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-     void updateMap(QString map);
-     void updateLog(QString log);
+    void updateMap(QString map);
+    void updateLog(QString log);
+    void updateMainWindow(QString gameWindowText);
+    void appendMainWindow(QString gameWindowText);
 private:
     void initialiseUI();
     ZorkUL *game;
+    int minutes;
+    int seconds;
+    QTimer *timer;
     void lockButton(QPushButton *button);
     void unlockButton(QPushButton *button);
     void ValidButtons();
@@ -36,7 +42,7 @@ public slots:
 
 private slots:
 
-
+    void showTime();
     void on_actionClose_triggered();
 
     void on_actionSettings_triggered();

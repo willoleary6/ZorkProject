@@ -16,8 +16,9 @@ class Room{
 
 private:
     void nullifyExits();
+    void initialiseMainWindowText();
     string exitString();
-
+    string mainWindowText;
     int numberOfItems();
 
     string name;
@@ -55,6 +56,7 @@ public:
     vector <Item*> getItemsInRoom();
 
     string roomName();
+    string getMainWindowText();
     string shortDescription();
     string longDescription();
     string displayItem();

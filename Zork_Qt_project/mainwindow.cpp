@@ -20,7 +20,12 @@ MainWindow::MainWindow(QWidget *parent) :
         }catch(const exception e){
             cout << "failed" << endl;
         }
-
+        ui->countdown->hide();
+        minutes = 2;
+        seconds = 0;
+        timer = new QTimer(this);
+        connect(timer,SIGNAL(timeout()),this,SLOT(showTime()));
+        timer->start(1000);
         initialiseUI();
 
     }
@@ -30,6 +35,24 @@ void MainWindow::initialiseUI(){
         ValidButtons();
         buildInventoryAndRoom();
         //connect(ui->roomItems, SIGNAL(itemClicked(QListWidgetItem*)),this,SLOT(on_roomItems_itemClicked(QListWidgetItem *item)));
+}
+void MainWindow::showTime(){
+    //function that sets the value of the digital clock on the UI
+    ui->countdown->show();
+    if(minutes == 0 && seconds == 0){
+        timer->stop();
+        //PUT SHUTDOWN COMMAND HERE
+        hide();
+        close();
+    }else if(seconds == 0){
+        --minutes;
+        seconds = 59;
+    }else{
+        seconds--;
+    }
+    ui->countdown->setDecMode();
+    ui->countdown->setDigitCount(15);
+    ui->countdown->display(QString::number(minutes) +" : "+ QString::number(seconds));
 }
 
 void MainWindow::buildInventoryAndRoom(){
@@ -75,11 +98,18 @@ int MainWindow::getNumberOfSpaces(string text){
      return spaceCount;
 }
 
-MainWindow::~MainWindow()
-{
-    cout << "test" << endl;
+MainWindow::~MainWindow(){
+    delete game;
     delete ui;
 }
+void MainWindow::updateMainWindow(QString gameWindowText){
+    ui->mainGameWindow->clear();
+    ui->mainGameWindow->append(gameWindowText);
+}
+void MainWindow::appendMainWindow(QString gameWindowText){
+    ui->mainGameWindow->append(gameWindowText);
+}
+
 void MainWindow::updateMap(QString map){
     ui->gameMap->clear();
     ui->gameMap->append(map);
@@ -227,5 +257,5 @@ void MainWindow::on_inventory_itemClicked(QTreeWidgetItem *item, int column)
 
 void MainWindow::on_escapeButton_clicked()
 {
-
+    this->close();
 }

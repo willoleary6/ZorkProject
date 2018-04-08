@@ -17,6 +17,7 @@ Room::Room(string description, int IDNumber, int floorId) {
     exit = false;
     //initially we set all exits to null
     nullifyExits();
+    initialiseMainWindowText();
 }
 
 /**
@@ -33,6 +34,7 @@ Room::Room(int IDNumber,int floorId) {
     locked = false;
     exit = false;
     nullifyExits();
+    initialiseMainWindowText();
 }
 /**
  * @brief Room::~Room
@@ -43,8 +45,30 @@ Room::~Room(){
         delete itemsInRoom[i];
     }
 }
+
+string Room::getMainWindowText(){
+    return mainWindowText;
+}
+
 vector <Item*> Room::getItemsInRoom(){
     return itemsInRoom;
+}
+void Room::initialiseMainWindowText(){
+    mainWindowText = "Seems like were in the " + description +".\n";
+    if(itemsInRoom.size() > 0){
+        mainWindowText += "There seems to be " + to_string(itemsInRoom.size()) + "Item(s) in the room that could be of use.\n";
+    }else{
+        mainWindowText += "There is nothing of interest in here to take.\n";
+    }
+    if(isExit()){
+       mainWindowText += "Wait I can escape from here!!!! FREEEDOM!! \n";
+    }
+    if(exits["upstairs"] != NULL){
+       mainWindowText += "Looks like I can go upstairs from here. \n";
+    }
+    if(exits["downstairs"] != NULL){
+       mainWindowText += "Looks like I can go downstairs from here. \n";
+    }
 }
 
 /**
@@ -91,6 +115,7 @@ key* Room::lockRoom(){
 void Room::makeExit(){
     exit = true;
     name += "[E]";
+    initialiseMainWindowText();
 }
 
 /**
@@ -169,6 +194,7 @@ void Room::setNorthExit(Room *north){
 void Room::setUpstairsExit(Room *upstairs){
     exits["upstairs"] = upstairs;
     name += "[^]";
+    initialiseMainWindowText();
 }
 
 /**
@@ -179,6 +205,7 @@ void Room::setUpstairsExit(Room *upstairs){
 void Room::setDownstairsExit(Room *downstairs){
     exits["downstairs"] = downstairs;
     name += "[v]";
+    initialiseMainWindowText();
 }
 
 /**
@@ -277,6 +304,7 @@ Room* Room::nextRoom(string direction) {
 void Room::addItem(Item *inItem) {
     itemsInRoom.push_back(inItem);
     inItem = NULL;
+    initialiseMainWindowText();
 }
 
 /**
@@ -341,6 +369,7 @@ Item* Room::removeItem(int itemIndex){
     Item* Temp = itemsInRoom.at(itemIndex);
     itemsInRoom.erase(itemsInRoom.begin() + itemIndex);
     return Temp;
+    initialiseMainWindowText();
 }
 
 /**

@@ -169,8 +169,9 @@ void ZorkUL::populateRoomsWithItems(){
     vector <Room *> floorRooms;
     map<string, Room*> exits;
     Room* lockedRoom;
-    vector <string> searchableNames = {"trunk","bin","cabinet","press","case","casket",
-                                 "crate","strongbox","box","shelf","safe","toolbox","bedstand"};
+    vector <string> searchableNames = {"Trunk","Bin","Cabinet","Press","Case","Casket",
+                                 "Crate","Strongbox","Box","Shelf","Safe","Toolbox","Bedstand",
+                                       "Drawer","Shoe-Box","Extons-Glorious-Beard"};
     /*Starting from floors[1] instead of floors[0] as floors[0]
      * will always only have one room - "the basement" and we cant exactly lock that room :P
      */
@@ -242,7 +243,7 @@ void ZorkUL::populateRoomsWithItems(){
                }
             }
         }
-        for(int i = 0; i < lockedRooms.size(); i++){
+        for(int i = lockedRooms.size()-1; i > -1; i--){
             if(lockedRooms[i]->getFloorID() > 1){
                 lockedRooms[i]->makeExit();
                 break;
@@ -325,6 +326,9 @@ void ZorkUL::addStairSystem(){
  */
 void ZorkUL::printWelcome() {
     ui->updateLog(QString::fromStdString("start"));
+    ui->updateMainWindow(QString::fromStdString("I've finally broken free of this cage! \n"
+                                                "It's only a matter of time before my kidnapper comes home and finds me in the process of escaping. \n"
+                                                "I better get out of here ASAP, I guess I should start by climbing these stairs.\n"));
     //ui->updateLog(QString::fromStdString(currentRoom->longDescription()));
 }
 
@@ -338,7 +342,7 @@ void ZorkUL::printWelcome() {
  */
 bool ZorkUL::processCommand(Command command) {
     if (command.isUnknown()) {
-        cout << "invalid input"<< endl;
+        //cout << "invalid input"<< endl;
         return false;
     }
     string commandWord = command.getCommandWord();
@@ -346,15 +350,15 @@ bool ZorkUL::processCommand(Command command) {
         printHelp();
     }else if (commandWord.compare("map") == 0){
         //this command prints a string map to display the current map to the user.
-        cout << floors[currentFloor]->printMap() << endl;
-        cout << currentRoom->longDescription() << endl;
+        //cout << floors[currentFloor]->printMap() << endl;
+        //cout << currentRoom->longDescription() << endl;
     }else if (commandWord.compare("go") == 0){
         //change the current room to that of the direction specified my the user.
         //goRoom(command);
     }else if (commandWord.compare("take") == 0){
         // added functionality for user to take items out of a room
         if (!command.hasSecondWord()) {
-            cout << "incomplete input"<< endl;
+            ui->appendMainWindow(QString::fromStdString("I don't even know what I'm doing here. \n"));
         }else if (command.hasSecondWord()) {
 
             takeItem(command);
@@ -362,13 +366,13 @@ bool ZorkUL::processCommand(Command command) {
     }else if(commandWord.compare("unlock") == 0){
         //some rooms on the map may be locked and the keys are required to unlock them.
         if (!command.hasSecondWord()) {
-            cout << "incomplete input"<< endl;
+            //cout << "incomplete input"<< endl;
         }else{
             string direction = command.getSecondWord();
             // Try to leave current room.
             Room* roomToUnlock = currentRoom->nextRoom(direction);
             if (roomToUnlock == NULL){
-                cout << "underdefined input"<< endl;
+                ui->appendMainWindow(QString::fromStdString("I don't even know what I'm doing here. \n"));
             }else if(!(roomToUnlock->isLocked())){
                 ui->updateLog(QString::fromStdString(roomToUnlock->shortDescription()+" is already unlocked."));
             }else{
@@ -379,7 +383,7 @@ bool ZorkUL::processCommand(Command command) {
     }else if(commandWord.compare("search") == 0){
         // added functionality for user to search a derived version of an item(searchable)
         if (!command.hasSecondWord()){
-            cout << "incomplete input"<< endl;
+            ui->appendMainWindow(QString::fromStdString("I don't even know what I'm doing here. \n"));
         }else if (command.hasSecondWord()){
             int location = currentRoom->isItemInRoom(command.getSecondWord());
             if (location  < 0 ){
@@ -391,7 +395,7 @@ bool ZorkUL::processCommand(Command command) {
     }else if (commandWord.compare("drop") == 0){
         // Added functionality for user to drop an item in a room
         if (!command.hasSecondWord()) {
-            cout << "incomplete input"<< endl;
+            ui->appendMainWindow(QString::fromStdString("I don't even know what I'm doing here. \n"));
         }else if (command.hasSecondWord()) {
             int location = user.isItemOnCharacter(command.getSecondWord());
             if (location  < 0 ){
@@ -400,6 +404,7 @@ bool ZorkUL::processCommand(Command command) {
                 /*Wrote a hand over function here,
                  * so while the room is gaining said item the user is loosing it.*/
                 ui->updateLog(QString::fromStdString("Dropped "+(user.getItemList())[location]->getShortDescription()));
+                ui->appendMainWindow(QString::fromStdString("I dont know why but I just got the sudden urge to drop the "+(user.getItemList())[location]->getShortDescription())+"\n");
                 currentRoom->addItem(user.removeItem(location));
             }
         }
@@ -412,10 +417,10 @@ bool ZorkUL::processCommand(Command command) {
         }
     }else if(commandWord.compare("inventory") == 0){
         //displaying all the items in users inventory
-        cout << user.longDescription() << endl;
+        //cout << user.longDescription() << endl;
     }else if (commandWord.compare("quit") == 0) {
         if (command.hasSecondWord()){
-            cout << "overdefined input"<< endl;
+            //cout << "overdefined input"<< endl;
         }else{
             return true; /**signal to quit*/
         }
@@ -439,8 +444,11 @@ void ZorkUL::randomTeleport(){
         currentRoom = rooms.at(randomNum);
 
         ui->updateLog(QString::fromStdString("Teleported to "+currentRoom->shortDescription()));
+        ui->updateMainWindow(QString::fromStdString("Ricks portal gun brought me here.\n"));
+        ui->appendMainWindow(QString::fromStdString(currentRoom->getMainWindowText()+"\n"));
         getMap();
     }else{
+        ui->appendMainWindow(QString::fromStdString("Yeah... no way am I going through that portal, Bunch of weirdos in there....\n"));
         ui->updateLog(QString::fromStdString("There is only one room on this floor."));
     }
 }
@@ -458,6 +466,7 @@ void ZorkUL::teleport(Command command){
             rooms.at(i)->setAsCurrentRoom(currentRoom);
             currentRoom = rooms.at(i);
             ui->updateLog(QString::fromStdString("Teleported to "+currentRoom->shortDescription()));
+            ui->updateMainWindow(QString::fromStdString(currentRoom->getMainWindowText()+"\n"));
             found = true;
             break;
         }
@@ -475,12 +484,13 @@ void ZorkUL::takeItem(Command command){
     //get the index of the item in the room
     int location = currentRoom->isItemInRoom(command.getSecondWord());
     if (location  < 0 ){
-        cout << "item is not in room" << endl;
+        ui->appendMainWindow(QString::fromStdString("Wait It's not here but... its right here! \n"));
     }else{
         //checking to see if the item is carryable
         if(currentRoom->getItem(location)->isCarryable()){
             //adding item to user's inventory while also removing it from the room
             user.addItem(currentRoom->removeItem(location));
+            ui->appendMainWindow(QString::fromStdString("Nice found a "+command.getSecondWord()+"\n"));
             ui->updateLog(QString::fromStdString("Picked up "+command.getSecondWord()));
         }else{
             ui->updateLog(QString::fromStdString("Can't pick up "+command.getSecondWord()));
@@ -513,7 +523,8 @@ void ZorkUL::unlockRoom(Room* roomToUnlock,string direction){
                 user.removeItem(i);
                 found = true;
                 roomToUnlock->unlockRoom();
-                ui->updateLog(QString::fromStdString("Success! "+roomToUnlock->shortDescription()+" is now unlocked"));
+                ui->appendMainWindow(QString::fromStdString("Success ! managed to unlock "+ roomToUnlock->shortDescription()+"\n"));
+                ui->updateLog(QString::fromStdString(roomToUnlock->shortDescription()+" is now unlocked"));
             }
            }catch(const exception& e){
                 /*We dont want the program to crash if a non
@@ -522,9 +533,11 @@ void ZorkUL::unlockRoom(Room* roomToUnlock,string direction){
            }
        }
        if(!found){
-           ui->updateLog(QString::fromStdString("You dont have the key for this door" ));
+           ui->appendMainWindow(QString::fromStdString("Oh crap.... doesn't look like I've the key on me for this door :( .\n"));
+           ui->updateLog(QString::fromStdString("Invalid Key" ));
        }
     }else{
+        ui->appendMainWindow(QString::fromStdString("Maybe if I stick my willy in the key hole it just mi.....\n"));
         ui->updateLog(QString::fromStdString("You dont have any keys!"));
     }
 }
@@ -541,11 +554,14 @@ void ZorkUL::searchItem(int location){
         searchableItem *box = static_cast<searchableItem*>(currentRoom->getItem(location));
         if(box->getNumberOfStoredItems() > 0){
             box->transferItemsToCharacter(&user);
+            ui->appendMainWindow(QString::fromStdString("After rumaging through the "+box->getShortDescription()+" I found some interesting items.\n"));
             ui->updateLog(QString::fromStdString("Found items in "+box->getShortDescription()));
         }else{
-           ui->updateLog(QString::fromStdString("There is nothing in the "+box->getShortDescription()));
+           ui->appendMainWindow(QString::fromStdString("Wait.... didn't I already search this thing...\n"));
+           ui->updateLog(QString::fromStdString(" nothing in the "+box->getShortDescription()));
         }
     }else{
+        ui->appendMainWindow(QString::fromStdString("Maybe if I hop my head off it hard enough I'll get a teleporter!\n"));
         ui->updateLog(QString::fromStdString("Cant search "+currentRoom->getItem(location)->getShortDescription()));
     }
 }
@@ -556,7 +572,7 @@ void ZorkUL::searchItem(int location){
  * @brief ZorkUL::printHelp
  */
 void ZorkUL::printHelp() {
-    cout << "valid inputs are; " << endl;
+    //cout << "valid inputs are; " << endl;
     parser.showCommands();
 }
 
@@ -569,9 +585,10 @@ void ZorkUL::goRoom(string direction) {
     // Try to leave current room.
     Room* nextRoom = currentRoom->nextRoom(direction);
     if (nextRoom == NULL){
-        cout << "underdefined input"<< endl;
+        //cout << "underdefined input"<< endl;
     }else if(nextRoom->isLocked()){
-        ui->updateLog(QString::fromStdString(nextRoom->shortDescription()+" is locked, find the key and unlock it !"));
+        ui->appendMainWindow(QString::fromStdString("Can't go "+direction+" seems to be locked... maybe there is a key around...\n"));
+        ui->updateLog(QString::fromStdString(nextRoom->shortDescription()+" is locked, find the key and unlock it !\n"));
     }else {
         if(direction == "upstairs"){
             currentFloor++;
@@ -583,8 +600,8 @@ void ZorkUL::goRoom(string direction) {
         currentRoom = nextRoom;
         getMap();
         ui->updateLog(QString::fromStdString("Moving "+direction));
+        ui->updateMainWindow(QString::fromStdString(currentRoom->getMainWindowText()));
         ui->updateLog(QString::fromStdString("Now in "+currentRoom->shortDescription()));
-        //ui->updateLog(QString::fromStdString(currentRoom->longDescription()));
     }
 }
 
