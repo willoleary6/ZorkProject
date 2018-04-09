@@ -42,10 +42,13 @@ void MainWindow::showTime(){
     if(minutes == 0 && seconds == 0){
         timer->stop();
         //PUT SHUTDOWN COMMAND HERE
+        false;
+        close();
         gameOver go;
+        go.gameLost();
         go.exec();
         hide();
-        //close();
+        close();
     }else if(seconds == 0){
         --minutes;
         seconds = 59;
@@ -54,7 +57,7 @@ void MainWindow::showTime(){
     }
     ui->countdown->setDecMode();
     ui->countdown->setDigitCount(15);
-    ui->countdown->display(QString::number(minutes) +" : "+ QString::number(seconds));
+    ui->countdown->display(QString::number(minutes) +":"+ QString::number(seconds));
 }
 
 void MainWindow::buildInventoryAndRoom(){
@@ -262,7 +265,9 @@ void MainWindow::on_inventory_itemClicked(QTreeWidgetItem *item, int column) {
 }
 
 void MainWindow::on_escapeButton_clicked() {
-    this->close();
+    timer->stop();
+    close();
     gameOver go;
+    go.gameWon(QString::number(minutes) +":"+ QString::number(seconds));
     go.exec();
 }
