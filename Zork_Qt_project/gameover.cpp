@@ -45,6 +45,7 @@ void gameOver::on_playAgainButton_clicked()
 void gameOver::on_leaderboardButton_clicked()
 {
     leaderboard l;
+    l.readFile();
     l.exec();
 }
 

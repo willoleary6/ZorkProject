@@ -49,7 +49,7 @@ void leaderboard::writeFile(QString playerName, QString timer) {
     QString filename = "/home/pi/Documents/zork/zorkProject/Zork_Qt_project/leaderboard.csv";
     QFile csvFile(filename);
 
-    if (!csvFile.open(QIODevice::ReadWrite)) {
+    if (!csvFile.open(QIODevice::Append)) {
         cout << "No file exists" << endl;
     }
     else {

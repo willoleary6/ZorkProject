@@ -45,6 +45,9 @@ border-color: rgb(0, 0, 0);
 border-radius: 10px;
 color: rgb(255, 255, 255);</string>
    </property>
+   <property name="horizontalScrollBarPolicy">
+    <enum>Qt::ScrollBarAlwaysOff</enum>
+   </property>
    <property name="columnCount">
     <number>0</number>
    </property>
@@ -120,7 +123,7 @@ color: rgb(255, 255, 255);</string>
     <rect>
      <x>20</x>
      <y>20</y>
-     <width>130</width>
+     <width>140</width>
      <height>70</height>
     </rect>
    </property>
@@ -188,6 +191,12 @@ color: rgb(255, 255, 255);</string>
     <string>Back</string>
    </property>
   </widget>
+  <zorder>leadTable</zorder>
+  <zorder>playerName</zorder>
+  <zorder>playerTime</zorder>
+  <zorder>leaderboardLabel</zorder>
+  <zorder>backButton</zorder>
+  <zorder>zorkLogo</zorder>
  </widget>
  <resources>
   <include location="imglib.qrc"/>
