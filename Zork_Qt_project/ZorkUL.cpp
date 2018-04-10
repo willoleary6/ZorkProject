@@ -1,26 +1,6 @@
 #include "ZorkUL.h"
 using namespace std;
 
-
-
-/*int main(int argc, char *argv[])
-{
-    QApplication a(argc, argv);
-    //UI
-    //zorkHome n;
-    //n.show();
-
-    //game
-    cout << "Starting" << endl;
-    ZorkUL *temp = new ZorkUL();
-    //temp->play();
-    delete temp;
-    cout << "Finished termination" <<endl;
-   // temp.play();
-
-    return a.exec();
-}*/
-
 /**
  * @brief ZorkUL::ZorkUL
  * Constructor that seeds the random number generator.
@@ -46,17 +26,12 @@ ZorkUL::ZorkUL(MainWindow *ui) {
     currentRoom = rooms[0];
     //spawn items onto the map and set the lock system with corresponding keys
     populateRoomsWithItems();
-
-
-    //cout << floors[currentFloor]->printMap();
-    //QString test = QString::fromStdString(floors[currentFloor]->printMap());
-    //ui->updateMap(test);
 }
 
 map<string, Room*> ZorkUL::getCurrentRoomExits(){
     return currentRoom->getExits();
 }
-
+//function that returns the commands a user can execute with a certain item
 vector<string> ZorkUL::getItemValidCommands(string ItemName,bool isRoom){
     int index;
     if(isRoom){
@@ -67,15 +42,16 @@ vector<string> ZorkUL::getItemValidCommands(string ItemName,bool isRoom){
         vector <Item*> itemsOnUser = user.getItemList();
         return itemsOnUser[index]->validUserCommandsList();
     }
-
 }
+//returns the map to the ui
 void ZorkUL:: getMap(){
     ui->updateMap(QString::fromStdString(floors[currentFloor]->printMap()));
 }
+//returns to the UI whether room is the escape room
 bool ZorkUL::isExit(){
     return currentRoom->isExit();
 }
-
+//returns to the UI the list of room
 vector<string> ZorkUL::getCurrentItemNames(bool isRoom){
     vector<Item*> items;
     if(isRoom){
@@ -89,6 +65,7 @@ vector<string> ZorkUL::getCurrentItemNames(bool isRoom){
     }
     return ItemNames;
 }
+//pass the command from the UI to the command function
 void ZorkUL::runCommand(string commandString){
     string word1;
     string word2;
@@ -120,13 +97,13 @@ void ZorkUL::runCommand(string commandString){
     // Now check whether this word is known. If so, create a command with it.
     // If not, create a "nil" command (empty string for unknown command).
     processCommand(Command(word1, word2));
-
 }
 
 /**
  * @brief ZorkUL::~ZorkUL
  * Destructor clearing memory once the object is finished
  */
+
 ZorkUL::~ZorkUL(){
     if(floors.size() > 0){
         for(int i = 0; i < floors.size(); i++){
