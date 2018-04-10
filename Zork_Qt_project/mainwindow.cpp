@@ -10,6 +10,7 @@
 #include <QTextStream>
 #include <QDesktopWidget>
 
+//main constructor
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -29,19 +30,18 @@ MainWindow::MainWindow(QWidget *parent) :
         initialiseUI();
 
     }
+//initialising the mainwindow
 void MainWindow::initialiseUI(){
         game->getMap();
         game->printWelcome();
         ValidButtons();
         buildInventoryAndRoom();
-        //connect(ui->roomItems, SIGNAL(itemClicked(QListWidgetItem*)),this,SLOT(on_roomItems_itemClicked(QListWidgetItem *item)));
 }
 void MainWindow::showTime(){
     //function that sets the value of the digital clock on the UI
     ui->countdown->show();
     if(minutes == 0 && seconds == 0){
         timer->stop();
-        //PUT SHUTDOWN COMMAND HERE
         false;
         close();
         gameOver go;
@@ -59,7 +59,7 @@ void MainWindow::showTime(){
     ui->countdown->setDigitCount(15);
     ui->countdown->display(QString::number(minutes) +":"+ QString::number(seconds));
 }
-
+//populate the room items and users inventory
 void MainWindow::buildInventoryAndRoom(){
     vector <string> itemNames;
     vector <string> validCommands;
@@ -93,7 +93,7 @@ void MainWindow::buildInventoryAndRoom(){
       }
    }
 }
-
+//find out if the command being passed has more than one word
 int MainWindow::getNumberOfSpaces(string text){
      int spaceCount = 0;
      for(int i =0; i < text.length(); i++){

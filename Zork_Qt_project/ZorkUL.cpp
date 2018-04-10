@@ -1,34 +1,16 @@
 #include "ZorkUL.h"
+
 using namespace std;
-
-
-
-/*int main(int argc, char *argv[])
-{
-    QApplication a(argc, argv);
-    //UI
-    //zorkHome n;
-    //n.show();
-
-    //game
-    cout << "Starting" << endl;
-    ZorkUL *temp = new ZorkUL();
-    //temp->play();
-    delete temp;
-    cout << "Finished termination" <<endl;
-   // temp.play();
-
-    return a.exec();
-}*/
-
 /**
  * @brief ZorkUL::ZorkUL
  * Constructor that seeds the random number generator.
  * populates the floors of the map and populates the map with items.
  */
 ZorkUL::ZorkUL(MainWindow *ui) {
+    /*Passing the pointer of the mainwindow so we
+     * can update the main window from here.
+     */
     this->ui = ui;
-    //ui->updateMap();
     //seeding the random numbers with the current timestamp
     srand(time(NULL));
     for(int i =0; i < 3; i++){
@@ -39,24 +21,29 @@ ZorkUL::ZorkUL(MainWindow *ui) {
     currentFloor = 0;
     //connecting the floors with a "upstairs/downstairs" exits
     addStairSystem();
-
     //setting the rooms on the current floor and current room
     rooms = floors[currentFloor]->getRooms();
     rooms[0]->setAsCurrentRoom(rooms[0]);
     currentRoom = rooms[0];
     //spawn items onto the map and set the lock system with corresponding keys
     populateRoomsWithItems();
-
-
-    //cout << floors[currentFloor]->printMap();
-    //QString test = QString::fromStdString(floors[currentFloor]->printMap());
-    //ui->updateMap(test);
 }
-
+/**
+ * @brief ZorkUL::getCurrentRoomExits
+ * This function returns the exits from the current room stored in a map.
+ * @return
+ */
 map<string, Room*> ZorkUL::getCurrentRoomExits(){
     return currentRoom->getExits();
 }
 
+/**
+ * @brief ZorkUL::getItemValidCommands
+ * function that returns the commands a user can execute with a certain item.
+ * @param ItemName
+ * @param isRoom
+ * @return
+ */
 vector<string> ZorkUL::getItemValidCommands(string ItemName,bool isRoom){
     int index;
     if(isRoom){
@@ -67,15 +54,27 @@ vector<string> ZorkUL::getItemValidCommands(string ItemName,bool isRoom){
         vector <Item*> itemsOnUser = user.getItemList();
         return itemsOnUser[index]->validUserCommandsList();
     }
-
 }
+
+/**
+ * @brief ZorkUL::getMap
+ * Returns the string map to the ui.
+ */
 void ZorkUL:: getMap(){
+    //each floor has a map visualising the floor so call that
     ui->updateMap(QString::fromStdString(floors[currentFloor]->printMap()));
 }
+
+/**
+ * @brief ZorkUL::isExit
+ * this function checks if the current room has is an escape room.
+ * @return
+ */
 bool ZorkUL::isExit(){
+    //calls a boolean in the room object to check if the room is a exit.
     return currentRoom->isExit();
 }
-
+//returns to the UI the list of room
 vector<string> ZorkUL::getCurrentItemNames(bool isRoom){
     vector<Item*> items;
     if(isRoom){
@@ -89,6 +88,7 @@ vector<string> ZorkUL::getCurrentItemNames(bool isRoom){
     }
     return ItemNames;
 }
+//pass the command from the UI to the command function
 void ZorkUL::runCommand(string commandString){
     string word1;
     string word2;
@@ -120,13 +120,13 @@ void ZorkUL::runCommand(string commandString){
     // Now check whether this word is known. If so, create a command with it.
     // If not, create a "nil" command (empty string for unknown command).
     processCommand(Command(word1, word2));
-
 }
 
 /**
  * @brief ZorkUL::~ZorkUL
  * Destructor clearing memory once the object is finished
  */
+
 ZorkUL::~ZorkUL(){
     if(floors.size() > 0){
         for(int i = 0; i < floors.size(); i++){
