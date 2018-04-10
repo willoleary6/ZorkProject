@@ -8,6 +8,7 @@
 #include <QTreeWidgetItem>
 #include <string>
 #include <QTimer>
+#include <QPushButton>
 
 class ZorkUL;
 class gameOver;

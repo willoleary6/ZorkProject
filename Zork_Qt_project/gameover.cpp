@@ -55,26 +55,6 @@ void gameOver::on_mainMenuButton_clicked()
     z.exec();
 }
 
-/*void gameOver::on_saveButton_clicked()
-{
-    QMessageBox::warning(this, "Error", "Works");
-
-    QString player, playerTime;
-    player = ui->playerName->text();
-    playerTime = ui->playerTime->text();
-
-    if (player.isEmpty()) {
-        QMessageBox::warning(this, "Error", "Please enter a username to continue");
-    }
-    //else {
-        leaderboard l;
-        l.writeFile(player, playerTime);
-        ui->scoreSaved->setText("Score saved successfully");
-   // }
-}*/
-
-
-
 void gameOver::on_saveButton_clicked()
 {
     QString player, playerTime;

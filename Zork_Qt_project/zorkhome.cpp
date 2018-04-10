@@ -1,6 +1,5 @@
 ﻿#include "zorkhome.h"
 #include "ui_zorkhome.h"
-#include "newGame.h"
 #include "settings.h"
 #include <QPixmap>
 #include <QtCore>
