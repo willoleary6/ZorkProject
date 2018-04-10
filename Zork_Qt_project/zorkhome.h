@@ -1,10 +1,13 @@
 #ifndef ZORKHOME_H
 #define ZORKHOME_H
 #include <QDialog>
-#include <newGame.h>
+#include "mainwindow.h"
+#include "leaderboard.h"
 #include <iostream>
 #include <QMediaPlaylist>
 
+class leaderboard;
+class MainWindow;
 namespace Ui {
 class zorkHome;
 }

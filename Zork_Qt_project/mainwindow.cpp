@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "newGame.h"
 #include "settings.h"
 #include <QMessageBox>
 #include <QPixmap>
@@ -9,6 +8,7 @@
 #include <QString>
 #include <QToolButton>
 #include <QTextStream>
+#include <QDesktopWidget>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -270,4 +270,12 @@ void MainWindow::on_escapeButton_clicked() {
     gameOver go;
     go.gameWon(QString::number(minutes) +":"+ QString::number(seconds));
     go.exec();
+}
+
+void MainWindow::on_actionNew_Game_triggered()
+{
+    this->close();
+    MainWindow *w = new MainWindow();
+    w->move(QApplication::desktop()->screen()->rect().center() - w->rect().center());
+    w->show();
 }

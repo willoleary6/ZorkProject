@@ -34,12 +34,12 @@ SOURCES += mainwindow.cpp\
         ZorkUL.cpp \
     floor.cpp \
     zorkhome.cpp \
-    newGame.cpp \
     carryableItem.cpp \
     searchableitem.cpp \
     key.cpp \
     settings.cpp \
-    gameover.cpp
+    gameover.cpp \
+    leaderboard.cpp
 
 
 
@@ -53,18 +53,18 @@ HEADERS  += mainwindow.h\
             ZorkUL.h \
     floor.h \
     zorkhome.h \
-    newGame.h \
     carryableItem.h \
     searchableitem.h \
     key.h \
     settings.h \
-    gameover.h
+    gameover.h \
+    leaderboard.h
 
 FORMS    += mainwindow.ui \
-    newGame.ui \
     zorkhome.ui \
     settings.ui \
-    gameover.ui
+    gameover.ui \
+    leaderboard.ui
 
 RESOURCES += \
     imglib.qrc
