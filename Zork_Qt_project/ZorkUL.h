@@ -26,20 +26,16 @@ private:
     void takeItem(Command command);
     void searchItem(int location);
     void getValidRooms(vector <Room *> *validRoomsForKeys, Room* nextRoom);
-
     void populateRoomsWithItems();
     void printHelp();
     void createItems();
     void displayItems();
     void addStairSystem();
 
-
     bool checkForDublicates(vector <Room *> validRoomsForKeys, Room* newRoom);
     bool processCommand(Command command);
 
-
     string go(string direction);
-
 
     //Global private Variables
     int currentFloor =0;
@@ -51,17 +47,22 @@ private:
     MainWindow *ui;
 
 public:
+
     ZorkUL(MainWindow *ui);
     ~ZorkUL();
+
     void play();
     void getMap();
     void printWelcome();
     void goRoom(string direction);
     void runCommand(string commandString);
+
     bool isExit();
+
     vector<string> getItemValidCommands(string ItemName, bool isRoom);
     vector<string> getItemValidUserCommands(string ItemName);
     vector<string> getCurrentItemNames( bool isRoom);
+
     map<string, Room*> getCurrentRoomExits();
 };
 

@@ -3,8 +3,10 @@
 
 #include "mainwindow.h"
 #include "zorkhome.h"
+#include "leaderboard.h"
 #include <QDialog>
 
+class leaderboard;
 class zorkHome;
 class MainWindow;
 namespace Ui {
@@ -28,6 +30,8 @@ private slots:
     void on_leaderboardButton_clicked();
 
     void on_mainMenuButton_clicked();
+
+    void on_saveButton_clicked();
 
 private:
     Ui::gameOver *ui;

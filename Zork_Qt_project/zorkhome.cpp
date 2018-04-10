@@ -1,12 +1,12 @@
-#include "zorkhome.h"
+﻿#include "zorkhome.h"
 #include "ui_zorkhome.h"
-#include "newGame.h"
 #include "settings.h"
 #include <QPixmap>
 #include <QtCore>
 #include <QMediaPlayer>
 #include <QMediaPlaylist>
 #include <QMessageBox>
+#include <QDesktopWidget>
 
 using namespace std;
 
@@ -49,9 +49,9 @@ zorkHome::~zorkHome()
 void zorkHome::on_newGameButton_clicked()
 {
     close();
-    newGame ng;
-    ng.setModal(true);
-    ng.exec();
+    MainWindow *w = new MainWindow();
+    w->move(QApplication::desktop()->screen()->rect().center() - w->rect().center());
+    w->show();
 }
 
 void zorkHome::on_exitButton_clicked()
@@ -83,5 +83,7 @@ void zorkHome::on_settingsButton_clicked()
 
 void zorkHome::on_leaderboardButton_clicked()
 {
-
+    leaderboard l;
+    l.readFile();
+    l.exec();
 }

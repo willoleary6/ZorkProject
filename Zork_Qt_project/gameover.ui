@@ -92,9 +92,9 @@ color: rgb(255, 255, 255);</string>
   <widget class="QLabel" name="winLoseLabel">
    <property name="geometry">
     <rect>
-     <x>120</x>
+     <x>80</x>
      <y>10</y>
-     <width>270</width>
+     <width>350</width>
      <height>81</height>
     </rect>
    </property>
@@ -107,7 +107,7 @@ color: rgb(255, 255, 255);</string>
     </font>
    </property>
    <property name="text">
-    <string>Success!</string>
+    <string>Text</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -131,7 +131,7 @@ color: rgb(255, 255, 255);</string>
     </font>
    </property>
    <property name="text">
-    <string>You failed to make it out in time</string>
+    <string>Text</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -140,10 +140,10 @@ color: rgb(255, 255, 255);</string>
   <widget class="QLabel" name="winLoseText">
    <property name="geometry">
     <rect>
-     <x>80</x>
+     <x>60</x>
      <y>110</y>
-     <width>351</width>
-     <height>91</height>
+     <width>390</width>
+     <height>100</height>
     </rect>
    </property>
    <property name="font">
@@ -152,7 +152,7 @@ color: rgb(255, 255, 255);</string>
     </font>
    </property>
    <property name="text">
-    <string>Tough luck. The kidnapper has found you after trying to escape and it is now likely that you will never make it out alive. T'was nice knowing ya.</string>
+    <string>Text</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -165,7 +165,7 @@ color: rgb(255, 255, 255);</string>
    <property name="geometry">
     <rect>
      <x>150</x>
-     <y>210</y>
+     <y>250</y>
      <width>130</width>
      <height>21</height>
     </rect>
@@ -182,32 +182,11 @@ color: rgb(255, 255, 255);</string>
     <string>Your time :</string>
    </property>
   </widget>
-  <widget class="QLabel" name="bestLabel">
-   <property name="geometry">
-    <rect>
-     <x>150</x>
-     <y>240</y>
-     <width>140</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Montserrat</family>
-     <pointsize>14</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="text">
-    <string>Best time :</string>
-   </property>
-  </widget>
   <widget class="QLabel" name="playerTime">
    <property name="geometry">
     <rect>
      <x>280</x>
-     <y>210</y>
+     <y>250</y>
      <width>70</width>
      <height>21</height>
     </rect>
@@ -225,28 +204,93 @@ color: rgb(255, 255, 255);</string>
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QLabel" name="bestTime">
+  <widget class="QLineEdit" name="playerName">
    <property name="geometry">
     <rect>
-     <x>290</x>
-     <y>240</y>
-     <width>60</width>
-     <height>21</height>
+     <x>50</x>
+     <y>220</y>
+     <width>270</width>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
     <font>
      <family>Montserrat</family>
-     <pointsize>14</pointsize>
+     <pointsize>15</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(46, 52, 54);</string>
+   </property>
+   <property name="maxLength">
+    <number>10</number>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+   <property name="placeholderText">
+    <string>Enter Player name here</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="saveButton">
+   <property name="geometry">
+    <rect>
+     <x>330</x>
+     <y>220</y>
+     <width>120</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Montserrat</family>
+     <weight>75</weight>
+     <bold>true</bold>
     </font>
    </property>
    <property name="text">
-    <string>0:00</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    <string>Save Score</string>
    </property>
   </widget>
+  <widget class="QLabel" name="scoreSaved">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>280</y>
+     <width>200</width>
+     <height>19</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Montserrat</family>
+     <italic>true</italic>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(237, 212, 0);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <zorder>mainMenuButton</zorder>
+  <zorder>leaderboardButton</zorder>
+  <zorder>playAgainButton</zorder>
+  <zorder>winLoseLabel</zorder>
+  <zorder>winLoseText</zorder>
+  <zorder>playerLabel</zorder>
+  <zorder>playerTime</zorder>
+  <zorder>winLoseHeading</zorder>
+  <zorder>playerName</zorder>
+  <zorder>saveButton</zorder>
+  <zorder>scoreSaved</zorder>
  </widget>
  <resources>
   <include location="imglib.qrc"/>

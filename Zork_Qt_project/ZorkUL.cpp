@@ -1,14 +1,16 @@
 #include "ZorkUL.h"
-using namespace std;
 
+using namespace std;
 /**
  * @brief ZorkUL::ZorkUL
  * Constructor that seeds the random number generator.
  * populates the floors of the map and populates the map with items.
  */
 ZorkUL::ZorkUL(MainWindow *ui) {
+    /*Passing the pointer of the mainwindow so we
+     * can update the main window from here.
+     */
     this->ui = ui;
-    //ui->updateMap();
     //seeding the random numbers with the current timestamp
     srand(time(NULL));
     for(int i =0; i < 3; i++){
@@ -19,7 +21,6 @@ ZorkUL::ZorkUL(MainWindow *ui) {
     currentFloor = 0;
     //connecting the floors with a "upstairs/downstairs" exits
     addStairSystem();
-
     //setting the rooms on the current floor and current room
     rooms = floors[currentFloor]->getRooms();
     rooms[0]->setAsCurrentRoom(rooms[0]);
@@ -27,11 +28,22 @@ ZorkUL::ZorkUL(MainWindow *ui) {
     //spawn items onto the map and set the lock system with corresponding keys
     populateRoomsWithItems();
 }
-
+/**
+ * @brief ZorkUL::getCurrentRoomExits
+ * This function returns the exits from the current room stored in a map.
+ * @return
+ */
 map<string, Room*> ZorkUL::getCurrentRoomExits(){
     return currentRoom->getExits();
 }
-//function that returns the commands a user can execute with a certain item
+
+/**
+ * @brief ZorkUL::getItemValidCommands
+ * function that returns the commands a user can execute with a certain item.
+ * @param ItemName
+ * @param isRoom
+ * @return
+ */
 vector<string> ZorkUL::getItemValidCommands(string ItemName,bool isRoom){
     int index;
     if(isRoom){
@@ -43,12 +55,23 @@ vector<string> ZorkUL::getItemValidCommands(string ItemName,bool isRoom){
         return itemsOnUser[index]->validUserCommandsList();
     }
 }
-//returns the map to the ui
+
+/**
+ * @brief ZorkUL::getMap
+ * Returns the string map to the ui.
+ */
 void ZorkUL:: getMap(){
+    //each floor has a map visualising the floor so call that
     ui->updateMap(QString::fromStdString(floors[currentFloor]->printMap()));
 }
-//returns to the UI whether room is the escape room
+
+/**
+ * @brief ZorkUL::isExit
+ * this function checks if the current room has is an escape room.
+ * @return
+ */
 bool ZorkUL::isExit(){
+    //calls a boolean in the room object to check if the room is a exit.
     return currentRoom->isExit();
 }
 //returns to the UI the list of room

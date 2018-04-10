@@ -2,13 +2,13 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "newGame.h"
 #include "ZorkUL.h"
 #include "gameover.h"
 #include <map>
 #include <QTreeWidgetItem>
 #include <string>
 #include <QTimer>
+#include <QPushButton>
 
 class ZorkUL;
 class gameOver;
@@ -71,6 +71,8 @@ private slots:
     void on_inventory_itemClicked(QTreeWidgetItem *item, int column);
 
     void on_escapeButton_clicked();
+
+    void on_actionNew_Game_triggered();
 
 private:
     Ui::MainWindow *ui;
