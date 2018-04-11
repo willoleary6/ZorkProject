@@ -35,7 +35,9 @@ public:
     {
         if (leaderboard->objectName().isEmpty())
             leaderboard->setObjectName(QStringLiteral("leaderboard"));
-        leaderboard->resize(500, 717);
+        leaderboard->resize(500, 710);
+        leaderboard->setMinimumSize(QSize(500, 710));
+        leaderboard->setMaximumSize(QSize(500, 710));
         QIcon icon;
         icon.addFile(QStringLiteral(":/images/zorkIcon.png"), QSize(), QIcon::Normal, QIcon::Off);
         leaderboard->setWindowIcon(icon);
@@ -43,6 +45,35 @@ public:
         leadTable = new QTableWidget(leaderboard);
         leadTable->setObjectName(QStringLiteral("leadTable"));
         leadTable->setGeometry(QRect(50, 150, 400, 500));
+        QPalette palette;
+        QBrush brush(QColor(255, 255, 255, 255));
+        brush.setStyle(Qt::SolidPattern);
+        palette.setBrush(QPalette::Active, QPalette::WindowText, brush);
+        QBrush brush1(QColor(35, 39, 41, 255));
+        brush1.setStyle(Qt::SolidPattern);
+        palette.setBrush(QPalette::Active, QPalette::Button, brush1);
+        palette.setBrush(QPalette::Active, QPalette::Text, brush);
+        palette.setBrush(QPalette::Active, QPalette::ButtonText, brush);
+        palette.setBrush(QPalette::Active, QPalette::Base, brush1);
+        palette.setBrush(QPalette::Active, QPalette::Window, brush1);
+        QBrush brush2(QColor(46, 52, 54, 255));
+        brush2.setStyle(Qt::SolidPattern);
+        palette.setBrush(QPalette::Active, QPalette::AlternateBase, brush2);
+        palette.setBrush(QPalette::Inactive, QPalette::WindowText, brush);
+        palette.setBrush(QPalette::Inactive, QPalette::Button, brush1);
+        palette.setBrush(QPalette::Inactive, QPalette::Text, brush);
+        palette.setBrush(QPalette::Inactive, QPalette::ButtonText, brush);
+        palette.setBrush(QPalette::Inactive, QPalette::Base, brush1);
+        palette.setBrush(QPalette::Inactive, QPalette::Window, brush1);
+        palette.setBrush(QPalette::Inactive, QPalette::AlternateBase, brush2);
+        palette.setBrush(QPalette::Disabled, QPalette::WindowText, brush);
+        palette.setBrush(QPalette::Disabled, QPalette::Button, brush1);
+        palette.setBrush(QPalette::Disabled, QPalette::Text, brush);
+        palette.setBrush(QPalette::Disabled, QPalette::ButtonText, brush);
+        palette.setBrush(QPalette::Disabled, QPalette::Base, brush1);
+        palette.setBrush(QPalette::Disabled, QPalette::Window, brush1);
+        palette.setBrush(QPalette::Disabled, QPalette::AlternateBase, brush2);
+        leadTable->setPalette(palette);
         QFont font;
         font.setFamily(QStringLiteral("Montserrat"));
         font.setPointSize(14);
@@ -50,18 +81,26 @@ public:
         font.setWeight(50);
         leadTable->setFont(font);
         leadTable->setStyleSheet(QLatin1String("background-color: rgb(35, 39, 41);\n"
+"alternate-background-color: rgb(46, 52, 54);\n"
 "border-style: solid;\n"
 "border-width: 2px;\n"
 "border-color: rgb(0, 0, 0);\n"
 "border-radius: 10px;\n"
 "color: rgb(255, 255, 255);"));
         leadTable->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        leadTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        leadTable->setAlternatingRowColors(true);
+        leadTable->setSelectionMode(QAbstractItemView::NoSelection);
+        leadTable->setSelectionBehavior(QAbstractItemView::SelectColumns);
         leadTable->setShowGrid(false);
+        leadTable->setSortingEnabled(true);
         leadTable->setColumnCount(0);
         leadTable->horizontalHeader()->setVisible(false);
         leadTable->horizontalHeader()->setCascadingSectionResizes(false);
+        leadTable->horizontalHeader()->setHighlightSections(false);
         leadTable->verticalHeader()->setVisible(false);
         leadTable->verticalHeader()->setHighlightSections(false);
+        leadTable->verticalHeader()->setProperty("showSortIndicator", QVariant(false));
         playerName = new QLabel(leaderboard);
         playerName->setObjectName(QStringLiteral("playerName"));
         playerName->setGeometry(QRect(50, 120, 200, 30));
@@ -98,7 +137,7 @@ public:
         leaderboardLabel->setWordWrap(true);
         backButton = new QPushButton(leaderboard);
         backButton->setObjectName(QStringLiteral("backButton"));
-        backButton->setGeometry(QRect(170, 660, 140, 40));
+        backButton->setGeometry(QRect(180, 660, 140, 40));
         backButton->setFont(font1);
         backButton->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
         leadTable->raise();

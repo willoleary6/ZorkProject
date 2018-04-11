@@ -36,8 +36,6 @@ private slots:
 private:
     Ui::gameOver *ui;
     MainWindow *w;
-    //void gameWon(QString timer);
-    //void gameLost();
 };
 
 #endif // GAMEOVER_H

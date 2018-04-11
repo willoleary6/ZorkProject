@@ -37,6 +37,8 @@ public:
         if (settings->objectName().isEmpty())
             settings->setObjectName(QStringLiteral("settings"));
         settings->resize(290, 340);
+        settings->setMinimumSize(QSize(290, 340));
+        settings->setMaximumSize(QSize(290, 340));
         QIcon icon;
         icon.addFile(QStringLiteral(":/images/zorkIcon.png"), QSize(), QIcon::Normal, QIcon::Off);
         settings->setWindowIcon(icon);
@@ -235,7 +237,7 @@ public:
         zork = new QLabel(settings);
         zork->setObjectName(QStringLiteral("zork"));
         zork->setGeometry(QRect(30, 10, 230, 90));
-        zork->setPixmap(QPixmap(QString::fromUtf8("../../Downloads/zorkLogo.png")));
+        zork->setPixmap(QPixmap(QString::fromUtf8(":/images/zorkLogo.png")));
         zork->setScaledContents(true);
         debugCB = new QCheckBox(settings);
         debugCB->setObjectName(QStringLiteral("debugCB"));

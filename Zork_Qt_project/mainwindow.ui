@@ -156,7 +156,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>../../Downloads/compass-2.png</pixmap>
+     <pixmap resource="imglib.qrc">:/images/compass.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1227,8 +1227,8 @@ border-radius: 10px;</string>
      <font>
       <family>Montserrat</family>
       <pointsize>12</pointsize>
-      <weight>50</weight>
-      <bold>false</bold>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="styleSheet">
@@ -1674,17 +1674,22 @@ border-radius: 10px;
 color: rgb(255, 255, 255);</string>
     </property>
     <attribute name="headerVisible">
-     <bool>true</bool>
+     <bool>false</bool>
     </attribute>
     <column>
      <property name="text">
       <string>Room Items</string>
      </property>
+     <property name="whatsThis">
+      <string notr="true"/>
+     </property>
      <property name="font">
       <font>
        <family>Piboto Light</family>
+       <pointsize>13</pointsize>
        <weight>75</weight>
        <bold>true</bold>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="textAlignment">
@@ -2176,8 +2181,12 @@ color: rgb(255, 255, 255);</string>
 border-style: solid;
 border-width: 2px;
 border-color: rgb(0, 0, 0);
-border-radius: 10px;color: rgb(255, 255, 255);</string>
+border-radius: 10px;
+color: rgb(255, 255, 255);</string>
     </property>
+    <attribute name="headerVisible">
+     <bool>false</bool>
+    </attribute>
     <column>
      <property name="text">
       <string>Inventory</string>
@@ -2185,6 +2194,7 @@ border-radius: 10px;color: rgb(255, 255, 255);</string>
      <property name="font">
       <font>
        <family>Piboto Light</family>
+       <pointsize>13</pointsize>
        <weight>75</weight>
        <bold>true</bold>
       </font>
@@ -2228,10 +2238,10 @@ border-radius: 10px;color: rgb(255, 255, 255);</string>
    <widget class="QLCDNumber" name="countdown">
     <property name="geometry">
      <rect>
-      <x>490</x>
+      <x>580</x>
       <y>440</y>
-      <width>171</width>
-      <height>101</height>
+      <width>111</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -2254,7 +2264,12 @@ border-radius: 10px;color: rgb(255, 255, 255);</string>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: rgb(255, 255, 255);</string>
+     <string notr="true">background-color: rgb(35, 39, 41);
+border-style: solid;
+border-width: 2px;
+border-color: rgb(0, 0, 0);
+border-radius: 10px;
+color: rgb(255, 255, 255);</string>
     </property>
    </widget>
    <widget class="QLabel" name="gameLogLabel_2">
@@ -2266,12 +2281,18 @@ border-radius: 10px;color: rgb(255, 255, 255);</string>
       <height>20</height>
      </rect>
     </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
     <property name="font">
      <font>
       <family>Montserrat</family>
       <pointsize>12</pointsize>
-      <weight>50</weight>
-      <bold>false</bold>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="styleSheet">
@@ -2297,8 +2318,8 @@ border-radius: 10px;color: rgb(255, 255, 255);</string>
      <font>
       <family>Montserrat</family>
       <pointsize>12</pointsize>
-      <weight>50</weight>
-      <bold>false</bold>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="styleSheet">
@@ -2309,6 +2330,36 @@ border-radius: 10px;color: rgb(255, 255, 255);</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>510</x>
+      <y>440</y>
+      <width>69</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>DejaVu Sans Condensed</family>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);
+</string>
+    </property>
+    <property name="text">
+     <string>Time Left</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="wordWrap">
+     <bool>true</bool>
     </property>
    </widget>
    <zorder>compassLogo</zorder>
@@ -2328,6 +2379,7 @@ border-radius: 10px;color: rgb(255, 255, 255);</string>
    <zorder>countdown</zorder>
    <zorder>gameLogLabel_2</zorder>
    <zorder>gameLogLabel_3</zorder>
+   <zorder>label</zorder>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <property name="enabled">
@@ -2374,7 +2426,7 @@ border-radius: 10px;color: rgb(255, 255, 255);</string>
     <addaction name="actionQuit_Game"/>
     <addaction name="actionSettings"/>
     <addaction name="separator"/>
-    <addaction name="actionClose"/>
+    <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -2385,17 +2437,9 @@ border-radius: 10px;color: rgb(255, 255, 255);</string>
    <addaction name="menuFile"/>
    <addaction name="menuHelp"/>
   </widget>
-  <action name="actionClose">
+  <action name="actionExit">
    <property name="text">
-    <string>Close</string>
-   </property>
-  </action>
-  <action name="actionUndo_Last_Move">
-   <property name="text">
-    <string>Undo Last Move</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+Z</string>
+    <string>Exit</string>
    </property>
   </action>
   <action name="actionNew_Game">

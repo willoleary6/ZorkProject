@@ -76,6 +76,10 @@ private slots:
 
     void on_actionQuit_Game_triggered();
 
+    void on_actionUndo_Last_Move_triggered();
+
+    void on_actionExit_triggered();
+
 private:
     Ui::MainWindow *ui;
 };

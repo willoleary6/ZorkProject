@@ -4,6 +4,10 @@
         <file>CSIS.png</file>
         <file>ul_White.png</file>
         <file>zorkIcon.png</file>
+        <file>compass.png</file>
+        <file>redX.png</file>
+        <file>ThumbUpLeft.png</file>
+        <file>ThumbUpRight.png</file>
     </qresource>
     <qresource prefix="/sounds">
         <file>doorSoundEffect.mp3</file>

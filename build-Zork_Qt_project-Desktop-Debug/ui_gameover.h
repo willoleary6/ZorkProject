@@ -35,12 +35,21 @@ public:
     QLineEdit *playerName;
     QPushButton *saveButton;
     QLabel *scoreSaved;
+    QLabel *image2;
+    QLabel *image1;
 
     void setupUi(QDialog *gameOver)
     {
         if (gameOver->objectName().isEmpty())
             gameOver->setObjectName(QStringLiteral("gameOver"));
         gameOver->resize(500, 380);
+        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(gameOver->sizePolicy().hasHeightForWidth());
+        gameOver->setSizePolicy(sizePolicy);
+        gameOver->setMinimumSize(QSize(500, 380));
+        gameOver->setMaximumSize(QSize(500, 380));
         QFont font;
         font.setFamily(QStringLiteral("Montserrat"));
         gameOver->setFont(font);
@@ -68,7 +77,7 @@ public:
         playAgainButton->setFont(font1);
         winLoseLabel = new QLabel(gameOver);
         winLoseLabel->setObjectName(QStringLiteral("winLoseLabel"));
-        winLoseLabel->setGeometry(QRect(80, 10, 350, 81));
+        winLoseLabel->setGeometry(QRect(120, 10, 270, 80));
         QFont font2;
         font2.setFamily(QStringLiteral("Montserrat"));
         font2.setPointSize(40);
@@ -78,7 +87,7 @@ public:
         winLoseLabel->setAlignment(Qt::AlignCenter);
         winLoseHeading = new QLabel(gameOver);
         winLoseHeading->setObjectName(QStringLiteral("winLoseHeading"));
-        winLoseHeading->setGeometry(QRect(80, 80, 350, 21));
+        winLoseHeading->setGeometry(QRect(100, 80, 310, 21));
         QFont font3;
         font3.setFamily(QStringLiteral("Montserrat"));
         font3.setPointSize(14);
@@ -134,6 +143,14 @@ public:
         scoreSaved->setFont(font7);
         scoreSaved->setStyleSheet(QStringLiteral("color: rgb(237, 212, 0);"));
         scoreSaved->setAlignment(Qt::AlignCenter);
+        image2 = new QLabel(gameOver);
+        image2->setObjectName(QStringLiteral("image2"));
+        image2->setGeometry(QRect(390, 20, 60, 60));
+        image2->setScaledContents(true);
+        image1 = new QLabel(gameOver);
+        image1->setObjectName(QStringLiteral("image1"));
+        image1->setGeometry(QRect(50, 20, 60, 60));
+        image1->setScaledContents(true);
         mainMenuButton->raise();
         leaderboardButton->raise();
         playAgainButton->raise();
@@ -145,6 +162,8 @@ public:
         playerName->raise();
         saveButton->raise();
         scoreSaved->raise();
+        image2->raise();
+        image1->raise();
 
         retranslateUi(gameOver);
 
@@ -157,14 +176,16 @@ public:
         mainMenuButton->setText(QApplication::translate("gameOver", "Main Menu", Q_NULLPTR));
         leaderboardButton->setText(QApplication::translate("gameOver", "Leaderboard", Q_NULLPTR));
         playAgainButton->setText(QApplication::translate("gameOver", "Play Again", Q_NULLPTR));
-        winLoseLabel->setText(QApplication::translate("gameOver", "Text", Q_NULLPTR));
-        winLoseHeading->setText(QApplication::translate("gameOver", "Text", Q_NULLPTR));
+        winLoseLabel->setText(QApplication::translate("gameOver", "Label", Q_NULLPTR));
+        winLoseHeading->setText(QApplication::translate("gameOver", "Heading", Q_NULLPTR));
         winLoseText->setText(QApplication::translate("gameOver", "Text", Q_NULLPTR));
         playerLabel->setText(QApplication::translate("gameOver", "Your time :", Q_NULLPTR));
         playerTime->setText(QApplication::translate("gameOver", "0:00", Q_NULLPTR));
         playerName->setPlaceholderText(QApplication::translate("gameOver", "Enter Player name here", Q_NULLPTR));
         saveButton->setText(QApplication::translate("gameOver", "Save Score", Q_NULLPTR));
         scoreSaved->setText(QString());
+        image2->setText(QString());
+        image1->setText(QString());
     } // retranslateUi
 
 };

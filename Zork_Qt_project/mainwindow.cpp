@@ -27,9 +27,11 @@ MainWindow::MainWindow(QWidget *parent) :
         timer = new QTimer(this);
         connect(timer,SIGNAL(timeout()),this,SLOT(showTime()));
         timer->start(1000);
+
         initialiseUI();
 
     }
+
 //initialising the mainwindow
 void MainWindow::initialiseUI(){
         game->getMap();
@@ -37,10 +39,12 @@ void MainWindow::initialiseUI(){
         ValidButtons();
         buildInventoryAndRoom();
 }
+
 void MainWindow::showTime(){
     //function that sets the value of the digital clock on the UI
     ui->countdown->show();
     if(minutes == 0 && seconds == 0){
+        // Game stops when timer hits 0:00
         timer->stop();
         false;
         close();
@@ -56,8 +60,11 @@ void MainWindow::showTime(){
         seconds--;
     }
     ui->countdown->setDecMode();
-    ui->countdown->setDigitCount(15);
-    ui->countdown->display(QString::number(minutes) +":"+ QString::number(seconds));
+    ui->countdown->setDigitCount(5);
+    if (seconds < 10)
+        ui->countdown->display(QString::number(minutes) +":0"+ QString::number(seconds));
+    else
+        ui->countdown->display(QString::number(minutes) +":"+ QString::number(seconds));
 }
 //populate the room items and users inventory
 void MainWindow::buildInventoryAndRoom(){
@@ -93,9 +100,9 @@ void MainWindow::buildInventoryAndRoom(){
    }
 }
 //find out if the command being passed has more than one word
-int MainWindow::getNumberOfSpaces(string text){
+int MainWindow::getNumberOfSpaces(string text) {
      int spaceCount = 0;
-     for(int i =0; i < text.length(); i++){
+     for(int i =0; i < text.length(); i++) {
          if(text.at(i) == ' '){
              spaceCount++;
          }
@@ -126,35 +133,21 @@ void MainWindow::updateLog(QString log) {
     ui->gameHistory->append(log);
 }
 
-void MainWindow::on_actionClose_triggered() {
-    QMessageBox confirmExit;
-    confirmExit.setWindowTitle("Exit Zork");
-    confirmExit.setText("Are you sure you want to quit Zork?");
-    confirmExit.setStyleSheet("color : white; background : rgb(79, 87, 88)");
-    confirmExit.setIcon(QMessageBox::Question);
-    confirmExit.setStandardButtons(QMessageBox::Cancel | QMessageBox::Close);
-    confirmExit.setDefaultButton(QMessageBox::Cancel);
-    int ret = confirmExit.exec();
 
-    switch (ret) {
-        case QMessageBox::Cancel:
-            break;
-        case QMessageBox::Close:
-            close();
-        break;
-    }
-}
-
+// Settings action from Menu bar
 void MainWindow::on_actionSettings_triggered() {
+    // Displays settings
     settings s;
     s.setModal(true);
     s.exec();
 }
 
+// About action in the Menu bar
 void MainWindow::on_actionAbout_triggered() {
     QImage ulLogo(":/images/ul_White.png");
     QImage image = ulLogo.scaled(200, 200, Qt::KeepAspectRatio);
 
+    // Message dialog displays information about the application and authors
     QMessageBox about;
     about.setIconPixmap(QPixmap::fromImage(image));
     about.setText("Zork");
@@ -278,16 +271,26 @@ void MainWindow::on_inventory_itemClicked(QTreeWidgetItem *item, int column) {
     buildInventoryAndRoom();
 }
 
+// Escape Button
 void MainWindow::on_escapeButton_clicked() {
     timer->stop();
+    // Players time is calculated
+    minutes = 1 - minutes;
+    seconds = 60 - seconds;
     close();
     gameOver go;
-    go.gameWon(QString::number(minutes) +":"+ QString::number(seconds));
+
+    // Checks if the seconds in the final time is < 10. If so, a "0" is add after the colon.
+    if (seconds < 10)
+        go.gameWon(QString::number(minutes) +":0"+ QString::number(seconds));
+    else
+        go.gameWon(QString::number(minutes) +":"+ QString::number(seconds));
     go.exec();
 }
 
-void MainWindow::on_actionNew_Game_triggered()
-{
+// New Game action in the Menu bar
+void MainWindow::on_actionNew_Game_triggered() {
+    // Dialog prompts to confirm the player wishes to stop the current game and start a new one
     QMessageBox confirmNewGame;
     confirmNewGame.setWindowTitle("Zork - Start New Game");
     confirmNewGame.setText("<b>You are currently in the middle of a game.</b>");
@@ -311,8 +314,9 @@ void MainWindow::on_actionNew_Game_triggered()
     }
 }
 
-void MainWindow::on_actionQuit_Game_triggered()
-{
+// Quit game action in the Menu bar
+void MainWindow::on_actionQuit_Game_triggered() {
+    // Dialog prompts to confirm player wishes to quit the game in progress and return to the main menu
     QMessageBox confirmQuitGame;
     confirmQuitGame.setWindowTitle("Zork - Quit Game");
     confirmQuitGame.setText("<b>You are currently in the middle of a game.</b>");
@@ -321,6 +325,7 @@ void MainWindow::on_actionQuit_Game_triggered()
     confirmQuitGame.setIcon(QMessageBox::Question);
     confirmQuitGame.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
     confirmQuitGame.setDefaultButton(QMessageBox::No);
+
     int ret = confirmQuitGame.exec();
 
     switch (ret) {
@@ -332,5 +337,26 @@ void MainWindow::on_actionQuit_Game_triggered()
             zorkHome h;
             h.exec();
             break;
+    }
+}
+
+// Exit action in the Menu bar
+void MainWindow::on_actionExit_triggered() {
+    // Dialog prompts to confirm application exit by player
+    QMessageBox confirmExit;
+    confirmExit.setWindowTitle("Exit Zork");
+    confirmExit.setText("Are you sure you want to quit Zork?");
+    confirmExit.setStyleSheet("color : white; background : rgb(79, 87, 88)");
+    confirmExit.setIcon(QMessageBox::Question);
+    confirmExit.setStandardButtons(QMessageBox::Cancel | QMessageBox::Yes);
+    confirmExit.setDefaultButton(QMessageBox::Cancel);
+    int ret = confirmExit.exec();
+
+    switch (ret) {
+        case QMessageBox::Cancel:
+            break;
+        case QMessageBox::Yes:
+            close();
+        break;
     }
 }

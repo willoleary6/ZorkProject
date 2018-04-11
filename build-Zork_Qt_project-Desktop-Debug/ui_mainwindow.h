@@ -31,8 +31,7 @@ QT_BEGIN_NAMESPACE
 class Ui_MainWindow
 {
 public:
-    QAction *actionClose;
-    QAction *actionUndo_Last_Move;
+    QAction *actionExit;
     QAction *actionNew_Game;
     QAction *actionSettings;
     QAction *actionAbout;
@@ -55,6 +54,7 @@ public:
     QLCDNumber *countdown;
     QLabel *gameLogLabel_2;
     QLabel *gameLogLabel_3;
+    QLabel *label;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
     QMenuBar *menuBar;
@@ -84,10 +84,8 @@ public:
         MainWindow->setWindowIcon(icon);
         MainWindow->setLayoutDirection(Qt::LeftToRight);
         MainWindow->setStyleSheet(QStringLiteral("background-color: rgb(79, 87, 88);"));
-        actionClose = new QAction(MainWindow);
-        actionClose->setObjectName(QStringLiteral("actionClose"));
-        actionUndo_Last_Move = new QAction(MainWindow);
-        actionUndo_Last_Move->setObjectName(QStringLiteral("actionUndo_Last_Move"));
+        actionExit = new QAction(MainWindow);
+        actionExit->setObjectName(QStringLiteral("actionExit"));
         actionNew_Game = new QAction(MainWindow);
         actionNew_Game->setObjectName(QStringLiteral("actionNew_Game"));
         actionSettings = new QAction(MainWindow);
@@ -126,7 +124,7 @@ public:
         compassLogo = new QLabel(centralWidget);
         compassLogo->setObjectName(QStringLiteral("compassLogo"));
         compassLogo->setGeometry(QRect(320, 480, 80, 80));
-        compassLogo->setPixmap(QPixmap(QString::fromUtf8("../../Downloads/compass-2.png")));
+        compassLogo->setPixmap(QPixmap(QString::fromUtf8(":/images/compass.png")));
         compassLogo->setScaledContents(true);
         gameMap = new QTextEdit(centralWidget);
         gameMap->setObjectName(QStringLiteral("gameMap"));
@@ -296,15 +294,20 @@ public:
         QFont font3;
         font3.setFamily(QStringLiteral("Montserrat"));
         font3.setPointSize(12);
-        font3.setBold(false);
-        font3.setWeight(50);
+        font3.setBold(true);
+        font3.setWeight(75);
         gameLogLabel->setFont(font3);
         gameLogLabel->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
         gameLogLabel->setAlignment(Qt::AlignCenter);
         roomItems = new QTreeWidget(centralWidget);
         QFont font4;
         font4.setFamily(QStringLiteral("Piboto Light"));
+        font4.setPointSize(13);
+        font4.setBold(true);
+        font4.setWeight(75);
+        font4.setKerning(false);
         QTreeWidgetItem *__qtreewidgetitem = new QTreeWidgetItem();
+        __qtreewidgetitem->setTextAlignment(0, Qt::AlignCenter);
         __qtreewidgetitem->setFont(0, font4);
         __qtreewidgetitem->setBackground(0, QColor(79, 87, 88));
         roomItems->setHeaderItem(__qtreewidgetitem);
@@ -375,8 +378,14 @@ public:
         downstairsButton->setFont(font1);
         downstairsButton->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
         inventory = new QTreeWidget(centralWidget);
+        QFont font5;
+        font5.setFamily(QStringLiteral("Piboto Light"));
+        font5.setPointSize(13);
+        font5.setBold(true);
+        font5.setWeight(75);
         QTreeWidgetItem *__qtreewidgetitem1 = new QTreeWidgetItem();
-        __qtreewidgetitem1->setFont(0, font4);
+        __qtreewidgetitem1->setTextAlignment(0, Qt::AlignCenter);
+        __qtreewidgetitem1->setFont(0, font5);
         __qtreewidgetitem1->setBackground(0, QColor(79, 87, 88));
         inventory->setHeaderItem(__qtreewidgetitem1);
         inventory->setObjectName(QStringLiteral("inventory"));
@@ -432,7 +441,9 @@ public:
 "border-style: solid;\n"
 "border-width: 2px;\n"
 "border-color: rgb(0, 0, 0);\n"
-"border-radius: 10px;color: rgb(255, 255, 255);"));
+"border-radius: 10px;\n"
+"color: rgb(255, 255, 255);"));
+        inventory->header()->setVisible(false);
         escapeButton = new QPushButton(centralWidget);
         escapeButton->setObjectName(QStringLiteral("escapeButton"));
         escapeButton->setGeometry(QRect(490, 560, 171, 41));
@@ -440,22 +451,29 @@ public:
         escapeButton->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
         countdown = new QLCDNumber(centralWidget);
         countdown->setObjectName(QStringLiteral("countdown"));
-        countdown->setGeometry(QRect(490, 440, 171, 101));
+        countdown->setGeometry(QRect(580, 440, 111, 51));
         QSizePolicy sizePolicy2(QSizePolicy::Fixed, QSizePolicy::Minimum);
         sizePolicy2.setHorizontalStretch(0);
         sizePolicy2.setVerticalStretch(0);
         sizePolicy2.setHeightForWidth(countdown->sizePolicy().hasHeightForWidth());
         countdown->setSizePolicy(sizePolicy2);
         countdown->setMinimumSize(QSize(0, 50));
-        QFont font5;
-        font5.setPointSize(30);
-        font5.setBold(true);
-        font5.setWeight(75);
-        countdown->setFont(font5);
-        countdown->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
+        QFont font6;
+        font6.setPointSize(30);
+        font6.setBold(true);
+        font6.setWeight(75);
+        countdown->setFont(font6);
+        countdown->setStyleSheet(QLatin1String("background-color: rgb(35, 39, 41);\n"
+"border-style: solid;\n"
+"border-width: 2px;\n"
+"border-color: rgb(0, 0, 0);\n"
+"border-radius: 10px;\n"
+"color: rgb(255, 255, 255);"));
         gameLogLabel_2 = new QLabel(centralWidget);
         gameLogLabel_2->setObjectName(QStringLiteral("gameLogLabel_2"));
         gameLogLabel_2->setGeometry(QRect(900, 420, 100, 20));
+        sizePolicy.setHeightForWidth(gameLogLabel_2->sizePolicy().hasHeightForWidth());
+        gameLogLabel_2->setSizePolicy(sizePolicy);
         gameLogLabel_2->setFont(font3);
         gameLogLabel_2->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
         gameLogLabel_2->setAlignment(Qt::AlignCenter);
@@ -465,6 +483,18 @@ public:
         gameLogLabel_3->setFont(font3);
         gameLogLabel_3->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
         gameLogLabel_3->setAlignment(Qt::AlignCenter);
+        label = new QLabel(centralWidget);
+        label->setObjectName(QStringLiteral("label"));
+        label->setGeometry(QRect(510, 440, 69, 51));
+        QFont font7;
+        font7.setFamily(QStringLiteral("DejaVu Sans Condensed"));
+        font7.setBold(true);
+        font7.setWeight(75);
+        label->setFont(font7);
+        label->setStyleSheet(QLatin1String("color: rgb(255, 255, 255);\n"
+""));
+        label->setAlignment(Qt::AlignCenter);
+        label->setWordWrap(true);
         MainWindow->setCentralWidget(centralWidget);
         compassLogo->raise();
         eastButton->raise();
@@ -483,6 +513,7 @@ public:
         countdown->raise();
         gameLogLabel_2->raise();
         gameLogLabel_3->raise();
+        label->raise();
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
         mainToolBar->setEnabled(false);
@@ -494,12 +525,12 @@ public:
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
         menuBar->setGeometry(QRect(0, 0, 1200, 23));
-        QFont font6;
-        font6.setFamily(QStringLiteral("Montserrat"));
-        font6.setPointSize(11);
-        font6.setBold(false);
-        font6.setWeight(50);
-        menuBar->setFont(font6);
+        QFont font8;
+        font8.setFamily(QStringLiteral("Montserrat"));
+        font8.setPointSize(11);
+        font8.setBold(false);
+        font8.setWeight(50);
+        menuBar->setFont(font8);
         menuBar->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
@@ -514,7 +545,7 @@ public:
         menuFile->addAction(actionQuit_Game);
         menuFile->addAction(actionSettings);
         menuFile->addSeparator();
-        menuFile->addAction(actionClose);
+        menuFile->addAction(actionExit);
         menuHelp->addAction(actionAbout);
 
         retranslateUi(MainWindow);
@@ -525,9 +556,7 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Zork", Q_NULLPTR));
-        actionClose->setText(QApplication::translate("MainWindow", "Close", Q_NULLPTR));
-        actionUndo_Last_Move->setText(QApplication::translate("MainWindow", "Undo Last Move", Q_NULLPTR));
-        actionUndo_Last_Move->setShortcut(QApplication::translate("MainWindow", "Ctrl+Z", Q_NULLPTR));
+        actionExit->setText(QApplication::translate("MainWindow", "Exit", Q_NULLPTR));
         actionNew_Game->setText(QApplication::translate("MainWindow", "New Game", Q_NULLPTR));
         actionNew_Game->setShortcut(QApplication::translate("MainWindow", "Ctrl+N", Q_NULLPTR));
         actionSettings->setText(QApplication::translate("MainWindow", "Settings", Q_NULLPTR));
@@ -550,6 +579,7 @@ public:
         escapeButton->setText(QApplication::translate("MainWindow", "Escape!", Q_NULLPTR));
         gameLogLabel_2->setText(QApplication::translate("MainWindow", "Map", Q_NULLPTR));
         gameLogLabel_3->setText(QApplication::translate("MainWindow", "Display", Q_NULLPTR));
+        label->setText(QApplication::translate("MainWindow", "Time Left", Q_NULLPTR));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", Q_NULLPTR));
         menuHelp->setTitle(QApplication::translate("MainWindow", "Help", Q_NULLPTR));
     } // retranslateUi

@@ -37,8 +37,13 @@ public:
         if (zorkHome->objectName().isEmpty())
             zorkHome->setObjectName(QStringLiteral("zorkHome"));
         zorkHome->resize(520, 260);
-        zorkHome->setMinimumSize(QSize(400, 0));
-        zorkHome->setMaximumSize(QSize(600, 300));
+        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(zorkHome->sizePolicy().hasHeightForWidth());
+        zorkHome->setSizePolicy(sizePolicy);
+        zorkHome->setMinimumSize(QSize(520, 260));
+        zorkHome->setMaximumSize(QSize(520, 260));
         QIcon icon;
         icon.addFile(QStringLiteral(":/images/zorkIcon.png"), QSize(), QIcon::Normal, QIcon::Off);
         zorkHome->setWindowIcon(icon);
