@@ -302,10 +302,15 @@ public:
         roomItems = new QTreeWidget(centralWidget);
         QFont font4;
         font4.setFamily(QStringLiteral("Piboto Light"));
+<<<<<<< HEAD
         font4.setPointSize(13);
         font4.setBold(true);
         font4.setWeight(75);
         font4.setKerning(false);
+=======
+        font4.setBold(true);
+        font4.setWeight(75);
+>>>>>>> 1da2ac8124bf3ac6b728a45b743c463ba898355a
         QTreeWidgetItem *__qtreewidgetitem = new QTreeWidgetItem();
         __qtreewidgetitem->setTextAlignment(0, Qt::AlignCenter);
         __qtreewidgetitem->setFont(0, font4);
@@ -366,7 +371,7 @@ public:
 "border-color: rgb(0, 0, 0);\n"
 "border-radius: 10px;\n"
 "color: rgb(255, 255, 255);"));
-        roomItems->header()->setVisible(false);
+        roomItems->header()->setVisible(true);
         upstairsButton = new QPushButton(centralWidget);
         upstairsButton->setObjectName(QStringLiteral("upstairsButton"));
         upstairsButton->setGeometry(QRect(400, 440, 40, 40));
@@ -385,7 +390,11 @@ public:
         font5.setWeight(75);
         QTreeWidgetItem *__qtreewidgetitem1 = new QTreeWidgetItem();
         __qtreewidgetitem1->setTextAlignment(0, Qt::AlignCenter);
+<<<<<<< HEAD
         __qtreewidgetitem1->setFont(0, font5);
+=======
+        __qtreewidgetitem1->setFont(0, font4);
+>>>>>>> 1da2ac8124bf3ac6b728a45b743c463ba898355a
         __qtreewidgetitem1->setBackground(0, QColor(79, 87, 88));
         inventory->setHeaderItem(__qtreewidgetitem1);
         inventory->setObjectName(QStringLiteral("inventory"));

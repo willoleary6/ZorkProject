@@ -1,5 +1,6 @@
 #include "floor.h"
-
+#define DEFAULT 0
+#define floorDimension 4
 /**
  * @brief floor::floor
  * @param floorId
@@ -8,8 +9,10 @@
 floor::floor(int floorId){
     this->floorId = floorId;
     if(floorId == 0){
+        //the first floor will always be the basement
         rooms.push_back(new Room("Basement",0,floorId));
     }else{
+        //every other floor is randomly generated
         generateRandomFloorPlan();
     }
 }
@@ -37,10 +40,10 @@ vector<Room *> floor::getRooms(){
  */
 void floor::generateRandomFloorPlan(){
     //This function generates a random floor plan of the map.
-    Room* floorPlan[4][4];
-    int rows = sizeof floorPlan/sizeof floorPlan[0];
-    int cols = sizeof floorPlan[0]/sizeof(Room*);
-    int count = 0;
+    Room* floorPlan[floorDimension][floorDimension];
+    int rows = sizeof floorPlan/sizeof floorPlan[DEFAULT];
+    int cols = sizeof floorPlan[DEFAULT]/sizeof(Room*);
+    int count = DEFAULT;
     int randomValue =0;
     vector <string> roomNames = {"Gallery","library","Bedrm","kitchen","Dinning","Sitting",
                                 "Mstr-bedrm","Bathrm","Garage","Cloak-rm","Conservatory","Pantry","Office",
@@ -92,13 +95,12 @@ void floor::generateRandomFloorPlan(){
                             //linking each room
                             floorPlan[i][j]->setEastExit(floorPlan[i][rangeRight]);
                             floorPlan[i][rangeRight]->setWestExit(floorPlan[i][j]);
+                            //jump out of for loop once found
                             goto upWard;
                          }
                      }
                  }
                  upWard:
-
-
                  if(i > 0 && j ==0 && roomExits["north"] == NULL){
                      //This block adds a vertical link to one of the rooms on this row(Chosen Randomly)
                      do{
@@ -132,7 +134,7 @@ void floor::pushNULLsToEnd(Room* rooms[]){
      * so all the NULLs in it are pushed to the right
      * hand side removinging any "Room islands" that may form.
      */
-    int count = 0;
+    int count = DEFAULT;
     for(int i = 0; i < sizeof(rooms); i++)
         if(rooms[i] != NULL)
             rooms[count++] = rooms[i];
@@ -150,7 +152,7 @@ int floor::getNumberOfValidRooms(Room* rooms[]){
     /*this function gets the number of rooms in a row so we
      * can generate a random index to connect it vertically to a room on the upper row.
      */
-    int count  = 0;
+    int count  = DEFAULT;
     for(int i = 0; i < sizeof(rooms); i++){
         if(rooms[i] != NULL){
             count ++;
@@ -187,7 +189,7 @@ bool floor::findMapCoordinates(Room* rooms,int *x_position, int *y_position, vec
 string floor::printMap(){
     //initialising variables
     vector<vector<string>> mapDisplay;
-    int x_position = 0,y_position = 0;
+    int x_position = DEFAULT,y_position = DEFAULT;
     //starting the recursive process with the first room on the floor
     addMapIndex(x_position, y_position , &mapDisplay, rooms[0]);
     string textMap;
@@ -240,7 +242,7 @@ vector<string> floor::fillEmptySlots(int x_position, bool invisible){
             if(invisible){
                 temp.push_back(" ");
             }else{
-                temp.push_back("---");
+                temp.push_back("___");
             }
         }
     }
@@ -282,7 +284,7 @@ vector<vector<string>> floor::traverseExits(int x_position, int y_position,
             mapString[y_position].insert(mapString[y_position].begin(),"");
             //ensuring x_position doesnt go off target
             if(x_position < 0){
-               x_position = 0;
+               x_position = DEFAULT;
             }
             addMapIndex(x_position, y_position, &mapString, currentRoomExits["west"]);
         }else if(mapString[y_position][(x_position)-2] != currentRoom->roomName()){
@@ -370,7 +372,7 @@ int floor::getLargestIndex(vector<vector<string>> mapDisplay, int j){
     /*this function goes through the selected column
      * and returns the size of the largest value in that columns.
      */
-    int largest = 0;
+    int largest = DEFAULT;
     for(int k = 0; k < mapDisplay.size(); k++){
             if(largest < mapDisplay[k][j].length()){
                 largest = mapDisplay[k][j].length();

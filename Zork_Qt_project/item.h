@@ -18,6 +18,7 @@ protected:
     bool weaponCheck;
     bool carryable;
     bool searchable;
+    virtual void setProperties();
     vector<string> validRoomCommands;
     vector<string> validUserCommands;
 public:
@@ -29,12 +30,6 @@ public:
     Item (string description);
     string getShortDescription();
     string getLongDescription();
-    int getWeight();
-    void setWeight(int weightGrams);
-    float getValue();
-    void setValue(float value);
-    int getWeaponCheck();
-    void setWeaponCheck(int weaponCheck);
     bool isCarryable();
     bool isSearchable();
 };
