@@ -54,6 +54,9 @@ vector <Item*> Room::getItemsInRoom(){
     return itemsInRoom;
 }
 void Room::initialiseMainWindowText(){
+    /*This function builds the the text for the main window.
+     * Text varies depending on the properties of the room.
+     */
     mainWindowText = "Seems like were in the " + description +".\n";
     if(itemsInRoom.size() > 0){
         mainWindowText += "There seems to be " + to_string(itemsInRoom.size()) + "Item(s) in the room that could be of use.\n";

@@ -1,57 +1,52 @@
 #include "item.h"
-
-Item::Item (string inDescription, int inWeightGrams, float inValue/**, int weaponCheck*/) {
-    description = inDescription;
-    setWeight(inWeightGrams);
-    value = inValue;
-    /**weaponCheck(isWeapon);*/
-}
-
+/**
+ * @brief Item::Item
+ * Sets the Items description as the string parameter
+ * @param inDescription string to set the items description as.
+ */
 Item::Item(string inDescription) {
     description = inDescription;
+    setProperties();
 }
+/**
+ * @brief Item::Item default constructor setting the item as 'Untitled'
+ */
 Item::Item() {
     description = "Untitled";
+    setProperties();
 }
 Item::~Item() {
 }
+/**
+ * @brief Item::isCarryable boolean function returning if the item can be carried or not
+ * @return
+ */
 bool Item::isCarryable(){
     return carryable;
 }
+/**
+ * @brief Item::isSearchable boolean function returning if the item can be searched or not
+ * @return
+ */
 bool Item::isSearchable(){
     return searchable;
 }
-//virtual vector<string> validRoomCommandsList() =0;
-
-void Item::setWeight(int inWeightGrams){
-    if (inWeightGrams > 9999 || inWeightGrams < 0){
-       cout << "weight invalid, must be 0<weight<9999" ;
-    }else{
-       weightGrams = inWeightGrams;
-    }
-}
-
-void Item::setValue(float inValue){
-    if (inValue > 9999 || inValue < 0){
-       cout << "value invalid, must be 0<value<9999" << endl ;
-    }else{
-       value = inValue;
-    }
-}
-
-/**void Item::setWeaponCheck(int isWeapon)
-{
-    if(isWeapon > 0 || isWeapon < 0)
-        cout << "Item not a weapon" ;
-    else
-        cout << "Item is a weapon" ;
-}*/
-
+/**
+ * @brief Item::getShortDescription returns the description of the item.
+ * @return
+ */
 string Item::getShortDescription(){
     return description;
 }
 
 string Item::getLongDescription(){
     return " item(s), " + description + ".\n";
+}
+/**
+ * @brief Item::setProperties sets the if the item is carryable and if its searchable
+ */
+void Item::setProperties(){
+    carryable = false;
+    searchable = false;
 }
 

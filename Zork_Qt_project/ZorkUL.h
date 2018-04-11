@@ -7,7 +7,7 @@
 #include "mainwindow.h"
 #include "Character.h"
 #include "Command.h"
-#include "Parser.h"
+//#include "Parser.h"
 #include "Room.h"
 #include "item.h"
 #include "floor.h"
@@ -41,7 +41,6 @@ private:
     int currentFloor =0;
     vector<floor*> floors;
     Character user;
-    Parser parser;
 	Room *currentRoom;
     vector <Room *> rooms;
     MainWindow *ui;

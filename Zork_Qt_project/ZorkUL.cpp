@@ -46,6 +46,7 @@ map<string, Room*> ZorkUL::getCurrentRoomExits(){
  */
 vector<string> ZorkUL::getItemValidCommands(string ItemName,bool isRoom){
     int index;
+    //checking if we are search the room for items or the user
     if(isRoom){
         index = currentRoom->isItemInRoom(ItemName);
         return currentRoom->getItem(index)->validRoomCommandsList();
@@ -88,7 +89,12 @@ vector<string> ZorkUL::getCurrentItemNames(bool isRoom){
     }
     return ItemNames;
 }
-//pass the command from the UI to the command function
+
+/**
+ * @brief ZorkUL::runCommand
+ * passes the command from the UI to the command function
+ * @param commandString
+ */
 void ZorkUL::runCommand(string commandString){
     string word1;
     string word2;
@@ -99,18 +105,24 @@ void ZorkUL::runCommand(string commandString){
     // Break "buffer" up by spaces
     bool finished = false;
     while (!finished) {
-        pos = commandString.find_first_of(' ', last_pos);	// find and remember first space.
-        if (pos == string::npos ) {			// if we found the last word,
-            words.push_back(commandString.substr(last_pos));	// add it to vector "words"
-            finished = true;				// and finish searching.
-        } else {					// otherwise add to vector and move on to next word.
+        // find and remember first space.
+        pos = commandString.find_first_of(' ', last_pos);
+        if (pos == string::npos ) {
+            // if we found the last word, add it to vector "words"
+            words.push_back(commandString.substr(last_pos));
+            //finish searching.
+            finished = true;
+        } else {
+            // otherwise add to vector and move on to next word.
             words.push_back(commandString.substr(last_pos, pos - last_pos));
             last_pos = pos + 1;
         }
     }
-
-    if (words.size() == 1) //was only 1 word entered?
-        word1 = words[0]; //get first word
+    //was only 1 word entered?
+    if (words.size() == 1){
+        //get first word
+        word1 = words[0];
+    }
     else if (words.size() >= 2) { //were at least 2 words entered?
         word1 = words[0]; //get first word
         word2 = words[1]; //get second word
@@ -133,27 +145,6 @@ ZorkUL::~ZorkUL(){
            delete floors[i];
         }
     }
-}
-
-/**
- * @brief ZorkUL::play
- * Main play routine.  Loops until end of play.
- */
-void ZorkUL::play() {
-    printWelcome();
-    // Enter the main command loop.  Here we repeatedly read commands and
-    // execute them until the ZorkUL game is over.
-    bool finished = false;
-    Command* command;
-    while (!finished) {
-        // Create pointer to command and give it a command.
-        command = parser.getCommand();
-        // Pass dereferenced command and check for end of game.
-        finished = processCommand(*command);
-    }
-    // Free the memory allocated by "parser.getCommand()"
-    //   with ("return new Command(...)")
-    delete command;
 }
 
 /**
@@ -221,7 +212,6 @@ void ZorkUL::populateRoomsWithItems(){
                }else{
                    floorRooms[randomValue]->addItem(lockedRoomKey);
                }
-
             }else{
                 /*Otherwise we lock the room and going from the entry point of the floor(Room with downstairs exit)
                  * we recursivly go through every room on the floor and build
@@ -329,7 +319,6 @@ void ZorkUL::printWelcome() {
     ui->updateMainWindow(QString::fromStdString("I've finally broken free of this cage! \n"
                                                 "It's only a matter of time before my kidnapper comes home and finds me in the process of escaping. \n"
                                                 "I better get out of here ASAP, I guess I should start by climbing these stairs.\n"));
-    //ui->updateLog(QString::fromStdString(currentRoom->longDescription()));
 }
 
 
@@ -347,20 +336,12 @@ bool ZorkUL::processCommand(Command command) {
     }
     string commandWord = command.getCommandWord();
     if (commandWord.compare("info") == 0){
-        printHelp();
-    }else if (commandWord.compare("map") == 0){
-        //this command prints a string map to display the current map to the user.
-        //cout << floors[currentFloor]->printMap() << endl;
-        //cout << currentRoom->longDescription() << endl;
-    }else if (commandWord.compare("go") == 0){
-        //change the current room to that of the direction specified my the user.
-        //goRoom(command);
+        //printHelp();
     }else if (commandWord.compare("take") == 0){
         // added functionality for user to take items out of a room
         if (!command.hasSecondWord()) {
             ui->appendMainWindow(QString::fromStdString("I don't even know what I'm doing here. \n"));
         }else if (command.hasSecondWord()) {
-
             takeItem(command);
         }
     }else if(commandWord.compare("unlock") == 0){
@@ -410,19 +391,12 @@ bool ZorkUL::processCommand(Command command) {
         }
     }else if(commandWord.compare("teleport") == 0){
         //added debug functionality to jump to any room a player wanted
+
+        //no implentation on ui for teleport added
         if (command.hasSecondWord()){
             teleport(command);
         }else{
             randomTeleport();
-        }
-    }else if(commandWord.compare("inventory") == 0){
-        //displaying all the items in users inventory
-        //cout << user.longDescription() << endl;
-    }else if (commandWord.compare("quit") == 0) {
-        if (command.hasSecondWord()){
-            //cout << "overdefined input"<< endl;
-        }else{
-            return true; /**signal to quit*/
         }
     }
     return false;
@@ -567,14 +541,6 @@ void ZorkUL::searchItem(int location){
 }
 
 /** COMMANDS **/
-
-/**
- * @brief ZorkUL::printHelp
- */
-void ZorkUL::printHelp() {
-    //cout << "valid inputs are; " << endl;
-    parser.showCommands();
-}
 
 /**
  * @brief ZorkUL::goRoom

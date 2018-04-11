@@ -1,4 +1,4 @@
-#include "Parser.h"
+/*#include "Parser.h"
 
 Parser::Parser() {
 	commands = new CommandWords();
@@ -50,6 +50,7 @@ Command* Parser::getCommand() {
 /**
  * Print out a list of valid command words.
  */
-void Parser::showCommands() {
+/*void Parser::showCommands() {
 	commands->showAll();
 }
+*/

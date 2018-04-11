@@ -4,8 +4,9 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
-QT 	 += multimedia
+QT       += core gui\
+            multimedia
+
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -27,9 +28,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += mainwindow.cpp\
         Character.cpp\
         Command.cpp\
-        CommandWords.cpp\
         item.cpp\
-        Parser.cpp\
         Room.cpp\
         ZorkUL.cpp \
     floor.cpp \
@@ -46,9 +45,7 @@ SOURCES += mainwindow.cpp\
 HEADERS  += mainwindow.h\
             Character.h\
             Command.h\
-            CommandWords.h\
             item.h\
-            parser.h\
             Room.h\
             ZorkUL.h \
     floor.h \

@@ -27,11 +27,9 @@ void key::addValidCommands(){
 }
 
 vector<string> key::validRoomCommandsList(){
-    //ut << "this far?" << endl;
     return validRoomCommands;
 }
 vector<string> key::validUserCommandsList(){
-    //ut << "this far?" << endl;
     return validUserCommands;
 }
 

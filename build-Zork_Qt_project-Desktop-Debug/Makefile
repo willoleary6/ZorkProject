@@ -33,7 +33,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = Zork_Qt_project1.0.0
-DISTDIR = /home/pi/Documents/zork/zorkProject/build-Zork_Qt_project-Desktop-Debug/.tmp/Zork_Qt_project1.0.0
+DISTDIR = /home/pi/Zork/zorkProject/build-Zork_Qt_project-Desktop-Debug/.tmp/Zork_Qt_project1.0.0
 LINK          = g++
 LFLAGS        = 
 LIBS          = $(SUBLIBS) -lQt5Multimedia -lQt5Widgets -lQt5Gui -lQt5Network -lQt5Core -lGLESv2 -lpthread 
@@ -51,9 +51,7 @@ OBJECTS_DIR   = ./
 SOURCES       = ../Zork_Qt_project/mainwindow.cpp \
 		../Zork_Qt_project/Character.cpp \
 		../Zork_Qt_project/Command.cpp \
-		../Zork_Qt_project/CommandWords.cpp \
 		../Zork_Qt_project/item.cpp \
-		../Zork_Qt_project/Parser.cpp \
 		../Zork_Qt_project/Room.cpp \
 		../Zork_Qt_project/ZorkUL.cpp \
 		../Zork_Qt_project/floor.cpp \
@@ -72,9 +70,7 @@ SOURCES       = ../Zork_Qt_project/mainwindow.cpp \
 OBJECTS       = mainwindow.o \
 		Character.o \
 		Command.o \
-		CommandWords.o \
 		item.o \
-		Parser.o \
 		Room.o \
 		ZorkUL.o \
 		floor.o \
@@ -157,9 +153,7 @@ DIST          = /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/spec_pre.prf \
 		../Zork_Qt_project/Zork_Qt_project.pro ../Zork_Qt_project/mainwindow.h \
 		../Zork_Qt_project/Character.h \
 		../Zork_Qt_project/Command.h \
-		../Zork_Qt_project/CommandWords.h \
 		../Zork_Qt_project/item.h \
-		../Zork_Qt_project/Parser.h \
 		../Zork_Qt_project/Room.h \
 		../Zork_Qt_project/ZorkUL.h \
 		../Zork_Qt_project/floor.h \
@@ -172,9 +166,7 @@ DIST          = /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/spec_pre.prf \
 		../Zork_Qt_project/leaderboard.h ../Zork_Qt_project/mainwindow.cpp \
 		../Zork_Qt_project/Character.cpp \
 		../Zork_Qt_project/Command.cpp \
-		../Zork_Qt_project/CommandWords.cpp \
 		../Zork_Qt_project/item.cpp \
-		../Zork_Qt_project/Parser.cpp \
 		../Zork_Qt_project/Room.cpp \
 		../Zork_Qt_project/ZorkUL.cpp \
 		../Zork_Qt_project/floor.cpp \
@@ -352,8 +344,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../Zork_Qt_project/imglib.qrc $(DISTDIR)/
-	$(COPY_FILE) --parents ../Zork_Qt_project/mainwindow.h ../Zork_Qt_project/Character.h ../Zork_Qt_project/Command.h ../Zork_Qt_project/CommandWords.h ../Zork_Qt_project/item.h ../Zork_Qt_project/Parser.h ../Zork_Qt_project/Room.h ../Zork_Qt_project/ZorkUL.h ../Zork_Qt_project/floor.h ../Zork_Qt_project/zorkhome.h ../Zork_Qt_project/carryableItem.h ../Zork_Qt_project/searchableitem.h ../Zork_Qt_project/key.h ../Zork_Qt_project/settings.h ../Zork_Qt_project/gameover.h ../Zork_Qt_project/leaderboard.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Zork_Qt_project/mainwindow.cpp ../Zork_Qt_project/Character.cpp ../Zork_Qt_project/Command.cpp ../Zork_Qt_project/CommandWords.cpp ../Zork_Qt_project/item.cpp ../Zork_Qt_project/Parser.cpp ../Zork_Qt_project/Room.cpp ../Zork_Qt_project/ZorkUL.cpp ../Zork_Qt_project/floor.cpp ../Zork_Qt_project/zorkhome.cpp ../Zork_Qt_project/carryableItem.cpp ../Zork_Qt_project/searchableitem.cpp ../Zork_Qt_project/key.cpp ../Zork_Qt_project/settings.cpp ../Zork_Qt_project/gameover.cpp ../Zork_Qt_project/leaderboard.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Zork_Qt_project/mainwindow.h ../Zork_Qt_project/Character.h ../Zork_Qt_project/Command.h ../Zork_Qt_project/item.h ../Zork_Qt_project/Room.h ../Zork_Qt_project/ZorkUL.h ../Zork_Qt_project/floor.h ../Zork_Qt_project/zorkhome.h ../Zork_Qt_project/carryableItem.h ../Zork_Qt_project/searchableitem.h ../Zork_Qt_project/key.h ../Zork_Qt_project/settings.h ../Zork_Qt_project/gameover.h ../Zork_Qt_project/leaderboard.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Zork_Qt_project/mainwindow.cpp ../Zork_Qt_project/Character.cpp ../Zork_Qt_project/Command.cpp ../Zork_Qt_project/item.cpp ../Zork_Qt_project/Room.cpp ../Zork_Qt_project/ZorkUL.cpp ../Zork_Qt_project/floor.cpp ../Zork_Qt_project/zorkhome.cpp ../Zork_Qt_project/carryableItem.cpp ../Zork_Qt_project/searchableitem.cpp ../Zork_Qt_project/key.cpp ../Zork_Qt_project/settings.cpp ../Zork_Qt_project/gameover.cpp ../Zork_Qt_project/leaderboard.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../Zork_Qt_project/mainwindow.ui ../Zork_Qt_project/zorkhome.ui ../Zork_Qt_project/settings.ui ../Zork_Qt_project/gameover.ui ../Zork_Qt_project/leaderboard.ui $(DISTDIR)/
 
 
@@ -402,8 +394,6 @@ moc_mainwindow.cpp: ../Zork_Qt_project/ZorkUL.h \
 		../Zork_Qt_project/Character.h \
 		../Zork_Qt_project/item.h \
 		../Zork_Qt_project/Command.h \
-		../Zork_Qt_project/Parser.h \
-		../Zork_Qt_project/CommandWords.h \
 		../Zork_Qt_project/Room.h \
 		../Zork_Qt_project/carryableItem.h \
 		../Zork_Qt_project/searchableitem.h \
@@ -411,15 +401,13 @@ moc_mainwindow.cpp: ../Zork_Qt_project/ZorkUL.h \
 		../Zork_Qt_project/floor.h \
 		../Zork_Qt_project/mainwindow.h \
 		/usr/lib/arm-linux-gnueabihf/qt5/bin/moc
-	/usr/lib/arm-linux-gnueabihf/qt5/bin/moc $(DEFINES) -I/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-g++ -I/home/pi/Documents/zork/zorkProject/Zork_Qt_project -I/usr/include/arm-linux-gnueabihf/qt5 -I/usr/include/arm-linux-gnueabihf/qt5/QtMultimedia -I/usr/include/arm-linux-gnueabihf/qt5/QtWidgets -I/usr/include/arm-linux-gnueabihf/qt5/QtGui -I/usr/include/arm-linux-gnueabihf/qt5/QtNetwork -I/usr/include/arm-linux-gnueabihf/qt5/QtCore -I. -I/usr/include/c++/6 -I/usr/include/arm-linux-gnueabihf/c++/6 -I/usr/include/c++/6/backward -I/usr/lib/gcc/arm-linux-gnueabihf/6/include -I/usr/local/include -I/usr/lib/gcc/arm-linux-gnueabihf/6/include-fixed -I/usr/include/arm-linux-gnueabihf -I/usr/include ../Zork_Qt_project/mainwindow.h -o moc_mainwindow.cpp
+	/usr/lib/arm-linux-gnueabihf/qt5/bin/moc $(DEFINES) -I/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-g++ -I/home/pi/Zork/zorkProject/Zork_Qt_project -I/usr/include/arm-linux-gnueabihf/qt5 -I/usr/include/arm-linux-gnueabihf/qt5/QtMultimedia -I/usr/include/arm-linux-gnueabihf/qt5/QtWidgets -I/usr/include/arm-linux-gnueabihf/qt5/QtGui -I/usr/include/arm-linux-gnueabihf/qt5/QtNetwork -I/usr/include/arm-linux-gnueabihf/qt5/QtCore -I. -I/usr/include/c++/6 -I/usr/include/arm-linux-gnueabihf/c++/6 -I/usr/include/c++/6/backward -I/usr/lib/gcc/arm-linux-gnueabihf/6/include -I/usr/local/include -I/usr/lib/gcc/arm-linux-gnueabihf/6/include-fixed -I/usr/include/arm-linux-gnueabihf -I/usr/include ../Zork_Qt_project/mainwindow.h -o moc_mainwindow.cpp
 
 moc_zorkhome.cpp: ../Zork_Qt_project/mainwindow.h \
 		../Zork_Qt_project/ZorkUL.h \
 		../Zork_Qt_project/Character.h \
 		../Zork_Qt_project/item.h \
 		../Zork_Qt_project/Command.h \
-		../Zork_Qt_project/Parser.h \
-		../Zork_Qt_project/CommandWords.h \
 		../Zork_Qt_project/Room.h \
 		../Zork_Qt_project/carryableItem.h \
 		../Zork_Qt_project/searchableitem.h \
@@ -430,19 +418,17 @@ moc_zorkhome.cpp: ../Zork_Qt_project/mainwindow.h \
 		../Zork_Qt_project/leaderboard.h \
 		../Zork_Qt_project/zorkhome.h \
 		/usr/lib/arm-linux-gnueabihf/qt5/bin/moc
-	/usr/lib/arm-linux-gnueabihf/qt5/bin/moc $(DEFINES) -I/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-g++ -I/home/pi/Documents/zork/zorkProject/Zork_Qt_project -I/usr/include/arm-linux-gnueabihf/qt5 -I/usr/include/arm-linux-gnueabihf/qt5/QtMultimedia -I/usr/include/arm-linux-gnueabihf/qt5/QtWidgets -I/usr/include/arm-linux-gnueabihf/qt5/QtGui -I/usr/include/arm-linux-gnueabihf/qt5/QtNetwork -I/usr/include/arm-linux-gnueabihf/qt5/QtCore -I. -I/usr/include/c++/6 -I/usr/include/arm-linux-gnueabihf/c++/6 -I/usr/include/c++/6/backward -I/usr/lib/gcc/arm-linux-gnueabihf/6/include -I/usr/local/include -I/usr/lib/gcc/arm-linux-gnueabihf/6/include-fixed -I/usr/include/arm-linux-gnueabihf -I/usr/include ../Zork_Qt_project/zorkhome.h -o moc_zorkhome.cpp
+	/usr/lib/arm-linux-gnueabihf/qt5/bin/moc $(DEFINES) -I/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-g++ -I/home/pi/Zork/zorkProject/Zork_Qt_project -I/usr/include/arm-linux-gnueabihf/qt5 -I/usr/include/arm-linux-gnueabihf/qt5/QtMultimedia -I/usr/include/arm-linux-gnueabihf/qt5/QtWidgets -I/usr/include/arm-linux-gnueabihf/qt5/QtGui -I/usr/include/arm-linux-gnueabihf/qt5/QtNetwork -I/usr/include/arm-linux-gnueabihf/qt5/QtCore -I. -I/usr/include/c++/6 -I/usr/include/arm-linux-gnueabihf/c++/6 -I/usr/include/c++/6/backward -I/usr/lib/gcc/arm-linux-gnueabihf/6/include -I/usr/local/include -I/usr/lib/gcc/arm-linux-gnueabihf/6/include-fixed -I/usr/include/arm-linux-gnueabihf -I/usr/include ../Zork_Qt_project/zorkhome.h -o moc_zorkhome.cpp
 
 moc_settings.cpp: ../Zork_Qt_project/settings.h \
 		/usr/lib/arm-linux-gnueabihf/qt5/bin/moc
-	/usr/lib/arm-linux-gnueabihf/qt5/bin/moc $(DEFINES) -I/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-g++ -I/home/pi/Documents/zork/zorkProject/Zork_Qt_project -I/usr/include/arm-linux-gnueabihf/qt5 -I/usr/include/arm-linux-gnueabihf/qt5/QtMultimedia -I/usr/include/arm-linux-gnueabihf/qt5/QtWidgets -I/usr/include/arm-linux-gnueabihf/qt5/QtGui -I/usr/include/arm-linux-gnueabihf/qt5/QtNetwork -I/usr/include/arm-linux-gnueabihf/qt5/QtCore -I. -I/usr/include/c++/6 -I/usr/include/arm-linux-gnueabihf/c++/6 -I/usr/include/c++/6/backward -I/usr/lib/gcc/arm-linux-gnueabihf/6/include -I/usr/local/include -I/usr/lib/gcc/arm-linux-gnueabihf/6/include-fixed -I/usr/include/arm-linux-gnueabihf -I/usr/include ../Zork_Qt_project/settings.h -o moc_settings.cpp
+	/usr/lib/arm-linux-gnueabihf/qt5/bin/moc $(DEFINES) -I/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-g++ -I/home/pi/Zork/zorkProject/Zork_Qt_project -I/usr/include/arm-linux-gnueabihf/qt5 -I/usr/include/arm-linux-gnueabihf/qt5/QtMultimedia -I/usr/include/arm-linux-gnueabihf/qt5/QtWidgets -I/usr/include/arm-linux-gnueabihf/qt5/QtGui -I/usr/include/arm-linux-gnueabihf/qt5/QtNetwork -I/usr/include/arm-linux-gnueabihf/qt5/QtCore -I. -I/usr/include/c++/6 -I/usr/include/arm-linux-gnueabihf/c++/6 -I/usr/include/c++/6/backward -I/usr/lib/gcc/arm-linux-gnueabihf/6/include -I/usr/local/include -I/usr/lib/gcc/arm-linux-gnueabihf/6/include-fixed -I/usr/include/arm-linux-gnueabihf -I/usr/include ../Zork_Qt_project/settings.h -o moc_settings.cpp
 
 moc_gameover.cpp: ../Zork_Qt_project/mainwindow.h \
 		../Zork_Qt_project/ZorkUL.h \
 		../Zork_Qt_project/Character.h \
 		../Zork_Qt_project/item.h \
 		../Zork_Qt_project/Command.h \
-		../Zork_Qt_project/Parser.h \
-		../Zork_Qt_project/CommandWords.h \
 		../Zork_Qt_project/Room.h \
 		../Zork_Qt_project/carryableItem.h \
 		../Zork_Qt_project/searchableitem.h \
@@ -453,7 +439,7 @@ moc_gameover.cpp: ../Zork_Qt_project/mainwindow.h \
 		../Zork_Qt_project/leaderboard.h \
 		../Zork_Qt_project/gameover.h \
 		/usr/lib/arm-linux-gnueabihf/qt5/bin/moc
-	/usr/lib/arm-linux-gnueabihf/qt5/bin/moc $(DEFINES) -I/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-g++ -I/home/pi/Documents/zork/zorkProject/Zork_Qt_project -I/usr/include/arm-linux-gnueabihf/qt5 -I/usr/include/arm-linux-gnueabihf/qt5/QtMultimedia -I/usr/include/arm-linux-gnueabihf/qt5/QtWidgets -I/usr/include/arm-linux-gnueabihf/qt5/QtGui -I/usr/include/arm-linux-gnueabihf/qt5/QtNetwork -I/usr/include/arm-linux-gnueabihf/qt5/QtCore -I. -I/usr/include/c++/6 -I/usr/include/arm-linux-gnueabihf/c++/6 -I/usr/include/c++/6/backward -I/usr/lib/gcc/arm-linux-gnueabihf/6/include -I/usr/local/include -I/usr/lib/gcc/arm-linux-gnueabihf/6/include-fixed -I/usr/include/arm-linux-gnueabihf -I/usr/include ../Zork_Qt_project/gameover.h -o moc_gameover.cpp
+	/usr/lib/arm-linux-gnueabihf/qt5/bin/moc $(DEFINES) -I/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-g++ -I/home/pi/Zork/zorkProject/Zork_Qt_project -I/usr/include/arm-linux-gnueabihf/qt5 -I/usr/include/arm-linux-gnueabihf/qt5/QtMultimedia -I/usr/include/arm-linux-gnueabihf/qt5/QtWidgets -I/usr/include/arm-linux-gnueabihf/qt5/QtGui -I/usr/include/arm-linux-gnueabihf/qt5/QtNetwork -I/usr/include/arm-linux-gnueabihf/qt5/QtCore -I. -I/usr/include/c++/6 -I/usr/include/arm-linux-gnueabihf/c++/6 -I/usr/include/c++/6/backward -I/usr/lib/gcc/arm-linux-gnueabihf/6/include -I/usr/local/include -I/usr/lib/gcc/arm-linux-gnueabihf/6/include-fixed -I/usr/include/arm-linux-gnueabihf -I/usr/include ../Zork_Qt_project/gameover.h -o moc_gameover.cpp
 
 moc_leaderboard.cpp: ../Zork_Qt_project/gameover.h \
 		../Zork_Qt_project/mainwindow.h \
@@ -461,8 +447,6 @@ moc_leaderboard.cpp: ../Zork_Qt_project/gameover.h \
 		../Zork_Qt_project/Character.h \
 		../Zork_Qt_project/item.h \
 		../Zork_Qt_project/Command.h \
-		../Zork_Qt_project/Parser.h \
-		../Zork_Qt_project/CommandWords.h \
 		../Zork_Qt_project/Room.h \
 		../Zork_Qt_project/carryableItem.h \
 		../Zork_Qt_project/searchableitem.h \
@@ -472,7 +456,7 @@ moc_leaderboard.cpp: ../Zork_Qt_project/gameover.h \
 		../Zork_Qt_project/leaderboard.h \
 		../Zork_Qt_project/leaderboard.h \
 		/usr/lib/arm-linux-gnueabihf/qt5/bin/moc
-	/usr/lib/arm-linux-gnueabihf/qt5/bin/moc $(DEFINES) -I/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-g++ -I/home/pi/Documents/zork/zorkProject/Zork_Qt_project -I/usr/include/arm-linux-gnueabihf/qt5 -I/usr/include/arm-linux-gnueabihf/qt5/QtMultimedia -I/usr/include/arm-linux-gnueabihf/qt5/QtWidgets -I/usr/include/arm-linux-gnueabihf/qt5/QtGui -I/usr/include/arm-linux-gnueabihf/qt5/QtNetwork -I/usr/include/arm-linux-gnueabihf/qt5/QtCore -I. -I/usr/include/c++/6 -I/usr/include/arm-linux-gnueabihf/c++/6 -I/usr/include/c++/6/backward -I/usr/lib/gcc/arm-linux-gnueabihf/6/include -I/usr/local/include -I/usr/lib/gcc/arm-linux-gnueabihf/6/include-fixed -I/usr/include/arm-linux-gnueabihf -I/usr/include ../Zork_Qt_project/leaderboard.h -o moc_leaderboard.cpp
+	/usr/lib/arm-linux-gnueabihf/qt5/bin/moc $(DEFINES) -I/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-g++ -I/home/pi/Zork/zorkProject/Zork_Qt_project -I/usr/include/arm-linux-gnueabihf/qt5 -I/usr/include/arm-linux-gnueabihf/qt5/QtMultimedia -I/usr/include/arm-linux-gnueabihf/qt5/QtWidgets -I/usr/include/arm-linux-gnueabihf/qt5/QtGui -I/usr/include/arm-linux-gnueabihf/qt5/QtNetwork -I/usr/include/arm-linux-gnueabihf/qt5/QtCore -I. -I/usr/include/c++/6 -I/usr/include/arm-linux-gnueabihf/c++/6 -I/usr/include/c++/6/backward -I/usr/lib/gcc/arm-linux-gnueabihf/6/include -I/usr/local/include -I/usr/lib/gcc/arm-linux-gnueabihf/6/include-fixed -I/usr/include/arm-linux-gnueabihf -I/usr/include ../Zork_Qt_project/leaderboard.h -o moc_leaderboard.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -514,8 +498,6 @@ mainwindow.o: ../Zork_Qt_project/mainwindow.cpp ../Zork_Qt_project/mainwindow.h 
 		../Zork_Qt_project/Character.h \
 		../Zork_Qt_project/item.h \
 		../Zork_Qt_project/Command.h \
-		../Zork_Qt_project/Parser.h \
-		../Zork_Qt_project/CommandWords.h \
 		../Zork_Qt_project/Room.h \
 		../Zork_Qt_project/carryableItem.h \
 		../Zork_Qt_project/searchableitem.h \
@@ -535,16 +517,8 @@ Character.o: ../Zork_Qt_project/Character.cpp ../Zork_Qt_project/Character.h \
 Command.o: ../Zork_Qt_project/Command.cpp ../Zork_Qt_project/Command.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Command.o ../Zork_Qt_project/Command.cpp
 
-CommandWords.o: ../Zork_Qt_project/CommandWords.cpp ../Zork_Qt_project/CommandWords.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o CommandWords.o ../Zork_Qt_project/CommandWords.cpp
-
 item.o: ../Zork_Qt_project/item.cpp ../Zork_Qt_project/item.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o item.o ../Zork_Qt_project/item.cpp
-
-Parser.o: ../Zork_Qt_project/Parser.cpp ../Zork_Qt_project/Parser.h \
-		../Zork_Qt_project/Command.h \
-		../Zork_Qt_project/CommandWords.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Parser.o ../Zork_Qt_project/Parser.cpp
 
 Room.o: ../Zork_Qt_project/Room.cpp ../Zork_Qt_project/Room.h \
 		../Zork_Qt_project/item.h \
@@ -563,8 +537,6 @@ ZorkUL.o: ../Zork_Qt_project/ZorkUL.cpp ../Zork_Qt_project/ZorkUL.h \
 		../Zork_Qt_project/Character.h \
 		../Zork_Qt_project/item.h \
 		../Zork_Qt_project/Command.h \
-		../Zork_Qt_project/Parser.h \
-		../Zork_Qt_project/CommandWords.h \
 		../Zork_Qt_project/Room.h \
 		../Zork_Qt_project/carryableItem.h \
 		../Zork_Qt_project/searchableitem.h \
@@ -588,8 +560,6 @@ zorkhome.o: ../Zork_Qt_project/zorkhome.cpp ../Zork_Qt_project/zorkhome.h \
 		../Zork_Qt_project/Character.h \
 		../Zork_Qt_project/item.h \
 		../Zork_Qt_project/Command.h \
-		../Zork_Qt_project/Parser.h \
-		../Zork_Qt_project/CommandWords.h \
 		../Zork_Qt_project/Room.h \
 		../Zork_Qt_project/carryableItem.h \
 		../Zork_Qt_project/searchableitem.h \
@@ -626,8 +596,6 @@ gameover.o: ../Zork_Qt_project/gameover.cpp ../Zork_Qt_project/gameover.h \
 		../Zork_Qt_project/Character.h \
 		../Zork_Qt_project/item.h \
 		../Zork_Qt_project/Command.h \
-		../Zork_Qt_project/Parser.h \
-		../Zork_Qt_project/CommandWords.h \
 		../Zork_Qt_project/Room.h \
 		../Zork_Qt_project/carryableItem.h \
 		../Zork_Qt_project/searchableitem.h \
@@ -645,8 +613,6 @@ leaderboard.o: ../Zork_Qt_project/leaderboard.cpp ../Zork_Qt_project/leaderboard
 		../Zork_Qt_project/Character.h \
 		../Zork_Qt_project/item.h \
 		../Zork_Qt_project/Command.h \
-		../Zork_Qt_project/Parser.h \
-		../Zork_Qt_project/CommandWords.h \
 		../Zork_Qt_project/Room.h \
 		../Zork_Qt_project/carryableItem.h \
 		../Zork_Qt_project/searchableitem.h \
