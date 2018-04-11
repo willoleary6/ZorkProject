@@ -115,7 +115,7 @@ public:
         font5.setWeight(50);
         playerName->setFont(font5);
         playerName->setStyleSheet(QStringLiteral("background-color: rgb(46, 52, 54);"));
-        playerName->setMaxLength(10);
+        playerName->setMaxLength(16);
         playerName->setAlignment(Qt::AlignCenter);
         saveButton = new QPushButton(gameOver);
         saveButton->setObjectName(QStringLiteral("saveButton"));

@@ -55,6 +55,8 @@ public:
 "border-color: rgb(0, 0, 0);\n"
 "border-radius: 10px;\n"
 "color: rgb(255, 255, 255);"));
+        leadTable->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        leadTable->setShowGrid(false);
         leadTable->setColumnCount(0);
         leadTable->horizontalHeader()->setVisible(false);
         leadTable->horizontalHeader()->setCascadingSectionResizes(false);
@@ -79,7 +81,7 @@ public:
         playerTime->setAlignment(Qt::AlignCenter);
         zorkLogo = new QLabel(leaderboard);
         zorkLogo->setObjectName(QStringLiteral("zorkLogo"));
-        zorkLogo->setGeometry(QRect(20, 20, 130, 70));
+        zorkLogo->setGeometry(QRect(20, 20, 140, 70));
         zorkLogo->setPixmap(QPixmap(QString::fromUtf8(":/images/zorkLogo.png")));
         zorkLogo->setScaledContents(true);
         leaderboardLabel = new QLabel(leaderboard);
@@ -99,6 +101,12 @@ public:
         backButton->setGeometry(QRect(170, 660, 140, 40));
         backButton->setFont(font1);
         backButton->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
+        leadTable->raise();
+        playerName->raise();
+        playerTime->raise();
+        leaderboardLabel->raise();
+        backButton->raise();
+        zorkLogo->raise();
 
         retranslateUi(leaderboard);
 

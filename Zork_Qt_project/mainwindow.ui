@@ -1674,7 +1674,7 @@ border-radius: 10px;
 color: rgb(255, 255, 255);</string>
     </property>
     <attribute name="headerVisible">
-     <bool>false</bool>
+     <bool>true</bool>
     </attribute>
     <column>
      <property name="text">
@@ -1683,7 +1683,12 @@ color: rgb(255, 255, 255);</string>
      <property name="font">
       <font>
        <family>Piboto Light</family>
+       <weight>75</weight>
+       <bold>true</bold>
       </font>
+     </property>
+     <property name="textAlignment">
+      <set>AlignCenter</set>
      </property>
      <property name="background">
       <color>
@@ -2180,7 +2185,12 @@ border-radius: 10px;color: rgb(255, 255, 255);</string>
      <property name="font">
       <font>
        <family>Piboto Light</family>
+       <weight>75</weight>
+       <bold>true</bold>
       </font>
+     </property>
+     <property name="textAlignment">
+      <set>AlignCenter</set>
      </property>
      <property name="background">
       <color>
@@ -2342,7 +2352,7 @@ border-radius: 10px;color: rgb(255, 255, 255);</string>
      <x>0</x>
      <y>0</y>
      <width>1200</width>
-     <height>24</height>
+     <height>23</height>
     </rect>
    </property>
    <property name="font">
@@ -2361,15 +2371,10 @@ border-radius: 10px;color: rgb(255, 255, 255);</string>
      <string>File</string>
     </property>
     <addaction name="actionNew_Game"/>
+    <addaction name="actionQuit_Game"/>
     <addaction name="actionSettings"/>
     <addaction name="separator"/>
     <addaction name="actionClose"/>
-   </widget>
-   <widget class="QMenu" name="menuEdit">
-    <property name="title">
-     <string>Edit</string>
-    </property>
-    <addaction name="actionUndo_Last_Move"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -2378,7 +2383,6 @@ border-radius: 10px;color: rgb(255, 255, 255);</string>
     <addaction name="actionAbout"/>
    </widget>
    <addaction name="menuFile"/>
-   <addaction name="menuEdit"/>
    <addaction name="menuHelp"/>
   </widget>
   <action name="actionClose">
@@ -2406,10 +2410,21 @@ border-radius: 10px;color: rgb(255, 255, 255);</string>
    <property name="text">
     <string>Settings</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
   </action>
   <action name="actionAbout">
    <property name="text">
     <string>About...</string>
+   </property>
+  </action>
+  <action name="actionQuit_Game">
+   <property name="text">
+    <string>Quit Game</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
    </property>
   </action>
  </widget>

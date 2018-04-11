@@ -36,6 +36,7 @@ public:
     QAction *actionNew_Game;
     QAction *actionSettings;
     QAction *actionAbout;
+    QAction *actionQuit_Game;
     QWidget *centralWidget;
     QPushButton *westButton;
     QPushButton *eastButton;
@@ -58,7 +59,6 @@ public:
     QStatusBar *statusBar;
     QMenuBar *menuBar;
     QMenu *menuFile;
-    QMenu *menuEdit;
     QMenu *menuHelp;
 
     void setupUi(QMainWindow *MainWindow)
@@ -94,6 +94,8 @@ public:
         actionSettings->setObjectName(QStringLiteral("actionSettings"));
         actionAbout = new QAction(MainWindow);
         actionAbout->setObjectName(QStringLiteral("actionAbout"));
+        actionQuit_Game = new QAction(MainWindow);
+        actionQuit_Game->setObjectName(QStringLiteral("actionQuit_Game"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         westButton = new QPushButton(centralWidget);
@@ -491,7 +493,7 @@ public:
         MainWindow->setStatusBar(statusBar);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1200, 24));
+        menuBar->setGeometry(QRect(0, 0, 1200, 23));
         QFont font6;
         font6.setFamily(QStringLiteral("Montserrat"));
         font6.setPointSize(11);
@@ -501,21 +503,18 @@ public:
         menuBar->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
-        menuEdit = new QMenu(menuBar);
-        menuEdit->setObjectName(QStringLiteral("menuEdit"));
         menuHelp = new QMenu(menuBar);
         menuHelp->setObjectName(QStringLiteral("menuHelp"));
         MainWindow->setMenuBar(menuBar);
 
         mainToolBar->addSeparator();
         menuBar->addAction(menuFile->menuAction());
-        menuBar->addAction(menuEdit->menuAction());
         menuBar->addAction(menuHelp->menuAction());
         menuFile->addAction(actionNew_Game);
+        menuFile->addAction(actionQuit_Game);
         menuFile->addAction(actionSettings);
         menuFile->addSeparator();
         menuFile->addAction(actionClose);
-        menuEdit->addAction(actionUndo_Last_Move);
         menuHelp->addAction(actionAbout);
 
         retranslateUi(MainWindow);
@@ -532,7 +531,10 @@ public:
         actionNew_Game->setText(QApplication::translate("MainWindow", "New Game", Q_NULLPTR));
         actionNew_Game->setShortcut(QApplication::translate("MainWindow", "Ctrl+N", Q_NULLPTR));
         actionSettings->setText(QApplication::translate("MainWindow", "Settings", Q_NULLPTR));
+        actionSettings->setShortcut(QApplication::translate("MainWindow", "Ctrl+S", Q_NULLPTR));
         actionAbout->setText(QApplication::translate("MainWindow", "About...", Q_NULLPTR));
+        actionQuit_Game->setText(QApplication::translate("MainWindow", "Quit Game", Q_NULLPTR));
+        actionQuit_Game->setShortcut(QApplication::translate("MainWindow", "Ctrl+C", Q_NULLPTR));
         westButton->setText(QApplication::translate("MainWindow", "W", Q_NULLPTR));
         eastButton->setText(QApplication::translate("MainWindow", "E", Q_NULLPTR));
         northButton->setText(QApplication::translate("MainWindow", "N", Q_NULLPTR));
@@ -549,7 +551,6 @@ public:
         gameLogLabel_2->setText(QApplication::translate("MainWindow", "Map", Q_NULLPTR));
         gameLogLabel_3->setText(QApplication::translate("MainWindow", "Display", Q_NULLPTR));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", Q_NULLPTR));
-        menuEdit->setTitle(QApplication::translate("MainWindow", "Edit", Q_NULLPTR));
         menuHelp->setTitle(QApplication::translate("MainWindow", "Help", Q_NULLPTR));
     } // retranslateUi
 

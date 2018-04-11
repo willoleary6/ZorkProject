@@ -14,7 +14,7 @@ leaderboard::~leaderboard()
 }
 
 void leaderboard::readFile() {
-    QString filename = "/home/pi/Documents/zork/zorkProject/Zork_Qt_project/leaderboard.csv";
+    QString filename = "/home/pi/Documents/leaderboard.csv";
     QFile csvFile(filename);
 
     if (!csvFile.open(QIODevice::ReadOnly)) {
@@ -28,10 +28,10 @@ void leaderboard::readFile() {
         while(!(stream.atEnd())) {
 
             QString line = csvFile.readLine();
-            table = line.split(", ");
+            table = line.split(",");
             ui->leadTable->setColumnCount(table.size());
             ui->leadTable->setColumnWidth(0, 200);
-            ui->leadTable->setColumnWidth(1, 200);
+            ui->leadTable->setColumnWidth(1, 195);
             ui->leadTable->insertRow(rowCount);
 
             for (int i = 0; i < table.size(); i++) {
@@ -46,15 +46,15 @@ void leaderboard::readFile() {
 }
 
 void leaderboard::writeFile(QString playerName, QString timer) {
-    QString filename = "/home/pi/Documents/zork/zorkProject/Zork_Qt_project/leaderboard.csv";
+    QString filename = "/home/pi/Documents/leaderboard.csv";
     QFile csvFile(filename);
 
     if (!csvFile.open(QIODevice::Append)) {
-        cout << "No file exists" << endl;
     }
     else {
+        csvFile.open(QIODevice::Append);
         QTextStream stream(&csvFile);
-        stream << playerName << ", "  << timer << endl;
+        stream << playerName << "," << timer << "\n";
     }
     csvFile.close();
 }

@@ -82,7 +82,6 @@ void MainWindow::buildInventoryAndRoom(){
                 }else{
                      currentItem->addChild(new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString(QString::fromStdString(validCommands[j]+" "+itemNames[i])))));
                 }
-
             }
             items.append(currentItem);
       }
@@ -128,7 +127,22 @@ void MainWindow::updateLog(QString log) {
 }
 
 void MainWindow::on_actionClose_triggered() {
-    close();
+    QMessageBox confirmExit;
+    confirmExit.setWindowTitle("Exit Zork");
+    confirmExit.setText("Are you sure you want to quit Zork?");
+    confirmExit.setStyleSheet("color : white; background : rgb(79, 87, 88)");
+    confirmExit.setIcon(QMessageBox::Question);
+    confirmExit.setStandardButtons(QMessageBox::Cancel | QMessageBox::Close);
+    confirmExit.setDefaultButton(QMessageBox::Cancel);
+    int ret = confirmExit.exec();
+
+    switch (ret) {
+        case QMessageBox::Cancel:
+            break;
+        case QMessageBox::Close:
+            close();
+        break;
+    }
 }
 
 void MainWindow::on_actionSettings_triggered() {
@@ -274,8 +288,49 @@ void MainWindow::on_escapeButton_clicked() {
 
 void MainWindow::on_actionNew_Game_triggered()
 {
-    this->close();
-    MainWindow *w = new MainWindow();
-    w->move(QApplication::desktop()->screen()->rect().center() - w->rect().center());
-    w->show();
+    QMessageBox confirmNewGame;
+    confirmNewGame.setWindowTitle("Zork - Start New Game");
+    confirmNewGame.setText("<b>You are currently in the middle of a game.</b>");
+    confirmNewGame.setInformativeText("Are you sure you wish to start a new game?");
+    confirmNewGame.setStyleSheet("color : white; background : rgb(79, 87, 88)");
+    confirmNewGame.setIcon(QMessageBox::Question);
+    confirmNewGame.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    confirmNewGame.setDefaultButton(QMessageBox::No);
+    int ret = confirmNewGame.exec();
+
+    switch (ret) {
+        case QMessageBox::No:
+            break;
+        case QMessageBox::Yes:
+            timer->stop();
+            this->close();
+            MainWindow *w = new MainWindow();
+            w->move(QApplication::desktop()->screen()->rect().center() - w->rect().center());
+            w->show();
+            break;
+    }
+}
+
+void MainWindow::on_actionQuit_Game_triggered()
+{
+    QMessageBox confirmQuitGame;
+    confirmQuitGame.setWindowTitle("Zork - Quit Game");
+    confirmQuitGame.setText("<b>You are currently in the middle of a game.</b>");
+    confirmQuitGame.setInformativeText("Are you sure you wish to end the game and return to the main menu?");
+    confirmQuitGame.setStyleSheet("color : white; background : rgb(79, 87, 88)");
+    confirmQuitGame.setIcon(QMessageBox::Question);
+    confirmQuitGame.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    confirmQuitGame.setDefaultButton(QMessageBox::No);
+    int ret = confirmQuitGame.exec();
+
+    switch (ret) {
+        case QMessageBox::No:
+            break;
+        case QMessageBox::Yes:
+            timer->stop();
+            this->close();
+            zorkHome h;
+            h.exec();
+            break;
+    }
 }
