@@ -1,4 +1,5 @@
 #include "Character.h"
+
 /**
  * @brief Character::Character
  * Default contructor that sets the users description as player
@@ -6,6 +7,7 @@
 Character::Character(){
     this->description = "Player";
 }
+
 /**
  * @brief Character::Character
  * @param description string parameter setting the users description
@@ -13,6 +15,7 @@ Character::Character(){
 Character::Character(string description) {
 	this->description = description;
 }
+
 /**
  * @brief Character::~Character
  * Destructor that clears the items stored on the user.
@@ -22,6 +25,7 @@ Character::~Character() {
         delete itemsInCharacter[i];
     }
 }
+
 /**
  * @brief Character::addItem adds a item to the users inventory
  * @param item
@@ -29,6 +33,7 @@ Character::~Character() {
 void Character::addItem(Item* item) {
     itemsInCharacter.push_back(item);
 }
+
 /**
  * @brief Character::shortDescription
  * @return returns a string of the users description
@@ -36,6 +41,7 @@ void Character::addItem(Item* item) {
 string Character::shortDescription(){
     return  this->description;
 }
+
 /**
  * @brief Character::removeItem
  * @param itemIndex index of the item we are taking on the inventory vector
@@ -47,6 +53,7 @@ Item* Character::removeItem(int itemIndex){
     itemsInCharacter.erase(itemsInCharacter.begin() + itemIndex);
     return Temp;
 }
+
 /**
  * @brief Character::getItemList
  * @return returns the vector of items stored in the users inventory
@@ -55,6 +62,7 @@ vector <Item*> Character::getItemList(){
     //return the vector containing
     return itemsInCharacter;
  }
+
 /**
  * @brief Character::longDescription
  * @return returns a string containing the users inventory and a list of the items on the user.
@@ -67,6 +75,7 @@ string Character::longDescription(){
     }
     return ret;
 }
+
 /**
  * @brief Character::isItemOnCharacter
  * @param inString string containing the name of the item we are searching for
@@ -89,6 +98,3 @@ int Character::isItemOnCharacter(string inString){
     }
     return -1;
 }
-
-
-

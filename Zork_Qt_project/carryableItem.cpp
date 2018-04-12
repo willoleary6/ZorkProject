@@ -1,6 +1,6 @@
 #include "carryableItem.h"
 
-//Constructors
+// Constructors
 carryableItem::carryableItem(){
     setProperties();
 }
@@ -10,14 +10,14 @@ carryableItem::carryableItem(string description){
     this->description = description;
     setProperties();
 }
-//using the virtual functions
+// Using the virtual functions
 vector<string> Item::validRoomCommandsList(){
     return validRoomCommands;
 }
 vector<string> Item::validUserCommandsList(){
     return validUserCommands;
 }
-//polymorphism
+// Polymorphism
 void carryableItem::setProperties(){
     carryable = true;
     searchable = false;

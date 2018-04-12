@@ -46,7 +46,6 @@ public slots:
 private slots:
 
     void showTime();
-    void on_actionClose_triggered();
 
     void on_actionSettings_triggered();
 
@@ -64,8 +63,6 @@ private slots:
 
     void on_southButton_clicked();
 
-    //void on_roomItems_itemClicked(QListWidgetItem *item);
-
     void on_roomItems_itemClicked(QTreeWidgetItem *item, int column);
 
     void on_inventory_itemClicked(QTreeWidgetItem *item, int column);
@@ -75,8 +72,6 @@ private slots:
     void on_actionNew_Game_triggered();
 
     void on_actionQuit_Game_triggered();
-
-    void on_actionUndo_Last_Move_triggered();
 
     void on_actionExit_triggered();
 

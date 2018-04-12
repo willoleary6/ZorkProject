@@ -1674,7 +1674,7 @@ border-radius: 10px;
 color: rgb(255, 255, 255);</string>
     </property>
     <attribute name="headerVisible">
-     <bool>false</bool>
+     <bool>true</bool>
     </attribute>
     <column>
      <property name="text">
@@ -2185,7 +2185,7 @@ border-radius: 10px;
 color: rgb(255, 255, 255);</string>
     </property>
     <attribute name="headerVisible">
-     <bool>false</bool>
+     <bool>true</bool>
     </attribute>
     <column>
      <property name="text">

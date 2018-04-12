@@ -16,9 +16,9 @@ gameOver::~gameOver()
     delete ui;
 }
 
-// Function for player winning the game
+//  Function for player winning the game
 void gameOver::gameWon(QString timer) {
-    // Should the player win the game, the following objects are modifed and presented
+    //  Should the player win the game, the following objects are modifed and presented.
     QPixmap winL(":/images/ThumbUpLeft.png");
     QPixmap winR(":/images/ThumbUpRight.png");
 
@@ -31,8 +31,9 @@ void gameOver::gameWon(QString timer) {
     ui->saveButton->show();
 }
 
-// Function for player losing the game
+//  Function for player losing the game
 void gameOver::gameLost() {
+    //  Should the player lose the game, the following objects are modifed and presented
     QPixmap lose(":/images/redX.png");
 
     ui->winLoseLabel->setText("Caught!");
@@ -46,32 +47,32 @@ void gameOver::gameLost() {
     ui->playerTime->hide();
 }
 
-// Play Again button
+//  Play Again button
 void gameOver::on_playAgainButton_clicked() {
-    // Closes the dialog and creates a new game
+    //  Closes the dialog and creates a new game
     this->close();
     w = new MainWindow();
     w->move(QApplication::desktop()->screen()->rect().center() - w->rect().center());
     w->show();
 }
 
-// Leaderboard button
+//  Leaderboard button
 void gameOver::on_leaderboardButton_clicked() {
-    // Displays the leaderboard
+    //  Displays the leaderboard
     leaderboard l;
     l.readFile();
     l.exec();
 }
 
-// Main Menu button
+//  Main Menu button
 void gameOver::on_mainMenuButton_clicked() {
-    // Closes the dialog and returns the player to the Zork main menu
+    //  Closes the dialog and returns the player to the Zork main menu
     this->close();
     zorkHome z;
     z.exec();
 }
 
-// Save Score button
+//  Save Score button
 void gameOver::on_saveButton_clicked() {
     /*
      *  Only visible if the player wins the game. The player is required to provide a
@@ -80,15 +81,15 @@ void gameOver::on_saveButton_clicked() {
      */
 
     QString player, playerTime;
-    player = ui->playerName->text();        // Copys player's username to QString player
-    playerTime = ui->playerTime->text();    // Copys player's time to QString playerTime
+    player = ui->playerName->text();        //  Copys player's username to QString player
+    playerTime = ui->playerTime->text();    //  Copys player's time to QString playerTime
 
-    // Checks if player is empty. If so, an error message is shown
+    //  Checks if player is empty. If so, an error message is shown
     if (player.isEmpty()) {
         QMessageBox::warning(this, "Error", "Please enter a username to continue");
     }
     else {
-        // Writes the player name and time to the leaderboard.csv file, then notifies the player.
+        //  Writes the player name and time to the leaderboard.csv file, then notifies the player.
         leaderboard l;
         l.writeFile(player, playerTime);
         ui->scoreSaved->setText("Score saved successfully");

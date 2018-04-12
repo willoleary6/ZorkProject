@@ -7,8 +7,11 @@ key::key(){
     setProperties();
     addValidCommands();
 }
+
 key::~key(){
 }
+
+// Particluar room key constructor
 key::key(string roomName,int roomId,int floorId){
     description = "Key-for-"+roomName+"-on-floor-"+to_string(floorId);
     this->roomId = roomId;
@@ -17,6 +20,8 @@ key::key(string roomName,int roomId,int floorId){
     addValidCommands();
 
 }
+
+// Valid commands
 void key::addValidCommands(){
     validUserCommands.push_back("unlock north");
     validUserCommands.push_back("unlock west");

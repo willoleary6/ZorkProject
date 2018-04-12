@@ -15,7 +15,7 @@ Room::Room(string description, int IDNumber, int floorId) {
     this->floorId = floorId;
     locked = false;
     exit = false;
-    //initially we set all exits to null
+    //  Initially we set all exits to null
     nullifyExits();
     initialiseMainWindowText();
 }
@@ -54,17 +54,18 @@ vector <Item*> Room::getItemsInRoom(){
     return itemsInRoom;
 }
 void Room::initialiseMainWindowText(){
-    /*This function builds the the text for the main window.
-     * Text varies depending on the properties of the room.
+    /*
+     *  This function builds the the text for the main window.
+     *  Text varies depending on the properties of the room.
      */
-    mainWindowText = "Seems like were in the " + description +".\n";
+    mainWindowText = "Seems like we're in the " + description +".\n";
     if(itemsInRoom.size() > 0){
-        mainWindowText += "There seems to be " + to_string(itemsInRoom.size()) + "Item(s) in the room that could be of use.\n";
+        mainWindowText += "There seems to be " + to_string(itemsInRoom.size()) + "item(s) in the room that could be of use.\n";
     }else{
         mainWindowText += "There is nothing of interest in here to take.\n";
     }
     if(isExit()){
-       mainWindowText += "Wait I can escape from here!!!! FREEEDOM!! \n";
+       mainWindowText += "Wait, I can escape from here!!!! FREEEDOM!! \n";
     }
     if(exits["upstairs"] != NULL){
        mainWindowText += "Looks like I can go upstairs from here. \n";
@@ -266,22 +267,22 @@ string Room::longDescription() {
 string Room::exitString() {
     string returnString = "exits: ";
     if (exits["north"] != NULL){
-        returnString += " north,";
+        returnString += " North,";
     }
     if (exits["east"] != NULL){
-        returnString += " east,";
+        returnString += " East,";
     }
     if (exits["south"] != NULL){
-        returnString += " south,";
+        returnString += " South,";
     }
     if (exits["west"] != NULL){
-        returnString += " west,";
+        returnString += " West,";
     }
     if(exits["upstairs"] != NULL){
-        returnString += " upstairs,";
+        returnString += " Upstairs,";
     }
     if(exits["downstairs"] != NULL){
-        returnString += " downstairs,";
+        returnString += " Downstairs,";
     }
     return returnString+"\n";
 }
@@ -292,11 +293,10 @@ string Room::exitString() {
  * @return returns the room in the direction the user specified.
  */
 Room* Room::nextRoom(string direction) {
-    map<string, Room*>::iterator next = exits.find(direction); //returns an iterator for the "pair"
+    map<string, Room*>::iterator next = exits.find(direction); //   Returns an iterator for the "pair"
     if (next == exits.end())
-        return NULL; // if exits.end() was returned, there's no room in that direction.
-    return next->second; // If there is a room, remove the "second" (Room*)
-                // part of the "pair" (<string, Room*>) and return it.
+        return NULL;        //  If exits.end() was returned, there's no room in that direction.
+    return next->second;    //  If there is a room, remove the "second" (Room*) part of the "pair" (<string, Room*>) and return it.
 }
 
 /**
@@ -351,7 +351,7 @@ int Room::isItemInRoom(string inString)
     }else if (itemsInRoom.size() > 0) {
         int x = (0);
         for (int n = sizeItems; n > 0; n--) {
-            // compare inString with short description
+            // Compare inString with short description
             int tempFlag = inString.compare( itemsInRoom[x]->getShortDescription());
             if (tempFlag == 0) {
                 return x;

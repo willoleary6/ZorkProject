@@ -10,7 +10,7 @@
 #include <QTextStream>
 #include <QDesktopWidget>
 
-//main constructor
+// Main constructor
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -31,6 +31,19 @@ MainWindow::MainWindow(QWidget *parent) :
         initialiseUI();
 
     }
+
+// Template for dialog boxes
+template <class T1, class T2>
+T1 msg(T1 m, T2 a, T2 b, T2 c) {
+    m->setWindowTitle(a);
+    m->setText(b);
+    m->setInformativeText(c);
+    m->setStyleSheet("color : white; background : rgb(79, 87, 88)");
+    m->setIcon(QMessageBox::Question);
+    m->setStandardButtons(QMessageBox::Cancel | QMessageBox::Yes);
+    m->setDefaultButton(QMessageBox::Cancel);
+    return m;
+}
 
 //initialising the mainwindow
 void MainWindow::initialiseUI(){
@@ -66,7 +79,7 @@ void MainWindow::showTime(){
     else
         ui->countdown->display(QString::number(minutes) +":"+ QString::number(seconds));
 }
-//populate the room items and users inventory
+// Populate the room items and users inventory
 void MainWindow::buildInventoryAndRoom(){
     vector <string> itemNames;
     vector <string> validCommands;
@@ -99,7 +112,7 @@ void MainWindow::buildInventoryAndRoom(){
       }
    }
 }
-//find out if the command being passed has more than one word
+// Finds out if the command being passed has more than one word
 int MainWindow::getNumberOfSpaces(string text) {
      int spaceCount = 0;
      for(int i =0; i < text.length(); i++) {
@@ -158,6 +171,7 @@ void MainWindow::on_actionAbout_triggered() {
     about.exec();
 }
 
+// Enables/disables direction buttons depending on current poisition of player
 void MainWindow::ValidButtons() {
     map<string, Room*> exits = game->getCurrentRoomExits();
     if(exits["north"] != NULL){
@@ -203,17 +217,21 @@ void MainWindow::ValidButtons() {
     }
 }
 
+// Disables direction buttons if player cannot move in particular direction
 void MainWindow::lockButton(QPushButton *button){
     button->setEnabled(false);
     button->setStyleSheet("background-color: #474746");
-    //button->hide();
 }
 
+// Enables direction buttons if player can move in particular direction
 void MainWindow::unlockButton(QPushButton *button){
     button->setEnabled(true);
     button->setStyleSheet("background-color: #83847f");
-    //button->show();
 }
+
+/*
+ *  All directional button events after being pressed
+ */
 
 void MainWindow::on_northButton_clicked(){
     game->goRoom("north");
@@ -251,21 +269,13 @@ void MainWindow::on_southButton_clicked(){
      buildInventoryAndRoom();
 }
 
-/*void MainWindow::on_roomItems_itemClicked(QListWidgetItem *item)
-{
-    //QTextStream out(stdout);
-    //out << item->text() << endl;
-
-}*/
-
+// Room Item
 void MainWindow::on_roomItems_itemClicked(QTreeWidgetItem *item, int column) {
-    //QTextStream out(stdout);
-    //out << item->text(column) << endl;
     game->runCommand(item->text(column).toUtf8().constData());
     buildInventoryAndRoom();
-    //item->addChild();*/
 }
 
+// Inventory Item
 void MainWindow::on_inventory_itemClicked(QTreeWidgetItem *item, int column) {
     game->runCommand(item->text(column).toUtf8().constData());
     buildInventoryAndRoom();
@@ -291,15 +301,14 @@ void MainWindow::on_escapeButton_clicked() {
 // New Game action in the Menu bar
 void MainWindow::on_actionNew_Game_triggered() {
     // Dialog prompts to confirm the player wishes to stop the current game and start a new one
-    QMessageBox confirmNewGame;
-    confirmNewGame.setWindowTitle("Zork - Start New Game");
-    confirmNewGame.setText("<b>You are currently in the middle of a game.</b>");
-    confirmNewGame.setInformativeText("Are you sure you wish to start a new game?");
-    confirmNewGame.setStyleSheet("color : white; background : rgb(79, 87, 88)");
-    confirmNewGame.setIcon(QMessageBox::Question);
-    confirmNewGame.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-    confirmNewGame.setDefaultButton(QMessageBox::No);
-    int ret = confirmNewGame.exec();
+    QMessageBox *confirm = new QMessageBox();
+    QString newTitle = "Zork - Quit Game";
+    QString newText = "<b>You are currently in the middle of a game.</b>";
+    QString newInfo = "Are you sure you wish to end the game and return to the main menu?";
+
+    // Template used to configure output dialog
+    confirm = msg(confirm, newTitle, newText, newInfo);
+    int ret = confirm->exec();
 
     switch (ret) {
         case QMessageBox::No:
@@ -317,19 +326,17 @@ void MainWindow::on_actionNew_Game_triggered() {
 // Quit game action in the Menu bar
 void MainWindow::on_actionQuit_Game_triggered() {
     // Dialog prompts to confirm player wishes to quit the game in progress and return to the main menu
-    QMessageBox confirmQuitGame;
-    confirmQuitGame.setWindowTitle("Zork - Quit Game");
-    confirmQuitGame.setText("<b>You are currently in the middle of a game.</b>");
-    confirmQuitGame.setInformativeText("Are you sure you wish to end the game and return to the main menu?");
-    confirmQuitGame.setStyleSheet("color : white; background : rgb(79, 87, 88)");
-    confirmQuitGame.setIcon(QMessageBox::Question);
-    confirmQuitGame.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-    confirmQuitGame.setDefaultButton(QMessageBox::No);
+    QMessageBox *confirm = new QMessageBox();
+    QString quitTitle = "Zork - Quit Game";
+    QString quitText = "<b>You are currently in the middle of a game.</b>";
+    QString quitInfo = "Are you sure you wish to end the game and return to the main menu?";
 
-    int ret = confirmQuitGame.exec();
+    // Template used to configure output dialog
+    confirm = msg(confirm, quitTitle, quitText, quitInfo);
+    int ret = confirm->exec();
 
     switch (ret) {
-        case QMessageBox::No:
+        case QMessageBox::Cancel:
             break;
         case QMessageBox::Yes:
             timer->stop();
@@ -343,14 +350,14 @@ void MainWindow::on_actionQuit_Game_triggered() {
 // Exit action in the Menu bar
 void MainWindow::on_actionExit_triggered() {
     // Dialog prompts to confirm application exit by player
-    QMessageBox confirmExit;
-    confirmExit.setWindowTitle("Exit Zork");
-    confirmExit.setText("Are you sure you want to quit Zork?");
-    confirmExit.setStyleSheet("color : white; background : rgb(79, 87, 88)");
-    confirmExit.setIcon(QMessageBox::Question);
-    confirmExit.setStandardButtons(QMessageBox::Cancel | QMessageBox::Yes);
-    confirmExit.setDefaultButton(QMessageBox::Cancel);
-    int ret = confirmExit.exec();
+    QMessageBox *confirm = new QMessageBox();
+    QString exitTitle = "Exit Zork";
+    QString exitText = "Are you sure you want to quit Zork?";
+    QString exitInfo = "";
+
+     // Template used to configure output dialog
+    confirm = msg(confirm, exitTitle, exitText, exitInfo);
+    int ret = confirm->exec();
 
     switch (ret) {
         case QMessageBox::Cancel:
